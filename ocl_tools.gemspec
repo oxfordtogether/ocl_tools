@@ -3,15 +3,14 @@ $:.push File.expand_path("lib", __dir__)
 # Maintain your gem's version:
 require "ocl_tools/version"
 
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.name        = "ocl_tools"
   spec.version     = OclTools::VERSION
   spec.authors     = ["VickyClose"]
   spec.email       = ["vicky.r.close@gmail.com"]
-  spec.homepage    = "TODO"
-  spec.summary     = "TODO: Summary of OclTools."
-  spec.description = "TODO: Description of OclTools."
+  spec.homepage    = "https://github.com/oxfordtogether/ocl_tools"
+  spec.summary     = "Useful stuff for OCL rails applications"
+  spec.description = "Useful stuff for OCL rails applications"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
