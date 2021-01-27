@@ -1,8 +1,5 @@
 # OclTools
-Short description and motivation.
-
-## Usage
-How to use my plugin.
+Rails engine containing useful stuff for OCL rails applications.
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -13,16 +10,5 @@ gem 'ocl_tools'
 
 And then execute:
 ```bash
-$ bundle
+$ bundle install
 ```
-
-Or install it yourself as:
-```bash
-$ gem install ocl_tools
-```
-
-## Contributing
-Contribution directions go here.
-
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
