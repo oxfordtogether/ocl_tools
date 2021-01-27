@@ -1,2 +1,6 @@
 <%= render OclTools::SimpleComponent.new %>
 <%= simple() %>
+
+<%= breadcrumbs do |list| %>
+  <%= list.link 'a', '#' %>
+<% end %>

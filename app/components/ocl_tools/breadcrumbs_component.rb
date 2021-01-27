@@ -1,6 +1,7 @@
 module OclTools
   class BreadcrumbsComponent < ViewComponent::Base
-    delegate :icon, to: :helpers
+    include ApplicationHelper # TO DO: is this the best thing to do?
+
     def initialize
       @links = []
 

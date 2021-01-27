@@ -12,3 +12,8 @@ And then execute:
 ```bash
 $ bundle install
 ```
+
+Then add this line to the ApplicationController to ensure helpers from the engine are available:
+```
+helper OclTools::Engine.helpers
+```
