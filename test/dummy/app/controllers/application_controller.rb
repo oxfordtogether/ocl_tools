@@ -1,3 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper OclTools::Engine.helpers
+  # do not import application helper, it will mess up webpack stuff
+  helper OclTools::ComponentsHelper
+
 end
