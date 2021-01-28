@@ -3,3 +3,7 @@ log/*.log
 pkg/
 
 node_modules
+
+tmp
+
+public/
