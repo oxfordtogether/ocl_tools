@@ -2,3 +2,14 @@
 <%= breadcrumbs do |list| %>
   <%= list.link 'a', '#' %>
 <% end %>
+
+<%= nav_tabs do |nav| %>
+  <% nav.link "Timeline", '#' %>
+  <% nav.link "Details", "#" %>
+<% end %>
+
+<%= notice_component(notice: 'hi there') %>
+
+<div data-controller="hello">
+  <h1 data-target="hello.output"></h1>
+</div

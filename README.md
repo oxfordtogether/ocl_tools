@@ -18,6 +18,15 @@ Then add this line to the ApplicationController to ensure helpers from the engin
 helper OclTools::Engine.helpers
 ```
 
+## Using the engine
+
+### Using a view component:
+```
+<%= render OclTools::SimpleComponent.new %>
+or
+<%= simple() %>
+```
+
 ## Run the dummy app
 
 A dummy app can be found in `test/dummy` with ocl_tools installed. Start this app by running the following commands in two separate console windows.
