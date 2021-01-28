@@ -1,0 +1,22 @@
+<div class="mt-1 relative">
+  <div class="flex">
+    <div class="w-12">
+      <%= form.orig_text_field "#{method}(3i)", value: @value&.day, class: "#{@classes}" %>
+      <div class="text-sm text-gray-400 ml-1">
+        Day
+      </div>
+    </div>
+    <div class="w-12 ml-2">
+      <%= form.orig_text_field "#{method}(2i)", value: @value&.month, class: "#{@classes}" %>
+      <div class="text-sm text-gray-400 ml-1">
+        Month
+      </div>
+    </div>
+    <div class="w-20 ml-2">
+      <%= form.orig_text_field "#{method}(1i)", value: @value&.year, class: "#{@classes}" %>
+      <div class="text-sm text-gray-400 ml-1">
+        Year
+      </div>
+    </div>
+  </div>
+</div>

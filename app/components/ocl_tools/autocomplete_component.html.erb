@@ -1,0 +1,47 @@
+<div class="relative" data-controller="autocomplete" data-autocomplete-params-value="<%= signed_params -%>" id="<%= field_id %>__autocomplete">
+  <label for="account_number" class="block text-sm font-medium text-gray-700"><%= label %></label>
+  <div class="mt-1 relative rounded-md shadow-sm">
+    <input data-autocomplete-target="value" type="hidden" id="<%= field_id %>" name="<%= field_name -%>" value="<%= object&.send(value_method)-%>" >
+    <input data-autocomplete-target="query" data-action="debounced:input->autocomplete#search" <%= 'disabled' if disabled %> autocomplete="off" type="text" id="<%=field_id-%>__query" class="block w-full pr-10 sm:text-sm rounded-md <%= @error ? 'border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500' : 'focus:ring-indigo-500 focus:border-indigo-500 border-gray-300' %>" value="<%= object&.send(text_method)%>">
+    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+      <span data-autocomplete-target="searchIcon">
+        <%= icon "heroicon-search", class: "h-5 w-5 text-gray-400" %>
+      </span>
+      <span data-autocomplete-target="searchingIcon" hidden>
+        <%= icon "spinner", class: "h-5 w-5 text-gray-400" %>
+      </span>
+    </div>
+  </div>
+  <% if @results  %>
+    <div data-autocomplete-target="dropdown" class="absolute mt-1 w-full rounded-md bg-white shadow-lg z-10">
+      <% if @results.any? %>
+        <div class="max-h-60 overflow-auto">
+          <ul class="rounded-md py-1 text-base leading-6 shadow-xs focus:outline-none sm:text-sm sm:leading-5" aria-labelledby="headlessui-listbox-label-1" id="headlessui-listbox-options-54" role="listbox" tabindex="0">
+            <% @results.each do |result| %>
+              <li data-action="click->autocomplete#select" class="focus:outline-none" data-value="<%= result.send(value_method) -%>" data-display="<%= result.send(text_method) -%>" id="headlessui-listbox-option-<%= result.send(value_method) -%>" role="option" tabindex="-1">
+                <div class="text-gray-900 focus:outline-none hover:bg-blue-600 hover:text-white cursor-default select-none relative py-2 pl-8 pr-4">
+                  <span class="font-normal block truncate">
+                    <% if has_custom_list_item_component? %>
+                      <%= render list_item_component.new(result) %>
+                    <% else %>
+                      <%= result.send(text_method) %>
+                    <% end %>
+                  </span></div>
+              </li>
+            <% end %>
+          </ul>
+          <% if @results.total_count > @results.length %>
+            <div class="m-4 pl-4 text-xs text-gray-500">
+              Showing <%= @results.length %> out of <%= @results.total_count %> people. <br>
+              Keep typing to refine your search.
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="m-4 pl-4 text-xs text-gray-500">
+          0 people found
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

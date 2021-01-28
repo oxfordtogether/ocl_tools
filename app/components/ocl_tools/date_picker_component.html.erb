@@ -1,0 +1,128 @@
+<div data-controller="date-picker" data-date-picker-date="<%= @value %>" class="mt-1 relative">
+  <div data-action="click->date-picker#show">
+    <input data-date-picker-target="yearInput" name="<%= @names[:year] %>" id="<%= @ids[:year] %>" class="hidden" type="text">
+    <input data-date-picker-target="monthInput" name="<%= @names[:month] %>" id="<%= @ids[:month] %>" class="hidden" type="text">
+    <input data-date-picker-target="dayInput" name="<%= @names[:day] %>" id="<%= @ids[:day] %>" class="hidden" type="text">
+    <input autocomplete="off" data-date-picker-target="input" id="<%= @ids[:base] %>" type="text" <%= @options %> class="<%= @classes %>" placeholder="<%= @placeholder %>">
+    <div class="absolute top-0 right-0 px-3 py-2">
+      <%= icon('calendar', class: 'h-5 w-5 text-gray-400') %>
+    </div>
+  </div>
+  <div data-date-picker-target="overlay" class="hidden">
+    <button data-action="click->date-picker#close" tabindex="-1" class="fixed inset-0 h-full w-full cursor-default"></button>
+    <div
+          data-date-picker-target="dayOverlay"
+          class="z-10 bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0"
+          style="width: 17rem"
+          >
+      <!-- header / Month + year + arrow icons -->
+      <div class="flex justify-between items-center mb-2">
+        <div class="flex items-center">
+          <span data-date-picker-target="monthLabel" class="text-lg font-bold text-gray-800"></span>
+          <span data-date-picker-target="yearLabel" class="ml-2 text-lg text-gray-600 font-normal"></span>
+          <button id="date-picker__change-year" data-action="click->date-picker#changeYear" class="ml-1">
+            <%= icon('chevron-down', class: "h-4 w-4 text-gray-400") %>
+          </button>
+        </div>
+        <div>
+          <button
+                type="button"
+                class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+                data-action="click->date-picker#prevMonth">
+            <%= icon('chevron-left', class: "h-6 w-6 text-gray-500 inline-flex") %>
+          </button>
+          <button
+                type="button"
+                class="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full"
+                data-action="click->date-picker#nextMonth">
+            <%= icon('chevron-right', class: "h-6 w-6 text-gray-500 inline-flex") %>
+          </button>
+        </div>
+      </div>
+      <!-- days of week -->
+      <div class="flex flex-wrap mb-3 -mx-1">
+        <% @days_of_week.each do |day| %>
+          <div style="width: 14.26%" class="px-1">
+            <div class="text-gray-800 font-medium text-center text-xs">
+              <%= day %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="flex flex-wrap -mx-1">
+        <% (0..5).each do |day| %> <!-- blank days -->
+          <div
+              data-date-picker-target="blankDay"
+              style="width: 14.28%"
+              class="hidden text-center border p-1 border-transparent text-sm"
+            ></div>
+        <% end %>
+        <% (1..31).each do |day| %> <!-- days -->
+          <div style="width: 14.28%" class="px-1 mb-1">
+            <div
+              id="date-picker__day-<%= day %>"
+
+                  data-date-picker-target="day"
+                  data-action="click->date-picker#selectDay"
+              class="cursor-pointer text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
+              >
+              <%= day %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div
+          data-date-picker-target="yearOverlay"
+          class="hidden z-10 bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0"
+          style="width: 17rem"
+          >
+      <div class="flex justify-between items-center mb-2">
+        <div>
+          <span class="text-lg font-bold text-gray-800">Select year</span>
+        </div>
+      </div>
+      <div
+          style="height: 176px"
+          class="overflow-auto flex flex-wrap -mx-1">
+        <% (@start_year..@end_year).each do |year| %>
+          <div style="width: 20%" class="px-1 mb-1">
+            <div
+              id="date-picker__year-<%= year %>"
+                  data-date-picker-target="year"
+                  data-action="click->date-picker#selectYear"
+              data-value="<%= year %>"
+              class="cursor-pointer text-center text-sm rounded-full leading-loose transition ease-in-out duration-100"
+              >
+              <%= year %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div
+          data-date-picker-target="monthOverlay"
+          class="hidden z-10 bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0"
+          style="width: 17rem"
+          >
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-lg font-bold text-gray-800">Select month</span>
+      </div>
+      <div class="flex flex-wrap -mx-1">
+        <% @months.each_with_index do |month, index| %>
+          <div style="width: 25%" class="px-1 mb-1">
+            <div
+              id="date-picker__month-<%= month %>"
+                  data-date-picker-target="month"
+                  data-action="click->date-picker#selectMonth"
+              data-value="<%= index %>"
+              class="cursor-pointer text-center text-base rounded-full leading-loose transition ease-in-out duration-100"
+              >
+              <%= month %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

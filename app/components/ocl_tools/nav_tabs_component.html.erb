@@ -1,0 +1,31 @@
+<div>
+  <div class="pt-8 pb-3 sm:hidden">
+    <label for="tabs" class="sr-only">Select a tab</label>
+    <select id="tabs" name="tabs"  onchange="location = this.value;" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+      <% links.each do |link| %>
+        <% if link.active? %>
+          <option selected value="<%= link.path %>">
+            <%= link.name %>
+          </option>
+        <% else %>
+          <option value="<%= link.path %>">
+            <%= link.name %>
+          </option>
+        <% end %>
+      <% end %>
+    </select>
+  </div>
+  <div class="pt-3 hidden sm:block">
+    <div class="border-b border-gray-200">
+      <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+        <% links.each do |link| %>
+          <% if link.active? %>
+            <%= link_to link.name, link.path, class: "border-indigo-500 text-indigo-600 whitespace-nowrap pt-4 pb-2 px-1 border-b-2 font-medium text-sm" %>
+          <% else %>
+            <%= link_to link.name, link.path, class: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap pt-4 pb-2 px-1 border-b-2 font-medium text-sm" %>
+          <% end %>
+        <% end %>
+      </nav>
+    </div>
+  </div>
+</div>
