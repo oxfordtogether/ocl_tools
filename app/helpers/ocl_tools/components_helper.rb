@@ -3,9 +3,5 @@ module OclTools
     def breadcrumbs(&blk)
       render BreadcrumbsComponent.new(&blk)
     end
-
-    def simple()
-      render SimpleComponent.new()
-    end
   end
 end
