@@ -4,6 +4,9 @@
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
+
+  config.action_controller.perform_caching = true
+  config.cache_store = :memory_store # we need this because we're using cache for sessions
   # Settings specified here will take precedence over those in config/application.rb.
 
   config.cache_classes = false
