@@ -5,6 +5,7 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
     "date-fns": "^2.16.1",
+    "el-transition": "^0.0.7",
     "stimulus": "^2.0.0",
     "stimulus-use": "^0.23.0",
     "stimulus_reflex": "^3.4.1",

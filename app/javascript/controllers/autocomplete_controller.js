@@ -1,5 +1,5 @@
 import ApplicationController from "./application_controller";
-// import { useClickOutside } from "stimulus-use";
+import { useClickOutside } from "stimulus-use";
 
 export default class extends ApplicationController {
   static targets = [
