@@ -9,5 +9,3 @@ Turbolinks.start();
 Turbolinks.setProgressBarDelay(200)
 
 import "controllers"
-import 'ocl_tools/controllers/notice_controller'
-
