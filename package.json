@@ -8,9 +8,15 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "babel-cli": "6",
+    "babel-preset-es2015": "6",
     "webpack-dev-server": "^3.11.0"
   },
-  "main": "app/javascript/packs/alert.js",
+  "scripts": {
+    "debug": "nodemon -e js --watch app --exec \"yarn run build\"",
+    "build": "babel app/javascript --presets babel-preset-es2015 --out-dir distribution"
+  },
+  "main": "distribution/packs/alert.js",
   "repository": "git@github.com:oxfordtogether/ocl_tools.git",
   "author": "VickyClose <vicky.r.close@gmail.com>"
 }

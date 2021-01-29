@@ -1,6 +1,7 @@
 function say_hello() {
-  alert('hello')
+  alert('hello 123 1234')
 }
 
-module.exports = { say_hello }
-
+export default {
+  say_hello,
+}

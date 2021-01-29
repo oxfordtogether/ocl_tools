@@ -34,8 +34,21 @@ or
 
 ## Run the dummy app
 
+Install [nodemon](https://www.npmjs.com/package/nodemon). Nodemon is a command line tool that watches for file changes then runs a predefined command. We use it to re-build the distribution files on changes to javascript in the engine.
+```
+yarn global add nodemon
+```
+
+```
+# in the ocl_tools directory
+yarn run debug
+```
+
 A dummy app can be found in `test/dummy` with ocl_tools installed. Start this app by running the following commands in two separate console windows.
 ```
+# in the test/dummy directory
 rails s
 bin/webpack-dev-server
 ```
+
+In theory, changes to the engine should cause the dummy app to reload.
