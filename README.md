@@ -8,6 +8,11 @@ Add this line to your application's Gemfile:
 gem "ocl_tools", git: "git@github.com:oxfordtogether/ocl_tools.git"
 ```
 
+Run the following to add the yarn package:
+```bash
+yarn add git@github.com:oxfordtogether/ocl_tools.git
+```
+
 And then execute:
 ```bash
 bundle install
@@ -15,7 +20,7 @@ bundle install
 
 Then add this line to the ApplicationController to ensure helpers from the engine are available:
 ```
-helper OclTools::Engine.helpers
+helper OclTools::ComponentsHelper
 ```
 
 ## Using the engine
