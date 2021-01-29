@@ -10,7 +10,7 @@
   "devDependencies": {
     "webpack-dev-server": "^3.11.0"
   },
-  "main": "app/javascript/packs/counter.js",
+  "main": "app/javascript/packs/alert.js",
   "repository": "git@github.com:oxfordtogether/ocl_tools.git",
   "author": "VickyClose <vicky.r.close@gmail.com>"
 }
