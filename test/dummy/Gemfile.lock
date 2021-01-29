@@ -3,6 +3,7 @@ PATH
   specs:
     ocl_tools (0.1.0)
       rails (~> 6.0.3, >= 6.0.3.4)
+      stimulus_reflex
       view_component
       webpacker (= 5.2.1)
 
