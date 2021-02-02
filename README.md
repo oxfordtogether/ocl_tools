@@ -23,6 +23,11 @@ Then add this line to the ApplicationController to ensure helpers from the engin
 helper OclTools::ComponentsHelper
 ```
 
+In order to use pagination component, you need to install `pagy` in your app:
+1. Add `pagy` gem
+2. Add `config/initializers/pagy.rb` (see dummy app for example)
+3. Add `include Pagy::Backend` in `application_controller.rb`
+
 ## Using the engine
 
 ### Using a view component:

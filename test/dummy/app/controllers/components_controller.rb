@@ -17,7 +17,9 @@ class ComponentsController < ApplicationController
 
   def notice; end
 
-  def pagination; end
+  def pagination
+    @pagy, @items   = pagy_array((0..100).to_a)
+  end
 
   def table
     @people = [

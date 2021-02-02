@@ -58,3 +58,5 @@ gem 'stimulus_reflex'
 gem 'sidekiq'
 
 gem 'ocl_tools', path: '../../'
+
+gem "pagy"
