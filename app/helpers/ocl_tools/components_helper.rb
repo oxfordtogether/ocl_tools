@@ -10,10 +10,6 @@ module OclTools
       doc.to_html.html_safe
     end
 
-    def autocomplete(*args)
-      render AutocompleteComponent.new(*args)
-    end
-
     def breadcrumbs(&blk)
       render BreadcrumbsComponent.new(&blk)
     end
@@ -22,24 +18,8 @@ module OclTools
       render ButtonLinkToComponent.new(*args, **kwargs)
     end
 
-    def date_field(*args)
-      render DateFieldComponent.new(*args)
-    end
-
-    def date_picker(*args)
-      render DatePickerComponent.new(*args)
-    end
-
-    def file_upload(*args)
-      render FileUploadComponent.new(*args)
-    end
-
     def footer(*args)
       render FooterComponent.new(*args)
-    end
-
-    def form_error(*args)
-      render FormErrorComponent.new(*args)
     end
 
     def nav_tabs(&blk)
