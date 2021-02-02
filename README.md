@@ -56,4 +56,12 @@ rails s
 bin/webpack-dev-server
 ```
 
+```
+rails db:migrate
+```
+
 In theory, changes to the engine should cause the dummy app to reload.
+
+## TO DO
+
+* Search / autocomplete
