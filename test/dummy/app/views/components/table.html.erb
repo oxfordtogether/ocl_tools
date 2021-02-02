@@ -1,0 +1,8 @@
+<%= table @people, row_url: ->(p) { "table/1" } do |tbl| %>
+  <% tbl.col "Name" do |person| %>
+    <%= person[:name] %>
+  <% end %>
+  <% tbl.col "Email" do |person| %>
+    <%= person[:email] %>
+  <% end %>
+<% end %>
