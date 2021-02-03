@@ -1,6 +1,14 @@
 # OclTools
 Rails engine containing useful stuff for OCL rails applications.
 
+## Making changes to the engine
+
+(Also see Using the Engine section)
+
+Add new elements to the dummy app so that other people can have a look.
+
+If you change any javascript, run `yarn run build` to re-bundle the js.
+
 ## Installation
 Add this line to your application's Gemfile:
 
@@ -30,7 +38,26 @@ In order to use pagination component, you need to install `pagy` in your app:
 2. Add `config/initializers/pagy.rb` (see dummy app for example)
 3. Add `include Pagy::Backend` in `application_controller.rb`
 
-## Using the engine
+
+Add the following to `javascript/controllers/index.js`. This loads the controllers from ocl_tools into the stimulus instance in your app.
+```
+import ocl_tools from 'ocl_tools'
+
+const application = Application.start()
+const context = require.context('controllers', true, /_controller\.js$/)
+
+const ocl_tools_controllers = Object.keys(ocl_tools.controllers).map((label) => (
+  {'identifier': label, 'controllerConstructor': ocl_tools.controllers[label] }
+))
+
+const context_list = definitionsFromContext(context).concat(ocl_tools_controllers)
+
+application.load(context_list)
+StimulusReflex.initialize(application, { consumer })
+```
+
+
+## Using the Engine
 
 ### Using a view component:
 ```
