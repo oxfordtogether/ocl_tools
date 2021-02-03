@@ -22,9 +22,9 @@
   },
   "scripts": {
     "debug": "nodemon -e js --watch app --exec \"yarn run build\"",
-    "build": "babel app/javascript --out-dir distribution"
+    "build": "babel app/javascript --out-dir dist"
   },
-  "main": "distribution/packs/alert.js",
+  "main": "dist/packs/ocl_tools.js",
   "repository": "git@github.com:oxfordtogether/ocl_tools.git",
   "author": "VickyClose <vicky.r.close@gmail.com>"
 }
