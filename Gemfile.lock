@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ocl_tools (0.1.0)
+      pagy
       rails (~> 6.0.3, >= 6.0.3.4)
       stimulus_reflex
       view_component
@@ -91,6 +92,7 @@ GEM
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
+    pagy (3.10.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-test (1.1.0)
