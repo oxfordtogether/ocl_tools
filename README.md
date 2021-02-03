@@ -10,7 +10,7 @@ gem "ocl_tools", git: "git@github.com:oxfordtogether/ocl_tools.git"
 
 Run the following to add the yarn package:
 ```bash
-yarn add git@github.com:oxfordtogether/ocl_tools.git
+yarn add oxfordtogether/ocl_tools.git
 ```
 
 And then execute:
@@ -21,6 +21,8 @@ bundle install
 Then add this line to the ApplicationController to ensure helpers from the engine are available:
 ```
 helper OclTools::ComponentsHelper
+helper OclTools::FormHelper
+default_form_builder OclTools::TailwindFormBuilder
 ```
 
 In order to use pagination component, you need to install `pagy` in your app:
@@ -65,3 +67,4 @@ In theory, changes to the engine should cause the dummy app to reload.
 ## TO DO
 
 * Search / autocomplete
+* Notes on how to get stimulus working
