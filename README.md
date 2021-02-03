@@ -1,4 +1,5 @@
 # OclTools
+
 Rails engine containing useful stuff for OCL rails applications.
 
 ## Making changes to the engine
@@ -10,23 +11,27 @@ Add new elements to the dummy app so that other people can have a look.
 If you change any javascript, run `yarn run build` to re-bundle the js.
 
 ## Installation
+
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "ocl_tools", git: "git@github.com:oxfordtogether/ocl_tools.git"
+gem "ocl_tools", git: "https://github.com/oxfordtogether/ocl_tools.git"
 ```
 
 Run the following to add the yarn package:
+
 ```bash
 yarn add oxfordtogether/ocl_tools.git
 ```
 
 And then execute:
+
 ```bash
 bundle install
 ```
 
 Then add this line to the ApplicationController to ensure helpers from the engine are available:
+
 ```
 helper OclTools::ComponentsHelper
 helper OclTools::FormHelper
@@ -34,12 +39,13 @@ default_form_builder OclTools::TailwindFormBuilder
 ```
 
 In order to use pagination component, you need to install `pagy` in your app:
+
 1. Add `pagy` gem
 2. Add `config/initializers/pagy.rb` (see dummy app for example)
 3. Add `include Pagy::Backend` in `application_controller.rb`
 
-
 Add the following to `javascript/controllers/index.js`. This loads the controllers from ocl_tools into the stimulus instance in your app.
+
 ```
 import ocl_tools from 'ocl_tools'
 
@@ -56,10 +62,10 @@ application.load(context_list)
 StimulusReflex.initialize(application, { consumer })
 ```
 
-
 ## Using the Engine
 
 ### Using a view component:
+
 ```
 <%= render OclTools::SimpleComponent.new %>
 or
@@ -69,6 +75,7 @@ or
 ## Run the dummy app
 
 Install [nodemon](https://www.npmjs.com/package/nodemon). Nodemon is a command line tool that watches for file changes then runs a predefined command. We use it to re-build the distribution files on changes to javascript in the engine.
+
 ```
 yarn global add nodemon
 ```
@@ -79,6 +86,7 @@ yarn run debug
 ```
 
 A dummy app can be found in `test/dummy` with ocl_tools installed. Start this app by running the following commands in two separate console windows.
+
 ```
 # in the test/dummy directory
 rails s
@@ -93,5 +101,5 @@ In theory, changes to the engine should cause the dummy app to reload.
 
 ## TO DO
 
-* Search / autocomplete
-* Notes on how to get stimulus working
+- Search / autocomplete
+- Notes on how to get stimulus working
