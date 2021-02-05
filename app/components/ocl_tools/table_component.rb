@@ -10,8 +10,8 @@ module OclTools
       yield self if blk
     end
 
-    def col(name, width = "", &blk)
-      @cols << Column.new(name, width, self, blk)
+    def col(name, width = "", classes: "", &blk)
+      @cols << Column.new(name, width, classes, self, blk)
     end
 
     def call_block(*args, &blk)
@@ -21,7 +21,7 @@ module OclTools
     attr_reader :cols, :collection, :row_url
   end
 
-  Column = Struct.new(:name, :width, :table_component, :blk) do
+  Column = Struct.new(:name, :width, :classes, :table_component, :blk) do
     def contents(*args)
       table_component.call_block(*args, &blk)
     end

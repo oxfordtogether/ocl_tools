@@ -2,7 +2,7 @@
   <% tbl.col "Name" do |person| %>
     <%= person[:name] %>
   <% end %>
-  <% tbl.col "Email" do |person| %>
+  <% tbl.col "Email", classes: "text-right" do |person| %>
     <%= person[:email] %>
   <% end %>
 <% end %>
