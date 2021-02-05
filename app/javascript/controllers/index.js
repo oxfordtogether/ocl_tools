@@ -20,12 +20,12 @@ import { default as VisibilityToggleController } from './visibility_toggle_contr
 const controllers = {
   'autocomplete': AutocompleteController,
   'conditional_fields': ConditionalFieldsController,
-  'date_picker': DatePickerController,
+  'date-picker': DatePickerController,
   "notice": NoticeController,
-  "file_upload": FileUploadController,
+  "file-upload": FileUploadController,
   'search': SearchController,
   'table': TableController,
-  'visibility_toggle': VisibilityToggleController
+  'visibility-toggle': VisibilityToggleController
 }
 
 export default controllers

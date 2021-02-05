@@ -44,12 +44,12 @@ _stimulus_reflex.default.initialize(application, {
 const controllers = {
   'autocomplete': _autocomplete_controller.default,
   'conditional_fields': _conditional_fields_controller.default,
-  'date_picker': _date_picker_controller.default,
+  'date-picker': _date_picker_controller.default,
   "notice": _notice_controller.default,
-  "file_upload": _file_upload_controller.default,
+  "file-upload": _file_upload_controller.default,
   'search': _search_controller.default,
   'table': _table_controller.default,
-  'visibility_toggle': _visibility_toggle_controller.default
+  'visibility-toggle': _visibility_toggle_controller.default
 };
 var _default = controllers;
 exports.default = _default;

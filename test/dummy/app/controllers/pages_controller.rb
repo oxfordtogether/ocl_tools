@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
   def home
-    redirect_to '/components/form'
+    redirect_to '/people/new'
   end
 end
