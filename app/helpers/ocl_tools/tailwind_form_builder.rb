@@ -118,15 +118,15 @@ module OclTools
       end
     end
 
-    def radio_group(method, label: nil)
+    def radio_group(method, label: nil, required_asterix: false, info_message: nil)
       errors = object.errors[method]
 
       @template.content_tag :div, class: "sm:col-span-6" do
-        label(method, label) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start") { yield } + error(errors.last)
+        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start") { yield } + error(errors.last) + info(info_message)
       end
     end
 
-    def radio_button(method, value, label, options: {})
+    def radio_button(method, value, label, required_asterix: false, info_message: nil, options: {})
       errors = object.errors[method]
 
       input_classes = "form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400"
@@ -135,19 +135,19 @@ module OclTools
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
 
       @template.content_tag :div, class: "flex items-center sm:col-span-6" do
-        @template.content_tag(:div, super(method, value, options_with_class), class: "") + @template.content_tag(:div, label(method, label), class: "pr-10")
+        @template.content_tag(:div, super(method, value, options_with_class), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
       end
     end
 
-    def check_box_group(method, label: nil)
+    def check_box_group(method, label: nil, required_asterix: false, info_message: nil)
       errors = object.errors[method]
 
       @template.content_tag :div, class: "sm:col-span-6" do
-        label(method, label) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start") { yield } + error(errors.last)
+        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start") { yield } + error(errors.last) + info(info_message)
       end
     end
 
-    def check_box(method, value, label, options: {})
+    def check_box(method, value, label, required_asterix: false, info_message: nil, options: {})
       errors = object.errors[method]
 
       input_classes = "h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400 rounded-md"
@@ -157,7 +157,7 @@ module OclTools
 
       @template.content_tag :div, class: "flex items-center sm:col-span-6" do
         # if not checked, the check_box will have {"method" => ""} in the params hash which may need to be cleaned in the controller
-        @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label), class: "pr-10")
+        @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
       end
     end
 
