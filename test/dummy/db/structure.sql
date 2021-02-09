@@ -35,7 +35,8 @@ CREATE TABLE public.people (
     date_of_birth date,
     start_date date,
     category character varying,
-    file character varying
+    file character varying,
+    active boolean
 );
 
 
@@ -105,6 +106,7 @@ ALTER TABLE ONLY public.schema_migrations
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20210202093500');
+('20210202093500'),
+('20210209100814');
 
 

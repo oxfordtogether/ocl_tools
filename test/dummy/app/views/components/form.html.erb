@@ -1,9 +1,10 @@
 <%= tailwind_form_with(model: @person, local: true) do |form| %>
   <%= form.section "Form title" do %>
-    <%= form.text_field :name, width: :half %>
+    <%= form.text_field :name, width: :half, required_asterix: true, info_message: "Pick something unique lots and lots and lots and lots lots and lots and lots and lots of helper text" %>
     <%= form.date_picker :date_of_birth, width: :half %>
     <%= form.date_field :start_date, width: :half %>
-    <%= form.file_field :file, width: :half %>
+    <%= form.file_field :file, width: :half, required_asterix: true, info_message: "Upload a great file" %>
+    <%= form.check_box :active, true, 'Check if active' %>
   <% end %>
   <%= form.button_section do %>
     <%= form.cancel '/people/new' %>

@@ -3,70 +3,80 @@ module OclTools
     INPUT_CLASSES = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md".freeze
     INPUT_ERROR_CLASSES = "shadow-sm block w-full sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500".freeze
 
-    def label(field, label = nil)
-      super(field, label, class: "block text-sm font-medium text-gray-700")
+    def label(field, label = nil, required_asterix: false)
+      @template.content_tag :div, class: "flex text-sm font-medium text-gray-700" do
+        if required_asterix
+          super(field, label) + @template.content_tag(:div, "*", class: "ml-1 text-red-500")
+        else
+          super(field, label)
+        end
+      end
     end
 
     def error(message)
       @template.content_tag(:p, message, class: "mt-1 text-sm text-red-600")
     end
 
+    def info(message)
+      @template.content_tag(:p, message, class: "mt-2 text-xs text-gray-400")
+    end
+
     alias orig_text_field text_field
     alias orig_file_field file_field
 
-    def text_field(field, label: nil, width: nil)
+    def text_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
       errors = object.errors[field]
 
-      tailwind_field(field, label, width: width) do
-        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last)
+      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
       end
     end
 
-    def text_area(field, label: nil, width: nil, **options)
+    def text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object.errors[field]
       options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
-      tailwind_field(field, label, width: width) do
-        super(field, **options) + error(errors.last)
+      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+        super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
-    def email_field(field, label: nil, width: nil)
+    def email_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
       errors = object.errors[field]
 
-      tailwind_field(field, label, width: width) do
-        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last)
+      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
       end
     end
 
-    def number_field(field, label: nil, width: nil)
+    def number_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
       errors = object.errors[field]
 
-      tailwind_field(field, label, width: width) do
-        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last)
+      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
       end
     end
 
-    def file_field(field, label: nil, width: nil)
+    def file_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
       errors = object.errors[field]
 
-      tailwind_field(field, label, width: width) do
-        @template.render(FileUploadComponent.new(form: self, field: field)) + error(errors.last)
+      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+        @template.render(FileUploadComponent.new(form: self, field: field)) + error(errors.last) + info(info_message)
       end
     end
 
-    def select(field, options, include_blank: true, label: nil, width: nil, html_options: {})
+    def select(field, options, include_blank: true, label: nil, width: nil, required_asterix: false, info_message: nil, html_options: {})
       errors = object.errors[field]
 
       choices = include_blank ? { include_blank: "Select..." } : {}
       classes = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
-      tailwind_field(field, label, width: width) do
-        super(field, options, choices, html_options.merge({ class: classes })) + error(errors.last)
+      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+        super(field, options, choices, html_options.merge({ class: classes })) + error(errors.last) + info(info_message)
       end
     end
 
-    def collection_select(method, collection, value_method, text_method, include_blank: true, width: nil, **options)
+    def collection_select(method, collection, value_method, text_method, include_blank: true, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object.errors[method]
 
       label = options[:label]
@@ -74,37 +84,37 @@ module OclTools
       options[:include_blank] = "Select..." if include_blank
       classes = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
-      tailwind_field(method, label, width: width) do
-        super(method, collection, value_method, text_method, options, { class: classes, disabled: disabled }) + error(errors.last)
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+        super(method, collection, value_method, text_method, options, { class: classes, disabled: disabled }) + error(errors.last) + info(info_message)
       end
     end
 
-    def date_picker(method, placeholder = "Select...", label: nil, width: nil, start_year: nil, end_year: nil, options: {})
+    def date_picker(method, placeholder = "Select...", label: nil, width: nil, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
       errors = object.errors[method]
       names = { "year": name_for("#{method}(1i)"), "month": name_for("#{method}(2i)"), "day": name_for("#{method}(3i)") }
       ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"), "base": id_for(method) }
 
-      tailwind_field(method, label, width: width) do
-        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.send(method), placeholder: placeholder, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last)
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.send(method), placeholder: placeholder, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
-    def date_field(method, label: nil, width: nil)
+    def date_field(method, label: nil, width: nil, required_asterix: false, info_message: nil)
       errors = object.errors[method]
 
-      tailwind_field(method, label, width: width) do
-        @template.render(DateFieldComponent.new(form: self, method: method, value: @object.send(method), errors: !errors.empty?)) + error(errors.last)
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+        @template.render(DateFieldComponent.new(form: self, method: method, value: @object.send(method), errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
-    def time_select(method, label: nil, width: nil)
+    def time_select(method, label: nil, width: nil, required_asterix: false, info_message: nil)
       input_classes = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
       input_error_classes = "shadow-sm sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500"
 
       errors = object.errors[method]
 
-      tailwind_field(method, label, width: width) do
-        super(method, { minute_step: 5, ignore_date: true }, { class: errors.empty? ? input_classes : input_error_classes }) + error(errors.last)
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+        super(method, { minute_step: 5, ignore_date: true }, { class: errors.empty? ? input_classes : input_error_classes }) + error(errors.last) + info(info_message)
       end
     end
 
@@ -250,13 +260,13 @@ module OclTools
       @template.content_tag(:p, subtitle, class: "mt-1 text-sm text-gray-500")
     end
 
-    def tailwind_field(field, label_text = nil, width: :full)
+    def tailwind_field(field, label_text = nil, width: :full, required_asterix: false)
       # note: need to ensure that the actual strings e.g. sm:col-span-3 appear in the file
       # or tailwind won't include them in the optimized css
       col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
       col_class = col_classes.fetch(width || :full)
       @template.content_tag :div, class: col_class do
-        label(field, label_text) + @template.content_tag(:div, class: "mt-1") { yield }
+        label(field, label_text, required_asterix: required_asterix) + @template.content_tag(:div, class: "mt-1") { yield }
       end
     end
   end
