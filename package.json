@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.2.1",
     "date-fns": "^2.16.1",
     "el-transition": "^0.0.7",
     "stimulus": "^2.0.0",
@@ -17,12 +16,11 @@
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-export-default-from": "^7.12.1",
-    "@babel/preset-env": "^7.12.11",
-    "webpack-dev-server": "^3.11.0"
+    "@babel/preset-env": "^7.12.11"
   },
   "scripts": {
     "debug": "nodemon -e js --watch app --exec \"yarn run build\"",
-    "build": "babel app/javascript --out-dir dist"
+    "build": "babel javascript --out-dir dist"
   },
   "main": "dist/packs/ocl_tools.js",
   "repository": "git@github.com:oxfordtogether/ocl_tools.git",
