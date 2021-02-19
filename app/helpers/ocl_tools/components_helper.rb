@@ -1,7 +1,14 @@
 module OclTools
   module ComponentsHelper
     def icon(name, options = {})
-      file = File.read(OclTools::Engine.root.join("app", "icons", "#{name}.svg"))
+      # use icon from app if it exists, else use icon from ocl_tools
+      app_icons_file = Rails.root.join("app", "icons", "#{name}.svg")
+      file = if File.exist?(app_icons_file)
+               File.read(app_icons_file)
+             else
+               File.read(OclTools::Engine.root.join("app", "icons", "#{name}.svg"))
+             end
+
       doc = Nokogiri::HTML::DocumentFragment.parse file
       svg = doc.at_css "svg"
 
