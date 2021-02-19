@@ -1,0 +1,19 @@
+<nav class="space-y-1" aria-label="Sidebar">
+  <% links.each do |link| %>
+    <% if link.active? %>
+      <%= link_to link.path, class: "bg-gray-200 text-gray-900 group flex items-center px-3 py-2 text-sm font-bold rounded-md" do %>
+        <%= icon link.icon, class: "text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
+        <span class="truncate">
+          <%= link.name %>
+        </span>
+      <% end %>
+    <% else %>
+      <%= link_to link.path, class: "text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2 text-sm font-medium rounded-md" do %>
+        <%= icon link.icon, class: "text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
+        <span class="truncate">
+          <%= link.name %>
+        </span>
+      <% end %>
+    <% end %>
+  <% end %>
+</nav>

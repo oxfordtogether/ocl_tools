@@ -41,6 +41,10 @@ module OclTools
       render PaginationComponent.new(*args)
     end
 
+    def side_nav(&blk)
+      render SideNavComponent.new(&blk)
+    end
+
     def table(*args, row_url: nil, &blk)
       render TableComponent.new(*args, row_url: row_url, &blk)
     end
