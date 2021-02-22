@@ -173,8 +173,8 @@ module OclTools
       @template.link_to(label, action, class: "inline-flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
     end
 
-    def delete(model, label = "Delete")
-      @template.link_to(label, model, method: :delete, class: "inline-flex items-center px-2 py-2 text-sm font-medium text-red-500 hover:text-red-700 underline")
+    def delete(url, label = "Delete")
+      @template.link_to(label, url, method: :delete, class: "inline-flex items-center px-2 py-2 text-sm font-medium text-red-500 hover:text-red-700 underline")
     end
 
     def title(title)
