@@ -2,10 +2,11 @@ module OclTools
   class TableComponent < ViewComponent::Base
     delegate :group_category_badge, to: :helpers
 
-    def initialize(collection, row_url: nil, &blk)
+    def initialize(collection, row_url: nil, small: false, &blk)
       @collection = collection
       @row_url = row_url
       @cols = []
+      @small = small
 
       yield self if blk
     end

@@ -17,6 +17,10 @@ module OclTools
       doc.to_html.html_safe
     end
 
+    def alert(*args)
+      render AlertComponent.new(*args)
+    end
+
     def breadcrumbs(&blk)
       render BreadcrumbsComponent.new(&blk)
     end
@@ -41,12 +45,16 @@ module OclTools
       render PaginationComponent.new(*args)
     end
 
+    def page_progress(*args)
+      render PageProgressComponent.new(*args)
+    end
+
     def side_nav(&blk)
       render SideNavComponent.new(&blk)
     end
 
-    def table(*args, row_url: nil, &blk)
-      render TableComponent.new(*args, row_url: row_url, &blk)
+    def table(*args, row_url: nil, small: false, &blk)
+      render TableComponent.new(*args, row_url: row_url, small: small, &blk)
     end
   end
 end
