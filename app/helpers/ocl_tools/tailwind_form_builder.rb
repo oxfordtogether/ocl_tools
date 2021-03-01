@@ -118,11 +118,11 @@ module OclTools
       end
     end
 
-    def radio_group(method, label: nil, required_asterix: false, info_message: nil)
+    def radio_group(method, label: nil, required_asterix: false, info_message: nil, &block)
       errors = object.errors[method]
 
       @template.content_tag :div, class: "sm:col-span-6" do
-        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start") { yield } + error(errors.last) + info(info_message)
+        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
       end
     end
 
@@ -139,15 +139,15 @@ module OclTools
       end
     end
 
-    def check_box_group(method, label: nil, required_asterix: false, info_message: nil)
+    def check_box_group(method, label: nil, required_asterix: false, info_message: nil, &block)
       errors = object.errors[method]
 
       @template.content_tag :div, class: "sm:col-span-6" do
-        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start") { yield } + error(errors.last) + info(info_message)
+        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
       end
     end
 
-    def check_box(method, value, label, required_asterix: false, info_message: nil, options: {})
+    def check_box(method, value, label, width: :full, required_asterix: false, info_message: nil, options: {})
       errors = object.errors[method]
 
       input_classes = "h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400 rounded-md"
@@ -155,7 +155,10 @@ module OclTools
 
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
 
-      @template.content_tag :div, class: "flex items-center sm:col-span-6" do
+      col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
+      col_class = col_classes.fetch(width || :full)
+
+      @template.content_tag :div, class: "flex items-center #{col_class}" do
         # if not checked, the check_box will have {"method" => ""} in the params hash which may need to be cleaned in the controller
         @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
       end
@@ -181,20 +184,16 @@ module OclTools
       @template.content_tag(:h1, title, class: "text-xl leading-6 font-medium text-gray-900 pb-6")
     end
 
-    def section(title = nil, subtitle = nil)
+    def section(title = nil, subtitle = nil, &block)
       heading = title ? section_heading(title, subtitle) : "".html_safe
       @template.content_tag :div, class: "pb-8 mb-8 border-b border-gray-200" do
-        heading + @template.content_tag(:div, class: "#{title ? 'mt-6' : ''} grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6") do
-          yield
-        end
+        heading + @template.content_tag(:div, class: "#{title ? 'mt-6' : ''} grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", &block)
       end
     end
 
-    def button_section
+    def button_section(&block)
       @template.content_tag :div do
-        @template.content_tag :div, class: "flex flex-col-reverse space-y-4 space-y-reverse sm:justify-end sm:flex-row sm:space-y-0 sm:space-x-3" do
-          yield
-        end
+        @template.content_tag :div, class: "flex flex-col-reverse space-y-4 space-y-reverse sm:justify-end sm:flex-row sm:space-y-0 sm:space-x-3", &block
       end
     end
 
@@ -216,17 +215,17 @@ module OclTools
       col_class = col_classes.fetch(width || :full)
       @template.content_tag :div, class: col_class do
         @template.render(AutocompleteComponent.new(
-                          label: label || method.to_s.humanize,
-                          field_id: id_for(method),
-                          field_name: name_for(method),
-                          value_method: value_method,
-                          text_method: text_method,
-                          search_params: search_params,
-                          object: selected,
-                          disabled: disabled,
-                          list_item_component: list_item_component,
-                          error: !errors.empty?,
-                        )) + error(errors.last)
+                           label: label || method.to_s.humanize,
+                           field_id: id_for(method),
+                           field_name: name_for(method),
+                           value_method: value_method,
+                           text_method: text_method,
+                           search_params: search_params,
+                           object: selected,
+                           disabled: disabled,
+                           list_item_component: list_item_component,
+                           error: !errors.empty?,
+                         )) + error(errors.last)
       end
     end
 
@@ -244,12 +243,12 @@ module OclTools
 
     def id_for(method, options = {})
       InstanceTag.new(object_name, method, self, options) \
-                .id_for(options)
+                 .id_for(options)
     end
 
     def name_for(method, options = {})
       InstanceTag.new(object_name, method, self, options) \
-                .name_for(options)
+                 .name_for(options)
     end
 
     def section_title(title)
@@ -260,13 +259,13 @@ module OclTools
       @template.content_tag(:p, subtitle, class: "mt-1 text-sm text-gray-500")
     end
 
-    def tailwind_field(field, label_text = nil, width: :full, required_asterix: false)
-      # note: need to ensure that the actual strings e.g. sm:col-span-3 appear in the file
+    def tailwind_field(field, label_text = nil, width: :full, required_asterix: false, &block)
+      # NOTE: need to ensure that the actual strings e.g. sm:col-span-3 appear in the file
       # or tailwind won't include them in the optimized css
       col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
       col_class = col_classes.fetch(width || :full)
       @template.content_tag :div, class: col_class do
-        label(field, label_text, required_asterix: required_asterix) + @template.content_tag(:div, class: "mt-1") { yield }
+        label(field, label_text, required_asterix: required_asterix) + @template.content_tag(:div, class: "mt-1", &block)
       end
     end
   end
