@@ -37,6 +37,10 @@ module OclTools
       render NavTabsComponent.new(&blk)
     end
 
+    def navbar(brand_name, &blk)
+      render NavbarComponent.new(brand_name, &blk)
+    end
+
     def notice_component(*args)
       render NoticeComponent.new(*args)
     end
