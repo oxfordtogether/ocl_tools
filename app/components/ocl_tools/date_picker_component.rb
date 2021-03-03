@@ -16,16 +16,6 @@ module OclTools
 
       @start_year = start_year || 1910
       @end_year = end_year || 2050
-
-      classes = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 inline w-full sm:text-sm border-gray-300 rounded-md".freeze
-      error_classes = "shadow-sm block w-full sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500".freeze
-      disabled_classes = "shadow-sm cursor-not-allowed focus:outline-none focus:ring-gray-200 focus:border-gray-300 inline w-full sm:text-sm border-gray-300 rounded-md".freeze
-
-      @classes = if disabled
-                   disabled_classes
-                 else
-                   (errors ? error_classes : classes)
-                 end
     end
   end
 end
