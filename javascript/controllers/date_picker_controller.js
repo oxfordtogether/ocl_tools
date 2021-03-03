@@ -1,10 +1,6 @@
 import { Controller } from "stimulus";
 import format from 'date-fns/format'
 
-// to do:
-// clear date button
-// height / styling
-
 export default class extends Controller {
   static targets = ["overlay", "dayOverlay", "monthOverlay", "yearOverlay", "monthLabel", "yearLabel", "month", "year", "blankDay", "day", "input", "yearInput", "monthInput", "dayInput"];
 
@@ -22,7 +18,10 @@ export default class extends Controller {
 
   show(event) {
     event.preventDefault()
-    this.overlayTarget.classList.remove("hidden")
+
+    if (this.data.get('disabled') != 'true') {
+      this.overlayTarget.classList.remove("hidden")
+    }
   }
 
   close(event) {

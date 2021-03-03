@@ -2,10 +2,11 @@ module OclTools
   class DatePickerComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
-    def initialize(ids:, names:, placeholder:, value: nil, start_year: nil, end_year: nil, options: {}, errors: false)
+    def initialize(ids:, names:, placeholder:, value: nil, disabled: false, start_year: nil, end_year: nil, options: {}, errors: false)
       @ids = ids
       @names = names
       @value = value
+      @disabled = disabled
 
       @days_of_week = %w[Sun Mon Tue Wed Thu Fri Sat]
       @months = %w[Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec]
@@ -18,8 +19,13 @@ module OclTools
 
       classes = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 inline w-full sm:text-sm border-gray-300 rounded-md".freeze
       error_classes = "shadow-sm block w-full sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500".freeze
+      disabled_classes = "shadow-sm cursor-not-allowed focus:outline-none focus:ring-gray-200 focus:border-gray-300 inline w-full sm:text-sm border-gray-300 rounded-md".freeze
 
-      @classes = errors ? error_classes : classes
+      @classes = if disabled
+                   disabled_classes
+                 else
+                   (errors ? error_classes : classes)
+                 end
     end
   end
 end
