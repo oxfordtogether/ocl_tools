@@ -13,9 +13,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-// to do:
-// clear date button
-// height / styling
 class _class extends _stimulus.Controller {
   connect() {
     const selected = !!this.data.get('date');
@@ -29,7 +26,10 @@ class _class extends _stimulus.Controller {
 
   show(event) {
     event.preventDefault();
-    this.overlayTarget.classList.remove("hidden");
+
+    if (this.data.get('disabled') != 'true') {
+      this.overlayTarget.classList.remove("hidden");
+    }
   }
 
   close(event) {

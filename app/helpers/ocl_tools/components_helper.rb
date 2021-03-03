@@ -33,6 +33,10 @@ module OclTools
       render FooterComponent.new(*args)
     end
 
+    def info(*args)
+      render InfoComponent.new(*args)
+    end
+
     def nav_tabs(&blk)
       render NavTabsComponent.new(&blk)
     end

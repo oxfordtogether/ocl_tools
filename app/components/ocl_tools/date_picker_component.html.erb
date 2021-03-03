@@ -1,9 +1,21 @@
-<div data-controller="date-picker" data-date-picker-date="<%= @value %>" class="mt-1 relative">
+<div data-controller="date-picker" data-date-picker-disabled="<%= @disabled %>" data-date-picker-date="<%= @value %>" class="mt-1 relative">
   <div data-action="click->date-picker#show">
     <input data-date-picker-target="yearInput" name="<%= @names[:year] %>" id="<%= @ids[:year] %>" class="hidden" type="text">
     <input data-date-picker-target="monthInput" name="<%= @names[:month] %>" id="<%= @ids[:month] %>" class="hidden" type="text">
     <input data-date-picker-target="dayInput" name="<%= @names[:day] %>" id="<%= @ids[:day] %>" class="hidden" type="text">
-    <input autocomplete="off" data-date-picker-target="input" id="<%= @ids[:base] %>" type="text" <%= @options %> class="<%= @classes %>" placeholder="<%= @placeholder %>">
+    <input autocomplete="off"
+          data-date-picker-target="input"
+          id="<%= @ids[:base] %>"
+          type="text"
+          <%= @options %>
+          class="<% if @disabled %>
+                  'shadow-sm cursor-not-allowed focus:ring-gray-200 focus:border-gray-300 inline w-full sm:text-sm border-gray-300 rounded-md '
+                 <% elsif @errors %>
+                  'shadow-sm block w-full sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500 '
+                 <% else %>
+                  'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 inline w-full sm:text-sm border-gray-300 rounded-md '
+                 <% end %>"
+         placeholder="<%= @placeholder %>">
     <div class="absolute top-0 right-0 px-3 py-2">
       <%= icon('calendar', class: 'h-5 w-5 text-gray-400') %>
     </div>
