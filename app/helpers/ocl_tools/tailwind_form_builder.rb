@@ -76,7 +76,7 @@ module OclTools
       end
     end
 
-    def collection_select(method, collection, value_method, text_method, include_blank: true, width: nil, required_asterix: false, info_message: nil, **options)
+    def collection_select(method, collection, value_method, text_method, include_blank: true, width: nil, required_asterix: false, info_message: nil, html_options: {}, **options)
       errors = object.errors[method]
 
       label = options[:label]
@@ -85,17 +85,17 @@ module OclTools
       classes = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
-        super(method, collection, value_method, text_method, options, { class: classes, disabled: disabled }) + error(errors.last) + info(info_message)
+        super(method, collection, value_method, text_method, options, html_options.merge({ class: classes, disabled: disabled })) + error(errors.last) + info(info_message)
       end
     end
 
-    def date_picker(method, placeholder = "Select...", label: nil, width: nil, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
+    def date_picker(method, placeholder = "Select...", label: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
       errors = object.errors[method]
       names = { "year": name_for("#{method}(1i)"), "month": name_for("#{method}(2i)"), "day": name_for("#{method}(3i)") }
       ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"), "base": id_for(method) }
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
-        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.send(method), placeholder: placeholder, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
+        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.send(method), placeholder: placeholder, disabled: disabled, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
@@ -164,20 +164,20 @@ module OclTools
       end
     end
 
-    def submit(label = "Save", secondary: false)
+    def submit(label = "Save", secondary: false, compact: false)
       if secondary
-        super(label, class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
+        super(label, class: "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border border-transparent shadow-sm text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
       else
-        super(label, class: "inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
+        super(label, class: "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
       end
     end
 
-    def cancel(action, label = "Cancel")
-      @template.link_to(label, action, class: "inline-flex justify-center bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
+    def cancel(action, label = "Cancel", compact: false)
+      @template.link_to(label, action, class: "inline-flex justify-center bg-white #{compact ? 'py-1 px-2' : 'py-2 px-4'} border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
     end
 
-    def delete(url, label = "Delete")
-      @template.link_to(label, url, method: :delete, class: "inline-flex items-center px-2 py-2 text-sm font-medium text-red-500 hover:text-red-700 underline")
+    def delete(url, label = "Delete", compact: false)
+      @template.link_to(label, url, method: :delete, class: "inline-flex items-center #{compact ? 'py-1 px-2' : 'py-2 px-2'} text-sm font-medium text-red-500 hover:text-red-700 underline")
     end
 
     def title(title)
@@ -191,7 +191,20 @@ module OclTools
       end
     end
 
+    def compact_section(title = nil, subtitle = nil, &block)
+      heading = title ? section_heading(title, subtitle) : "".html_safe
+      @template.content_tag :div, class: "pb-1 mb-1" do
+        heading + @template.content_tag(:div, class: "#{title ? 'mt-2' : ''} grid grid-cols-1 gap-y-1 gap-x-4 sm:grid-cols-6", &block)
+      end
+    end
+
     def button_section(&block)
+      @template.content_tag :div do
+        @template.content_tag :div, class: "flex flex-col-reverse space-y-4 space-y-reverse sm:justify-end sm:flex-row sm:space-y-0 sm:space-x-3", &block
+      end
+    end
+
+    def compact_button_section(&block)
       @template.content_tag :div do
         @template.content_tag :div, class: "flex flex-col-reverse space-y-4 space-y-reverse sm:justify-end sm:flex-row sm:space-y-0 sm:space-x-3", &block
       end
