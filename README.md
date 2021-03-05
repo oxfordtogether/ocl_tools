@@ -62,6 +62,30 @@ application.load(context_list)
 StimulusReflex.initialize(application, { consumer })
 ```
 
+## Developing against a local version
+
+If you want to be able to make changes to ocl tools alongside another application, you can link
+to a local version.
+
+For the ruby parts, you just need to link to the local copy in your `Gemfile` and changes
+will immediately be picked up by the main app:
+
+```
+gem "ocl_tools", path: "../ocl_tools"
+```
+
+For the javascript parts, you'll need to use yarn link and set up a process to build the `dist`
+folder on changes:
+
+```
+# in ocl_tools
+yarn link
+yarn run debuc
+
+# in your app
+yarn link ocl_tools
+```
+
 ## Using the Engine
 
 ### Using a view component:

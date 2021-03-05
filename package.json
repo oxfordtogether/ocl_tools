@@ -5,6 +5,7 @@
     "@rails/ujs": "^6.0.0",
     "date-fns": "^2.16.1",
     "el-transition": "https://github.com/tomclose/el-transition.git#d9ddd55",
+    "nodemon": "^2.0.7",
     "stimulus": "^2.0.0",
     "stimulus-use": "^0.23.0",
     "stimulus_reflex": "^3.4.1",
