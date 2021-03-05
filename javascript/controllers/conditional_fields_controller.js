@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["optionA", "optionB"];
 
   connect() {
-    if (this.data.get('option') == 'OPTION_B') {
+    if (this.data.get("option") == "OPTION_B") {
       this.optionATarget.classList.add("hidden");
       this.optionBTarget.classList.remove("hidden");
     } else {
@@ -14,7 +14,7 @@ export default class extends Controller {
   }
 
   changed(evt) {
-    switch (evt.currentTarget.getAttribute('data-value')) {
+    switch (evt.currentTarget.getAttribute("data-value")) {
       case "OPTION_A":
         this.optionATarget.classList.remove("hidden");
         this.optionBTarget.classList.add("hidden");

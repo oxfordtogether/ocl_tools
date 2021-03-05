@@ -11,7 +11,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 class _class extends _stimulus.Controller {
   connect() {
-    if (this.data.get('option') == 'OPTION_B') {
+    if (this.data.get("option") == "OPTION_B") {
       this.optionATarget.classList.add("hidden");
       this.optionBTarget.classList.remove("hidden");
     } else {
@@ -21,7 +21,7 @@ class _class extends _stimulus.Controller {
   }
 
   changed(evt) {
-    switch (evt.currentTarget.getAttribute('data-value')) {
+    switch (evt.currentTarget.getAttribute("data-value")) {
       case "OPTION_A":
         this.optionATarget.classList.remove("hidden");
         this.optionBTarget.classList.add("hidden");
