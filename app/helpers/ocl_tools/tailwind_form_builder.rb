@@ -164,6 +164,10 @@ module OclTools
       end
     end
 
+    def grid(&block)
+      @template.content_tag(:div, class: "grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", &block)
+    end
+
     def submit(label = "Save", secondary: false, compact: false)
       if secondary
         super(label, class: "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border border-transparent shadow-sm text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")

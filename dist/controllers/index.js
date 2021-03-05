@@ -33,7 +33,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const application = _stimulus.Application.start();
 
-const context = require.context('controllers', true, /_controller\.js$/);
+const context = require.context("controllers", true, /_controller\.js$/);
 
 application.load((0, _webpackHelpers.definitionsFromContext)(context));
 
@@ -42,14 +42,14 @@ _stimulus_reflex.default.initialize(application, {
 });
 
 const controllers = {
-  'autocomplete': _autocomplete_controller.default,
-  'conditional_fields': _conditional_fields_controller.default,
-  'date-picker': _date_picker_controller.default,
-  "notice": _notice_controller.default,
+  autocomplete: _autocomplete_controller.default,
+  "conditional-fields": _conditional_fields_controller.default,
+  "date-picker": _date_picker_controller.default,
+  notice: _notice_controller.default,
   "file-upload": _file_upload_controller.default,
-  'search': _search_controller.default,
-  'table': _table_controller.default,
-  'visibility-toggle': _visibility_toggle_controller.default
+  search: _search_controller.default,
+  table: _table_controller.default,
+  "visibility-toggle": _visibility_toggle_controller.default
 };
 var _default = controllers;
 exports.default = _default;
