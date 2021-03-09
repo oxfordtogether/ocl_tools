@@ -17,8 +17,8 @@ module OclTools
       doc.to_html.html_safe
     end
 
-    def alert(&blk)
-      render AlertComponent.new(&blk)
+    def alert(*args)
+      render AlertComponent.new(*args)
     end
 
     def breadcrumbs(&blk)

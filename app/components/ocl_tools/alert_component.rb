@@ -1,8 +1,10 @@
 module OclTools
   class AlertComponent < ViewComponent::Base
     delegate :icon, to: :helpers
-    with_content_areas :title, :info
 
-    def initialize; end
+    def initialize(title: nil, info: nil)
+      @title = title
+      @info = info
+    end
   end
 end
