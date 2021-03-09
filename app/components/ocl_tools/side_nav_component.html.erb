@@ -1,19 +1,37 @@
-<nav class="space-y-1" aria-label="Sidebar">
-  <% links.each do |link| %>
-    <% if link.active? %>
-      <%= link_to link.path, class: "bg-gray-200 text-gray-900 group flex items-center px-3 py-2 text-sm font-bold rounded-md" do %>
-        <%= icon link.icon, class: "text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
-        <span class="truncate">
+<div class="pb-3 sm:hidden">
+  <label for="tabs" class="sr-only">Select a tab</label>
+  <select id="tabs" name="tabs"  onchange="location = this.value;" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+    <% links.each do |link| %>
+      <% if link.active? %>
+        <option selected value="<%= link.path %>">
           <%= link.name %>
-        </span>
-      <% end %>
-    <% else %>
-      <%= link_to link.path, class: "text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2 text-sm font-medium rounded-md" do %>
-        <%= icon link.icon, class: "text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
-        <span class="truncate">
+        </option>
+      <% else %>
+        <option value="<%= link.path %>">
           <%= link.name %>
-        </span>
+        </option>
       <% end %>
     <% end %>
-  <% end %>
-</nav>
+  </select>
+</div>
+<div class="pt-3 hidden sm:block">
+  <nav class="space-y-1" aria-label="Sidebar">
+    <% links.each do |link| %>
+      <% if link.active? %>
+        <%= link_to link.path, class: "bg-gray-200 text-gray-900 group flex items-center px-3 py-2 text-sm font-bold rounded-md" do %>
+          <%= icon link.icon, class: "text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
+          <span class="truncate">
+            <%= link.name %>
+          </span>
+        <% end %>
+      <% else %>
+        <%= link_to link.path, class: "text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-3 py-2 text-sm font-medium rounded-md" do %>
+          <%= icon link.icon, class: "text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
+          <span class="truncate">
+            <%= link.name %>
+          </span>
+        <% end %>
+      <% end %>
+    <% end %>
+  </nav>
+</div>
