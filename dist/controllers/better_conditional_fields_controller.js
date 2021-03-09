@@ -154,6 +154,14 @@ class _class extends _stimulus.Controller {
         } else {
           target.classList.remove("hidden");
         }
+      } else if (target.getAttribute("data-display-if")) {
+        const token = target.getAttribute("data-display-if");
+
+        if (this.tokensValue.includes(token)) {
+          target.classList.remove("hidden");
+        } else {
+          target.classList.add("hidden");
+        }
       }
     });
   }
