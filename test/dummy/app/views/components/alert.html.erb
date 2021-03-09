@@ -1,0 +1,9 @@
+<%= render(OclTools::AlertComponent.new) do |component| %>
+    <% component.with(:title) do %>
+        Safeguarding
+    <% end %>
+        
+    <% component.with(:info) do %>
+        <p>If you have any concerns or safeguarding issues that are urgent, please fill out the <%= link_to("Safeguarding form", "https://www.oxfordhub.org/safeguarding", class: "underline") %>.</p>
+    <% end %>
+<% end %>

@@ -7,8 +7,10 @@ class ComponentsController < ApplicationController
 
   def notice; end
 
+  def alert; end
+
   def pagination
-    @pagy, @items   = pagy_array((0..100).to_a)
+    @pagy, @items = pagy_array((0..100).to_a)
   end
 
   def table
