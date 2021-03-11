@@ -17,6 +17,8 @@ var _autocomplete_controller = _interopRequireDefault(require("./autocomplete_co
 
 var _conditional_fields_controller = _interopRequireDefault(require("./conditional_fields_controller"));
 
+var _better_conditional_fields_controller = _interopRequireDefault(require("./better_conditional_fields_controller"));
+
 var _date_picker_controller = _interopRequireDefault(require("./date_picker_controller"));
 
 var _file_upload_controller = _interopRequireDefault(require("./file_upload_controller"));
@@ -44,6 +46,7 @@ _stimulus_reflex.default.initialize(application, {
 const controllers = {
   autocomplete: _autocomplete_controller.default,
   "conditional-fields": _conditional_fields_controller.default,
+  "better-conditional-fields": _better_conditional_fields_controller.default,
   "date-picker": _date_picker_controller.default,
   notice: _notice_controller.default,
   "file-upload": _file_upload_controller.default,
