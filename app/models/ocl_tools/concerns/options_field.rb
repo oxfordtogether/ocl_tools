@@ -23,6 +23,7 @@ module OclTools
 
           # rails' select will accept arrays like [["Some description", :some_option], ..]
           define_singleton_method("#{name}_options_for_select") { options.map { |k, v| [v, k] } }
+          define_singleton_method("humanized_#{name}") { |val| options[val] }
 
           # get the field to always return a symbol
           define_method(name) { attributes[name.to_s]&.to_sym }

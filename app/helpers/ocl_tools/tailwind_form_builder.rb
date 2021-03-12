@@ -24,11 +24,12 @@ module OclTools
     alias orig_text_field text_field
     alias orig_file_field file_field
 
-    def text_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
+    def text_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **kwargs)
       errors = object.errors[field]
+      kwargs[:class] = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
-        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
+        super(field, **kwargs) + error(errors.last) + info(info_message)
       end
     end
 
