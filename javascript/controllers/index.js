@@ -13,6 +13,7 @@ import { default as ConditionalFieldsController } from "./conditional_fields_con
 import { default as BetterConditionalFieldsController } from "./better_conditional_fields_controller";
 import { default as DatePickerController } from "./date_picker_controller";
 import { default as FileUploadController } from "./file_upload_controller";
+import { default as IconSelectController } from "./icon_select_controller";
 import { default as NoticeController } from "./notice_controller";
 import { default as SearchController } from "./search_controller";
 import { default as TableController } from "./table_controller";
@@ -23,6 +24,7 @@ const controllers = {
   "conditional-fields": ConditionalFieldsController,
   "better-conditional-fields": BetterConditionalFieldsController,
   "date-picker": DatePickerController,
+  "icon-select": IconSelectController,
   notice: NoticeController,
   "file-upload": FileUploadController,
   search: SearchController,

@@ -23,6 +23,8 @@ var _date_picker_controller = _interopRequireDefault(require("./date_picker_cont
 
 var _file_upload_controller = _interopRequireDefault(require("./file_upload_controller"));
 
+var _icon_select_controller = _interopRequireDefault(require("./icon_select_controller"));
+
 var _notice_controller = _interopRequireDefault(require("./notice_controller"));
 
 var _search_controller = _interopRequireDefault(require("./search_controller"));
@@ -48,6 +50,7 @@ const controllers = {
   "conditional-fields": _conditional_fields_controller.default,
   "better-conditional-fields": _better_conditional_fields_controller.default,
   "date-picker": _date_picker_controller.default,
+  "icon-select": _icon_select_controller.default,
   notice: _notice_controller.default,
   "file-upload": _file_upload_controller.default,
   search: _search_controller.default,

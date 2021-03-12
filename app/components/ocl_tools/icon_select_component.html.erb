@@ -1,0 +1,16 @@
+<div data-controller="icon-select">
+  <div class="flex justify-evenly mt-5 mb-2">
+    <input name="<%= @name %>" id="<%= @id %>" value="<%= @value %>" data-icon-select-target="input" class="hidden" type="text">
+    <% @select_options.each do |option| %>
+      <div data-icon-select-target="icon"
+           class="<%= option[:classes] %> <%= @value == option[:value] ? option[:selected_classes] : option[:unselected_classes]%> cursor-pointer"
+           data-selected-classes-value="<%= option[:selected_classes] %>" data-unselected-classes-value="<%= option[:unselected_classes] %>"
+           data-action="click->icon-select#select"
+        data-value="<%= option[:value] %>">
+        <div class="rounded-full">
+          <%= icon(option[:icon], class: option[:icon_classes]) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
