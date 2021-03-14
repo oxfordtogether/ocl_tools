@@ -3,6 +3,7 @@
     <input name="<%= @name %>" id="<%= @id %>" value="<%= @value %>" data-icon-select-target="input" class="hidden" type="text">
     <% @select_options.each do |option| %>
       <div data-icon-select-target="icon"
+           id="<%= @id %>_<%= option[:value] %>"
            class="<%= option[:classes] %> <%= @value == option[:value] ? option[:selected_classes] : option[:unselected_classes]%> cursor-pointer"
            data-selected-classes-value="<%= option[:selected_classes] %>" data-unselected-classes-value="<%= option[:unselected_classes] %>"
            data-action="click->icon-select#select"
