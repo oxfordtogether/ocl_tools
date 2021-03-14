@@ -2,8 +2,9 @@ module OclTools
   class BreadcrumbsComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
-    def initialize
+    def initialize(home_path: "/")
       @links = []
+      @home_path = home_path
 
       yield self
     end
@@ -12,7 +13,7 @@ module OclTools
       @links << BreadcrumbsLink.new(name, path)
     end
 
-    attr_reader :links
+    attr_reader :links, :home_path
   end
 
   BreadcrumbsLink = Struct.new(:name, :path)

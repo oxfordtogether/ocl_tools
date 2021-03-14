@@ -165,6 +165,14 @@ module OclTools
       end
     end
 
+    def icon_select(method, select_options, label: nil, width: :full, required_asterix: false, info_message: nil)
+      errors = object.errors[method]
+
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+        @template.render(IconSelectComponent.new(name_for(method), id_for(method), select_options, value: @object.send(method))) + error(errors.last) + info(info_message)
+      end
+    end
+
     def grid(&block)
       @template.content_tag(:div, class: "grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", &block)
     end

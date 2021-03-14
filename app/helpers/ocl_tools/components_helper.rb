@@ -21,8 +21,8 @@ module OclTools
       render AlertComponent.new(*args)
     end
 
-    def breadcrumbs(&blk)
-      render BreadcrumbsComponent.new(&blk)
+    def breadcrumbs(*args, &blk)
+      render BreadcrumbsComponent.new(*args, &blk)
     end
 
     def button_link_to(*args, **kwargs)
