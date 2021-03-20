@@ -38,12 +38,6 @@ helper OclTools::FormHelper
 default_form_builder OclTools::TailwindFormBuilder
 ```
 
-In order to use pagination component, you need to install `pagy` in your app:
-
-1. Add `pagy` gem
-2. Add `config/initializers/pagy.rb` (see dummy app for example)
-3. Add `include Pagy::Backend` in `application_controller.rb`
-
 Add the following to `javascript/controllers/index.js`. This loads the controllers from ocl_tools into the stimulus instance in your app.
 
 ```
@@ -61,6 +55,12 @@ const context_list = definitionsFromContext(context).concat(ocl_tools_controller
 application.load(context_list)
 StimulusReflex.initialize(application, { consumer })
 ```
+
+In order to use pagination component, you need to install `pagy` in your app:
+
+1. Add `pagy` gem
+2. Add `config/initializers/pagy.rb` (see dummy app for example)
+3. Add `include Pagy::Backend` in `application_controller.rb`
 
 ## Developing against a local version
 
