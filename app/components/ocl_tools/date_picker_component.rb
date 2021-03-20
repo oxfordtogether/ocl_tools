@@ -16,6 +16,8 @@ module OclTools
 
       @start_year = start_year || 1910
       @end_year = end_year || 2050
+
+      @errors = errors
     end
   end
 end
