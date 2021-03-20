@@ -69,13 +69,17 @@ class _class extends _stimulus.Controller {
         throw new Error(""(_templateObject2(), target.tagName, targetType || "")(_templateObject()));
       }
     });
+    this.updateTargets();
   }
 
   connectSelectSource(target) {
     const {
-      name
+      name,
+      value
     } = getNameAndValue(target);
     this.addListener(target, e => this.setToken(name, e.target.value));
+    this.setToken(name, value); // initial value
+
     debug("added listener to select: setToken(".concat(name, ", *)"));
   }
 
@@ -85,6 +89,8 @@ class _class extends _stimulus.Controller {
       value
     } = getNameAndValue(target);
     this.addListener(target, e => this.setToken(name, value));
+    this.setToken(name, value); // initial value
+
     debug("added listener to radio input: setToken(".concat(name, ", ").concat(value, ")"));
   }
 
@@ -96,6 +102,8 @@ class _class extends _stimulus.Controller {
     this.addListener(target, e => {
       e.target.checked ? this.addToken(name, value) : this.removeToken(name, value);
     });
+    if (e.target.checked) this.addToken(name, value); // initial value
+
     debug("added listener to checkbox: addRemove(".concat(name, ", ").concat(value, ")"));
   }
 
@@ -116,9 +124,14 @@ class _class extends _stimulus.Controller {
 
 
   setToken(name, value) {
-    this.tokensValue = [...this.tokensValue.filter(x => splitToken(x).name !== name), makeToken(name, value)];
+    this._setToken(name, value);
+
     debug("setting tokens: %o", this.tokensValue);
     this.updateTargets();
+  }
+
+  _setToken(name, value) {
+    this.tokensValue = [...this.tokensValue.filter(x => splitToken(x).name !== name), makeToken(name, value)];
   }
   /**
    * Adds a token to the list of tokens. Allows multiple tokens for a given name
@@ -126,9 +139,14 @@ class _class extends _stimulus.Controller {
 
 
   addToken(name, value) {
-    this.tokensValue = [...this.tokensValue, makeToken(name, value)];
-    debug("setting tokens: %o", this.tokensValue);
+    this._addToken(name, value);
+
+    debug("addToken: %o", this.tokensValue);
     this.updateTargets();
+  }
+
+  _addToken(name, value) {
+    this.tokensValue = [...this.tokensValue, makeToken(name, value)];
   }
   /**
    * Removes a token to the list of tokens.

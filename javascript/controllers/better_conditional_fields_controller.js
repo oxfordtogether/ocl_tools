@@ -36,17 +36,20 @@ export default class extends Controller {
         );
       }
     });
+    this.updateTargets();
   }
 
   connectSelectSource(target) {
-    const { name } = getNameAndValue(target);
+    const { name, value } = getNameAndValue(target);
     this.addListener(target, (e) => this.setToken(name, e.target.value));
+    this.setToken(name, value); // initial value
     debug(`added listener to select: setToken(${name}, *)`);
   }
 
   connectRadioSource(target) {
     const { name, value } = getNameAndValue(target);
     this.addListener(target, (e) => this.setToken(name, value));
+    this.setToken(name, value); // initial value
     debug(`added listener to radio input: setToken(${name}, ${value})`);
   }
 
@@ -57,6 +60,7 @@ export default class extends Controller {
         ? this.addToken(name, value)
         : this.removeToken(name, value);
     });
+    if (e.target.checked) this.addToken(name, value); // initial value
     debug(`added listener to checkbox: addRemove(${name}, ${value})`);
   }
 
@@ -75,21 +79,29 @@ export default class extends Controller {
    * Sets a unique token for the given name, removing any existing tokens
    */
   setToken(name, value) {
+    this._setToken(name, value);
+    debug("setting tokens: %o", this.tokensValue);
+    this.updateTargets();
+  }
+
+  _setToken(name, value) {
     this.tokensValue = [
       ...this.tokensValue.filter((x) => splitToken(x).name !== name),
       makeToken(name, value),
     ];
-    debug("setting tokens: %o", this.tokensValue);
-    this.updateTargets();
   }
 
   /**
    * Adds a token to the list of tokens. Allows multiple tokens for a given name
    */
   addToken(name, value) {
-    this.tokensValue = [...this.tokensValue, makeToken(name, value)];
-    debug("setting tokens: %o", this.tokensValue);
+    this._addToken(name, value);
+    debug("addToken: %o", this.tokensValue);
     this.updateTargets();
+  }
+
+  _addToken(name, value) {
+    this.tokensValue = [...this.tokensValue, makeToken(name, value)];
   }
 
   /**
