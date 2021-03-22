@@ -1,8 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "logout", type: :system do
+  let!(:<%= user_var %>) { create(:<%= user_var %>) }
+
   it "works" do
-    login_as nil
+    login_as <%= user_var %>
 
     visit "/"
 
