@@ -13,30 +13,24 @@
     <div class="min-h-screen bg-white">
       <nav class="bg-white">
         <div class="max-w-7xl mx-auto">
-          <div class="flex justify-between h-16">
-            <div class="flex">
-              <div class="">
-                <%= nav_tabs do |nav| %>
-                  <% nav.link "Breadcrumbs", '/components/breadcrumbs' %>
-                  <% nav.link "Button link to", '/components/button_link_to' %>
-                  <% nav.link "Footer", '/components/footer' %>
-                  <% nav.link "Form", '/people/new' %>
-                  <% nav.link "Notice", '/components/notice' %>
-                  <% nav.link "Pagination", '/components/pagination' %>
-                  <% nav.link "Table", '/components/table' %>
-                  <% nav.link "Alert", '/components/alert' %>
-                <% end %>
-              </div>
+          <div class="grid sm:grid-cols-4">
+            <div class="sm:mr-8">
+              <%= side_nav do |nav| %>
+                <% nav.link "Breadcrumbs", components_breadcrumbs_path, "calendar" %>
+                <% nav.link "Button link to", components_button_link_to_path, "calendar" %>
+                <% nav.link "Footer", components_footer_path, "calendar" %>
+                <% nav.link "Form", new_person_path, "calendar" %>
+                <% nav.link "Notice", components_notice_path, "calendar" %>
+                <% nav.link "Pagination", components_pagination_path, "calendar" %>
+                <% nav.link "Table", components_table_path, "calendar" %>
+                <% nav.link "Alert", components_alert_path, "calendar" %>
+              <% end %>
+            </div>
+            <div class="sm:col-span-3 sm:col-start-2">
+              <%= yield %>
             </div>
           </div>
         </div>
-      </nav>
-      <div class="py-10">
-        <main>
-          <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <%= yield %>
-          </div>
-        </main>
       </div>
     </div>
   </body>
