@@ -1,8 +1,0 @@
-<%= render(OclTools::BlockAlertComponent.new) do |component| %>
-  <% component.with(:title) do %>
-    Example alert:
-  <% end %>
-  <% component.with(:info) do %>
-    Going hiking? Check if the weather forecast has changed on the <%= link_to("BBC website", "https://www.bbc.co.uk/weather", class: "underline") %>.
-  <% end %>
-<% end %>
