@@ -1,0 +1,39 @@
+<div class="sm:flex sm:items-center sm:justify-between">
+  <div class="flex-1 min-w-0">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">
+        <%= title %>
+        <% if subtitle.present? %><p class="inline text-sm font-medium text-gray-500"><%= subtitle %></p><% end %>
+        <% badges.each do |badge| %>
+          <%= badge.contents %>
+        <% end %>
+      </h1>
+      <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0">
+        <% icon_and_texts.each do |icon_and_text| %>
+          <div class="mr-6 mt-2 flex items-center text-sm text-gray-500">
+            <%= icon(icon_and_text.icon, class: "flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400") %>
+            <%= icon_and_text.text %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0">
+      <% label_and_texts.each do |label_and_text| %>
+        <div class="mr-6 mt-2 flex items-center text-sm text-gray-500">
+          <dt class="text-sm font-medium text-gray-500">
+            <%= label_and_text.label %>:
+          </dt>
+          <dd class="ml-1.5 text-sm text-gray-900">
+            <%= label_and_text.text %>
+          </dd>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
+    <% actions.each do |action| %>
+      <%= action.contents %>
+    <% end %>
+  </div>
+</div>
+<%= nav_tabs_sections.contents %>

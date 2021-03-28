@@ -11,6 +11,8 @@ class ComponentsController < ApplicationController
 
   def block_alert; end
 
+  def header; end
+
   def pagination
     @pagy, @items = pagy_array((0..100).to_a)
   end
