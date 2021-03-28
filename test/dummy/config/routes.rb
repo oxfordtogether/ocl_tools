@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   get "/components/table", to: "components#table"
   get "/components/alert", to: "components#alert"
   get "/components/header", to: "components#header"
+  get "/components/inbox", to: "components#inbox"
 end

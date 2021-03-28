@@ -13,6 +13,8 @@ class ComponentsController < ApplicationController
 
   def header; end
 
+  def inbox; end
+
   def pagination
     @pagy, @items = pagy_array((0..100).to_a)
   end
