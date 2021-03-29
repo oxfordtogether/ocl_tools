@@ -1,0 +1,48 @@
+require "rails_helper"
+
+RSpec.describe "login", type: :system do
+  let!(:<%= user_var %>) { create(:<%= user_var %>) }
+
+  it "redirects to /login if user isn't logged in" do
+    visit "/"
+    expect(current_path).to eq("/login")
+  end
+
+  it "displays homepage given valid permissions" do
+    login_as <%= user_var %>
+
+    visit "/"
+    expect(current_path).to eq("/")
+  end
+
+  it "links a user by their email" do
+    <%= user_var %>.update(auth0_id: nil)
+
+    login_as email: <%= user_var %>.email, email_verified: true, auth0_id: 'abc123'
+
+    visit "/"
+    expect(current_path).to eq("/")
+
+    expect(<%= user_var %>.reload.auth0_id).to eq('abc123')
+  end
+
+  it "doesn't link a user if the email is verified" do
+    login_as email: <%= user_var %>.email, email_verified: false
+
+    visit "/"
+    expect(current_path).to eq("/email_not_verified")
+
+    click_on "Back"
+    expect(current_path).to eq("/logout")
+  end
+
+  it "won't give access if there's no user" do
+    login_as email: "not-an-email@email.com", email_verified: true
+
+    visit "/"
+    expect(current_path).to eq("/invalid_permissions")
+
+    click_on "Back"
+    expect(current_path).to eq("/logout")
+  end
+end
