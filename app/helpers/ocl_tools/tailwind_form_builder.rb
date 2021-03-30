@@ -136,7 +136,7 @@ module OclTools
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
 
       @template.content_tag :div, class: "flex items-center sm:col-span-6" do
-        @template.content_tag(:div, super(method, value, options_with_class), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
+        @template.content_tag(:div, super(method, value, options_with_class), class: "") + @template.content_tag(:div, label("#{method}_#{value}", label, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
       end
     end
 
