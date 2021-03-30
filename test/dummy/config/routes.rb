@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   get "/components/pagination", to: "components#pagination"
   get "/components/table", to: "components#table"
   get "/components/alert", to: "components#alert"
-  get "/components/block_alert", to: "components#block_alert"
+  get "/components/header", to: "components#header"
+  get "/components/inbox", to: "components#inbox"
 end

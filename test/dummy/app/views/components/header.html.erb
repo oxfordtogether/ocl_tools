@@ -1,0 +1,26 @@
+<%= header title: "Title", subtitle: "Subtitle" do |head| %>
+  <% head.badge do %>
+    <span class="px-1 text-sm text-gray-800 bg-blue-100 rounded-full">badge 1</span>
+  <% end %>
+  <% head.badge do %>
+    <span class="px-1 text-sm text-gray-800 bg-green-100 rounded-full">badge 2</span>
+  <% end %>
+  <% head.action do %>
+    <%= button_link_to "Action 1", "/" %>
+  <% end %>
+  <% head.action do %>
+    <%= button_link_to "Action 2", "/" %>
+  <% end %>
+  <% head.icon_and_text "person-badge", "Info 1" %>
+  <% head.icon_and_text "phone", "Info 2" %>
+  <% head.icon_and_text "home", "Info 3" %>
+  <% head.label_and_text "Info", "Something" %>
+  <% head.label_and_text "More Info", "Something else" %>
+  <% head.nav_tabs_section do %>
+    <%= nav_tabs do |nav| %>
+      <% nav.link "Nav 1", "/" %>
+      <% nav.link "Nav 2", "/" %>
+      <% nav.link "Nav 3", "/" %>
+    <% end %>
+  <% end %>
+<% end %>

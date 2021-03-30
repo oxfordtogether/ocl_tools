@@ -61,6 +61,10 @@ module OclTools
       render SideNavComponent.new(&blk)
     end
 
+    def header(*args, &blk)
+      render HeaderComponent.new(*args, &blk)
+    end
+
     def table(*args, row_url: nil, small: false, &blk)
       render TableComponent.new(*args, row_url: row_url, small: small, &blk)
     end
