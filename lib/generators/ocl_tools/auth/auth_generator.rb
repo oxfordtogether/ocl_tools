@@ -36,6 +36,8 @@ module OclTools
       template "login_spec.rb", "spec/system/login_spec.rb"
       template "logout_spec.rb", "spec/system/logout_spec.rb"
       copy_file "spec_support_login.rb", "spec/support/login.rb"
+
+      append_file ".env.development", "REQUIRE_AUTH_IN_DEV=false"
     end
 
     private
