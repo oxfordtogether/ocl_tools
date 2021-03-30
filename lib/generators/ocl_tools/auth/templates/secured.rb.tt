@@ -9,6 +9,7 @@ module Secured
 
   def logged_in_using_omniauth?
     fake_login if Rails.env.demo?
+    fake_login if Rails.env.development? && ENV["REQUIRE_AUTH_IN_DEV"] != "true"
 
     return true if current_<%= user_var %>_id
 
@@ -37,9 +38,12 @@ module Secured
   private
 
   def fake_login
-    raise "Can't fake login in #{Rails.env}" unless Rails.env.demo?
+    raise "Can't fake login in #{Rails.env}" unless Rails.env.demo? || Rails.env.development?
 
     session[:auth0_id] ||= "fake-auth0-id-#{('a'..'z').to_a.sample(5).join}"
-    session[:<%= user_var %>_id] ||= <%= user_class %>.first&.id
+
+    <%= user_var %> = <%= user_class %>.first
+    raise "You need to create a <%= user_class %> for fake login to succeed" unless <%= user_var %>
+    session[:<%= user_var %>_id] ||= <%= user_class %>.first.id
   end
 end
