@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir["{app,config,lib}/**/*", "Rakefile", "README.md"]
 
   spec.add_dependency "pagy"
-  spec.add_dependency "rails", "~> 6.0.3", ">= 6.0.3.5"
+  spec.add_dependency "rails", "~> 6"
   spec.add_dependency "stimulus_reflex"
   spec.add_dependency "view_component"
   spec.add_development_dependency "sqlite3"
