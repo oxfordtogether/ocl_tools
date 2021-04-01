@@ -120,14 +120,18 @@ export default class extends Controller {
     this.targetTargets.forEach((target) => {
       if (target.getAttribute("data-display-unless")) {
         const token = target.getAttribute("data-display-unless");
-        if (this.tokensValue.includes(token)) {
+        const token_regex = new RegExp(token);
+
+        if (this.tokensValue.map(t => !!t.match(token_regex)).some(v => !!v)) {
           target.classList.add("hidden");
         } else {
           target.classList.remove("hidden");
         }
       } else if (target.getAttribute("data-display-if")) {
         const token = target.getAttribute("data-display-if");
-        if (this.tokensValue.includes(token)) {
+        const token_regex = new RegExp(token);
+
+        if (this.tokensValue.map(t => !!t.match(token_regex)).some(v => !!v)) {
           target.classList.remove("hidden");
         } else {
           target.classList.add("hidden");
