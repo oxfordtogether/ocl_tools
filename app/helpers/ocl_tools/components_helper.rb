@@ -29,6 +29,10 @@ module OclTools
       render ButtonLinkToComponent.new(*args, **kwargs)
     end
 
+    def badge(*args, **kwargs)
+      render BadgeComponent.new(*args, **kwargs)
+    end
+
     def footer(*args)
       render FooterComponent.new(*args)
     end
@@ -49,6 +53,10 @@ module OclTools
       render NoticeComponent.new(*args)
     end
 
+    def inbox(*args)
+      render InboxComponent.new(*args)
+    end
+
     def pagination(*args)
       render PaginationComponent.new(*args)
     end
@@ -65,8 +73,8 @@ module OclTools
       render HeaderComponent.new(*args, &blk)
     end
 
-    def table(*args, row_url: nil, small: false, &blk)
-      render TableComponent.new(*args, row_url: row_url, small: small, &blk)
+    def table(*args, **kwargs, &blk)
+      render TableComponent.new(*args, **kwargs, &blk)
     end
   end
 end

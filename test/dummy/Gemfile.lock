@@ -3,7 +3,7 @@ PATH
   specs:
     ocl_tools (0.1.0)
       pagy
-      rails (~> 6.0.3, >= 6.0.3.5)
+      rails
       stimulus_reflex
       view_component
 
