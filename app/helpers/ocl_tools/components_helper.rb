@@ -53,10 +53,6 @@ module OclTools
       render NoticeComponent.new(*args)
     end
 
-    def inbox(*args)
-      render InboxComponent.new(*args)
-    end
-
     def pagination(*args)
       render PaginationComponent.new(*args)
     end
