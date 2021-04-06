@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Declare your gem's dependencies in ocl_tools.gemspec.
@@ -13,3 +13,5 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+
+gem "htmlbeautifier", git: "https://github.com/jeremyf/htmlbeautifier", ref: "4d4467f"

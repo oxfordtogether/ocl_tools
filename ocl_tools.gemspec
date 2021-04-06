@@ -28,4 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "stimulus_reflex"
   spec.add_dependency "view_component"
   spec.add_development_dependency "sqlite3"
+
+  spec.add_development_dependency "htmlbeautifier"
+  spec.add_development_dependency "solargraph"
 end
