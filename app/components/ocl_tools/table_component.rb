@@ -2,11 +2,12 @@ module OclTools
   class TableComponent < ViewComponent::Base
     delegate :group_category_badge, to: :helpers
 
-    def initialize(collection, row_url: nil, small: false, &blk)
+    def initialize(collection, row_url: nil, small: false, show_header: true, &blk)
       @collection = collection
       @row_url = row_url
       @cols = []
       @small = small
+      @show_header = show_header
 
       yield self if blk
     end
@@ -19,7 +20,7 @@ module OclTools
       view_context.capture(*args, &blk)
     end
 
-    attr_reader :cols, :collection, :row_url
+    attr_reader :cols, :collection, :row_url, :show_header
   end
 
   Column = Struct.new(:name, :width, :classes, :table_component, :blk) do

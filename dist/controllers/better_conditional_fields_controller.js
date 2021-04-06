@@ -1,6 +1,10 @@
 "use strict";
 
-require("core-js/modules/es.string.includes.js");
+require("core-js/modules/es.regexp.constructor.js");
+
+require("core-js/modules/es.regexp.to-string.js");
+
+require("core-js/modules/es.string.match.js");
 
 require("core-js/modules/es.string.split.js");
 
@@ -166,16 +170,18 @@ class _class extends _stimulus.Controller {
     this.targetTargets.forEach(target => {
       if (target.getAttribute("data-display-unless")) {
         const token = target.getAttribute("data-display-unless");
+        const token_regex = new RegExp(token);
 
-        if (this.tokensValue.includes(token)) {
+        if (this.tokensValue.map(t => !!t.match(token_regex)).some(v => !!v)) {
           target.classList.add("hidden");
         } else {
           target.classList.remove("hidden");
         }
       } else if (target.getAttribute("data-display-if")) {
         const token = target.getAttribute("data-display-if");
+        const token_regex = new RegExp(token);
 
-        if (this.tokensValue.includes(token)) {
+        if (this.tokensValue.map(t => !!t.match(token_regex)).some(v => !!v)) {
           target.classList.remove("hidden");
         } else {
           target.classList.add("hidden");

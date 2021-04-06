@@ -9,15 +9,22 @@ module OclTools
       Style.new("primary-filled", "border-transparent text-white bg-primary-600 hover:bg-primary-700", "text-white"),
     ]
 
-    def initialize(text, path, options: {}, style: "gray-outline", icon: nil)
+    Size = Struct.new(:name, :link_classes, :icon_classes)
+    SIZES = [
+      Size.new("small", "px-2 py-1", "-ml-0.5 mr-1 h-4 w-4"),
+      Size.new("normal", "px-4 py-2", "-ml-1 mr-2 h-5 w-5"),
+    ]
+
+    def initialize(text, path, options: {}, style: "gray-outline", size: "normal", icon: nil)
       @text = text
       @path = path
       @icon_name = icon
       @options = options
 
       @style = STYLES.find { |s| s.name == style } or raise "Unrecognised style: #{style}"
+      @size = SIZES.find { |s| s.name == size } or raise "Unrecognised size: #{size}"
     end
 
-    attr_reader :text, :path, :style, :icon_name, :options
+    attr_reader :text, :path, :style, :size, :icon_name, :options
   end
 end
