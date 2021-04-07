@@ -61,6 +61,10 @@ module OclTools
       render PageProgressComponent.new(*args)
     end
 
+    def profile_initials(*args)
+      render ProfileInitialsComponent.new(*args)
+    end
+
     def side_nav(&blk)
       render SideNavComponent.new(&blk)
     end
