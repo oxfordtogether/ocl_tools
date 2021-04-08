@@ -18,7 +18,7 @@ module OclTools
     end
 
     def info(message)
-      @template.content_tag(:p, message, class: "mt-2 text-xs text-gray-400")
+      @template.content_tag(:p, message, class: "mt-1 text-xs text-gray-400")
     end
 
     alias orig_text_field text_field
