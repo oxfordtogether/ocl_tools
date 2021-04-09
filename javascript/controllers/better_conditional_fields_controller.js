@@ -49,7 +49,7 @@ export default class extends Controller {
   connectRadioSource(target) {
     const { name, value } = getNameAndValue(target);
     this.addListener(target, (e) => this.setToken(name, value));
-    this.setToken(name, value); // initial value
+    if (target.checked) this.setToken(name, value); // initial value
     debug(`added listener to radio input: setToken(${name}, ${value})`);
   }
 
@@ -60,7 +60,7 @@ export default class extends Controller {
         ? this.addToken(name, value)
         : this.removeToken(name, value);
     });
-    if (e.target.checked) this.addToken(name, value); // initial value
+    if (target.checked) this.addToken(name, value); // initial value
     debug(`added listener to checkbox: addRemove(${name}, ${value})`);
   }
 
@@ -122,7 +122,9 @@ export default class extends Controller {
         const token = target.getAttribute("data-display-unless");
         const token_regex = new RegExp(token);
 
-        if (this.tokensValue.map(t => !!t.match(token_regex)).some(v => !!v)) {
+        if (
+          this.tokensValue.map((t) => !!t.match(token_regex)).some((v) => !!v)
+        ) {
           target.classList.add("hidden");
         } else {
           target.classList.remove("hidden");
@@ -131,7 +133,9 @@ export default class extends Controller {
         const token = target.getAttribute("data-display-if");
         const token_regex = new RegExp(token);
 
-        if (this.tokensValue.map(t => !!t.match(token_regex)).some(v => !!v)) {
+        if (
+          this.tokensValue.map((t) => !!t.match(token_regex)).some((v) => !!v)
+        ) {
           target.classList.remove("hidden");
         } else {
           target.classList.add("hidden");

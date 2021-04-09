@@ -93,7 +93,7 @@ class _class extends _stimulus.Controller {
       value
     } = getNameAndValue(target);
     this.addListener(target, e => this.setToken(name, value));
-    this.setToken(name, value); // initial value
+    if (target.checked) this.setToken(name, value); // initial value
 
     debug("added listener to radio input: setToken(".concat(name, ", ").concat(value, ")"));
   }
@@ -106,7 +106,7 @@ class _class extends _stimulus.Controller {
     this.addListener(target, e => {
       e.target.checked ? this.addToken(name, value) : this.removeToken(name, value);
     });
-    if (e.target.checked) this.addToken(name, value); // initial value
+    if (target.checked) this.addToken(name, value); // initial value
 
     debug("added listener to checkbox: addRemove(".concat(name, ", ").concat(value, ")"));
   }
