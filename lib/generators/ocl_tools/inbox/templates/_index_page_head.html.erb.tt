@@ -1,0 +1,8 @@
+<%%= header title: "<%= plural_name.humanize %>" do |head| %>
+  <%% head.nav_tabs_section do %>
+    <%%= nav_tabs do |nav| %>
+      <%% nav.link "Inbox", <%= index_helper %>_path(:inbox) %>
+      <%% nav.link "All", <%= index_helper %>_path(:all) %>
+    <%% end %>
+  <%% end %>
+<%% end %>
