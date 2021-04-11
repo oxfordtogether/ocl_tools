@@ -8,7 +8,7 @@ module OclTools
                File.join("app/controllers", controller_class_path, "#{controller_file_name}_controller.rb")
 
       # generate views
-      %w[_index_page_head.html.erb index.html.erb show.html.erb].each do |filename|
+      %w[_index_head.html.erb index.html.erb show.html.erb].each do |filename|
         template filename, File.join("app/views", controller_file_path, filename)
       end
 
