@@ -9,3 +9,5 @@ test:
   <<: *default
 production:
   <<: *default
+demo:
+  <<: *default
