@@ -16,28 +16,7 @@ class AuthController < ApplicationController
   end
 
   def callback
-    auth_details = request.env["omniauth.auth"]
-    redirect_to "/" unless auth_details
-
-    email_verified = session[:email_verified] = auth_details.dig(:extra, :raw_info, :email_verified)
-    email = session[:email] = auth_details.dig(:info, :email)
-    auth0_id = session[:auth0_id] = auth_details[:uid]
-
-    if auth0_id.nil?
-      redirect_to "/"
-      return
-    end
-
-    # first we want to see if we can find a <%= user_var %>
-    <%= user_var %> = <%= user_class %>.where(auth0_id: auth0_id).first
-
-    # if there isn't a <%= user_var %>, try to find one to link to
-    if !<%= user_var %> && email && email_verified
-      <%= user_var %> = <%= user_class %>.all.find { |p| p.email == email }
-      <%= user_var %>&.update!(auth0_id: auth0_id)
-    end
-
-    session[:<%= user_var %>_id] = <%= user_var %>.id if <%= user_var %>
+    verify_and_log_user_in
 
     redirect_to "/"
   end
@@ -50,6 +29,36 @@ class AuthController < ApplicationController
 
   private
 
+  def verify_and_log_user_in
+    auth_details = request.env["omniauth.auth"]
+    return unless auth_details
+
+    email_verified = session[:email_verified] = auth_details.dig(:extra, :raw_info, :email_verified)
+    email = session[:email] = auth_details.dig(:info, :email)
+    auth0_id = session[:auth0_id] = auth_details[:uid]
+
+    return if auth0_id.nil?
+
+    <%- user_classes_and_vars.each do |user_class, user_var| -%>
+    attempt_<%= user_var %>_login(auth0_id, email, email_verified)
+    <%- end -%>
+  end
+
+  <%- user_classes_and_vars.each do |user_class, user_var| -%>
+  def attempt_<%= user_var %>_login(auth0_id, email, email_verified)
+    # first we want to see if we can find a <%= user_var %>
+    <%= user_var %> = <%= user_class %>.where(auth0_id: auth0_id).first
+
+    # if there isn't a <%= user_var %>, try to find one to link to
+    if !<%= user_var %> && email && email_verified
+      <%= user_var %> = <%= user_class %>.where(email: email).first
+      <%= user_var %>&.update!(auth0_id: auth0_id)
+    end
+
+    session[:<%= user_var %>_id] = <%= user_var %>.id if <%= user_var %>&.login_enabled?
+  end
+
+  <%- end -%>
   def logout_url
     domain = Rails.application.config_for(:auth0).domain
     client_id = Rails.application.config_for(:auth0).client_id

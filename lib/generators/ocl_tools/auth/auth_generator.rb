@@ -3,7 +3,7 @@ module OclTools
     include Rails::Generators::AppName
     source_root File.expand_path("templates", __dir__)
 
-    argument :user_model, type: :string, desc: "Name of model that will hold the auth0_id"
+    argument :user_models, type: :array, desc: "Names of models that will hold the auth0_id e.g. Admin"
 
     def create
       gem "auth0"
@@ -42,16 +42,12 @@ module OclTools
 
     private
 
-    def user_class
-      user_model.camelize
-    end
-
-    def user_var
-      user_model.underscore
+    def user_classes_and_vars
+      user_models.map { |m| [m.camelize, m.underscore] }
     end
 
     def app_desc
-      app_name.humanize.capitalize
+      app_name.humanize.titleize
     end
   end
 end
