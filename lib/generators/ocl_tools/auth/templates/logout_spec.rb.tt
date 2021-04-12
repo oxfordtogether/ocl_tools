@@ -1,16 +1,20 @@
 require "rails_helper"
 
 RSpec.describe "logout", type: :system do
-  let!(:<%= user_var %>) { create(:<%= user_var %>) }
+  <%- user_classes_and_vars.each do |user_class, user_var| -%>
+  context "as <%= user_var %>" do
+    let!(:<%= user_var %>) { create(:<%= user_var %>) }
 
-  it "works" do
-    login_as <%= user_var %>
+    it "works" do
+      login_as <%= user_var %>
 
-    visit "/"
+      visit "/"
 
-    find("#user-menu").click # this will depend on where logout button is
-    click_on "Logout"
+      find("#user-menu").click # this will depend on where logout button is
+      click_on "Logout"
 
-    expect(current_path).to eq("/logout")
+      expect(current_path).to eq("/logout")
+    end
   end
+  <%- end -%>
 end

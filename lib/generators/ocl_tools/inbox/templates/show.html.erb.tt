@@ -1,0 +1,25 @@
+<%% content_for :breadcrumbs do %>
+  <%%= breadcrumbs do |list| %>
+    <%% list.link "<%= plural_name.humanize %>", <%= index_helper %>_path(params[:filter]) %>
+  <%% end %>
+<%% end %>
+
+<%% content_for :page_head do %>
+  <%%= render partial: "index_page_head" %>
+<%% end %>
+
+<%%= render(OclTools::InboxShowComponent.new(
+  current_index: @current_index,
+  total: @total,
+  back_path: <%= index_helper %>_path(params[:filter]),
+  prev_path: prev_<%= singular_route_name %>_path(params[:filter], @<%= singular_name %>),
+  next_path: next_<%= singular_route_name %>_path(params[:filter], @<%= singular_name %>)
+)) do |component| %>
+  <%% component.with(:right_aligned_actions) do %>
+    <div class="flex gap-x-3 my-2">
+    </div>
+  <%% end %>
+  <%% component.with(:body) do %>
+  TODO
+  <%% end %>
+<%% end %>
