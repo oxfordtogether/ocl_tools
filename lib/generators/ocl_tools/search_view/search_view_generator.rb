@@ -9,14 +9,14 @@ module OclTools
     def generate
       @section = options["section"]
       @namespace = options["namespace"]
-      @index_head_path = "#{@section}/index_head"
+      @index_head_path = "#{@namespace}/#{@section}/index_head"
 
       template "index.html.erb", File.join("app/views", regular_class_path, singular_name, "index.html.erb")
 
       template "controller.rb", File.join("app/controllers", regular_class_path, "#{singular_name}_controller.rb")
 
       route %(
-      get :search
+        get :search, to: "search#index"
       ), namespace: regular_class_path
     end
 
