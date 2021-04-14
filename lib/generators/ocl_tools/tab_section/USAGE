@@ -1,0 +1,8 @@
+Description:
+    Generates a section header and controller
+
+Example:
+    rails generate ocl_tools:section admin/person --tabs search bigs littles admins
+
+    This will create:
+        app/views/admin/_index_head.html.erb

@@ -1,0 +1,9 @@
+Description:
+    Generates an index page with search box
+
+Example:
+    rails generate ocl_tools:search_view admin/search --section people
+
+    This will create:
+        app/views/admin/search/index.html.erb
+        app/controllers/admin/search_controller.rb

@@ -1,0 +1,16 @@
+<% module_namespacing do -%>
+class <%= controller_class_name %>Controller < <%= base_controller_class_name %>Controller
+  def index
+    case params[:status]
+    when "all"
+      @<%= plural_name %> = <%= model_name %>.all
+    <%- @statuses.keys.each do |status| -%>
+    when "<%= status %>"
+      @<%= plural_name %> = <%= model_name %>.<%= status %>.all
+    <%- end -%>
+    else
+      redirect_to <%= index_helper %>_path(:all)
+    end
+  end
+end
+<% end %>
