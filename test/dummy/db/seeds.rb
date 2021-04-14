@@ -1,7 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+Person.create!(name: "John Smith", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+Person.create!(name: "Jim Smith", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+Person.create!(name: "John James", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+Person.create!(name: "James Robbins", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+Person.create!(name: "Jane Robbins", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+Person.create!(name: "Jane Smithy", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+Person.create!(name: "Janet Johnson", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+Person.create!(name: "John Johnson", date_of_birth: "2000-01-01", start_date: "2021-01-01", category: "person", file: "file", active: true)
+
+OclTools::SearchCache.refresh

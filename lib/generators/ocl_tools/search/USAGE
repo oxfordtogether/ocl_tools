@@ -33,7 +33,7 @@ SearchCache.refresh
 
 Add debounced package
 ```
-yarn install debounced
+yarn add debounced
 
 # app/javascript/packs/application.js
 import debounced from "debounced";

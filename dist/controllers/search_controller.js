@@ -12,7 +12,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 class _class extends _application_controller.default {
-  beforePerform(element, reflex) {
+  beforePerform() {
     this.activityTarget.hidden = false;
     this.countTarget.hidden = true;
   }
