@@ -11,5 +11,8 @@ relative = lambda do |date|
   end
 end
 
+am_pm = "%l:%M%P"
+
 Time::DATE_FORMATS[:day_long] = Date::DATE_FORMATS[:day_long] = day_long
 Time::DATE_FORMATS[:relative] = Date::DATE_FORMATS[:relative] = relative
+Time::DATE_FORMATS[:am_pm] = am_pm
