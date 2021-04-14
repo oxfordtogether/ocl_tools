@@ -13,7 +13,7 @@ module OclTools
 
     def initialize(text, style)
       @text = text
-      @style = STYLES.find { |s| s.name == style } or raise "Unrecognised style: #{style}"
+      @style = STYLES.find { |s| s.name == style } or raise "Unrecognised style: #{style}. Allowed styles: #{STYLES.map(&:name).join(', ')}"
     end
 
     attr_reader :text, :style

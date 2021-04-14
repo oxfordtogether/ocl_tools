@@ -15,6 +15,10 @@ module Secured
     fake_login if Rails.env.development? && ENV["REQUIRE_AUTH_IN_DEV"] != "true"
 
     <%- user_classes_and_vars.each do |user_class, user_var| -%>
+    Current.<%= user_var %>_id = current_<%= user_var %>_id
+    <%- end -%>
+
+    <%- user_classes_and_vars.each do |user_class, user_var| -%>
     return true if current_<%= user_var %>_id
     <%- end -%>
 
