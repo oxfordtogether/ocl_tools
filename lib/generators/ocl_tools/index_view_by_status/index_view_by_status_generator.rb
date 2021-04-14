@@ -18,13 +18,7 @@ module OclTools
       template "controller.rb", File.join("app/controllers", regular_class_path, "#{plural_name}_controller.rb")
 
       route %(
-        resources :#{plural_name}, only: %i[index] do
-          get 'filter/:status',
-              action: :index,
-              constraints: { status: /all|#{@statuses.keys.join("|")}/ },
-              on: :collection,
-              as: :filter
-        end
+        resources :#{plural_name}, only: %i[index], path: "#{plural_name}/(:status)", constraints: { status: /all|#{@statuses.keys.join("|")}/ }
       ), namespace: regular_class_path
     end
 
