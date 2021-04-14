@@ -29,6 +29,10 @@ module OclTools
       render ButtonLinkToComponent.new(*args, **kwargs)
     end
 
+    def filter_button(*args, **kwargs)
+      render FilterButtonComponent.new(*args, **kwargs)
+    end
+
     def badge(*args, **kwargs)
       render BadgeComponent.new(*args, **kwargs)
     end
