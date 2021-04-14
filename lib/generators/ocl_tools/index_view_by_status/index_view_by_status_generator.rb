@@ -4,12 +4,10 @@ module OclTools
     include Rails::Generators::ResourceHelpers
 
     class_option :section, type: :string, desc: "Name of section, e.g. people"
-    class_option :namespace, type: :string, desc: "Namespace, e.g. admin"
 
     def generate
       @section = options["section"]
-      @namespace = options["namespace"]
-      @index_head_path = "#{@namespace}/#{@section}/index_head"
+      @index_head_path = "#{class_path.join("/")}/#{@section}/index_head"
 
       @statuses = model_name.constantize.send("status_options_for_select").map(&:reverse).to_h
 
@@ -24,8 +22,8 @@ module OclTools
 
     private
 
-    def index_path(namespace, name)
-      "#{namespace}_#{name}_path"
+    def index_path(name)
+      "#{class_path.join("_")}_#{name}_path"
     end
 
     def model_name

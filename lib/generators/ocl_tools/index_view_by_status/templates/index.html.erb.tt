@@ -1,6 +1,6 @@
 <%% content_for :breadcrumbs do %>
   <%%= breadcrumbs do |list| %>
-    <%% list.link "<%= @section.humanize %>", <%= index_path(@namespace, @section) %> %>
+    <%% list.link "<%= @section.humanize %>", <%= index_path(@section) %> %>
     <%% list.link "<%= plural_name.humanize %>", <%= index_helper %>_path(params[:status]) %>
   <%% end %>
 <%% end %>

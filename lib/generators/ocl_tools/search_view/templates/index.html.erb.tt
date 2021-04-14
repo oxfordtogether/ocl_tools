@@ -1,7 +1,7 @@
 <%% content_for :breadcrumbs do %>
   <%%= breadcrumbs do |list| %>
-    <%% list.link "<%= @section.humanize %>", <%= index_path(@namespace, @section) %> %>
-    <%% list.link "<%= singular_name.humanize %>", <%= index_path(@namespace, singular_name) %> %>
+    <%% list.link "<%= @section.humanize %>", <%= index_path(@section) %> %>
+    <%% list.link "<%= singular_name.humanize %>", <%= index_path(singular_name) %> %>
   <%% end %>
 <%% end %>
 <%% content_for :page_head do %>

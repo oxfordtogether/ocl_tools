@@ -2,7 +2,7 @@ Description:
     Generates an index page with search box
 
 Example:
-    rails generate ocl_tools:search_view admin/search --namespace admin --section people
+    rails generate ocl_tools:search_view admin/search --section people
 
     This will create:
         app/views/admin/search/index.html.erb
