@@ -2,7 +2,7 @@ Description:
     Adds search cache
 
 Example:
-    rails generate search search
+    rails generate ocl_tools:search search
 
 Requires the following to be set up:
 
