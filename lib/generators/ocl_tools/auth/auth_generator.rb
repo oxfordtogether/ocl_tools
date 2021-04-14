@@ -20,6 +20,8 @@ module OclTools
       template "auth_controller.rb", "app/controllers/auth_controller.rb"
       template "secured.rb", "app/controllers/concerns/secured.rb"
 
+      template "current.rb", "app/models/current.rb"
+
       inject_into_file "app/controllers/application_controller.rb", after: "class ApplicationController < ActionController::Base\n" do
         "  include Secured\n"
       end
