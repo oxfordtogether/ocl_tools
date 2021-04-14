@@ -1,19 +1,12 @@
 Description:
-    Adds search cache and page
+    Adds search cache
 
 Example:
-    rails generate search search
+    rails generate ocl_tools:search search
 
-Set up
+Requires the following to be set up:
 
-Add application_reflex (if it doesn't already exist)
-```
-# app/reflexes/application_reflex.rb
-class ApplicationReflex < StimulusReflex::Reflex
-end
-```
-
-Add route:
+Routes and controller, e.g.
 ```
 # config/route.rb
 get "search", to: "pages#search"
@@ -31,9 +24,9 @@ Seed cache
 SearchCache.refresh
 ```
 
-Add debounced package
+Debounced package
 ```
-yarn install debounced
+yarn add debounced
 
 # app/javascript/packs/application.js
 import debounced from "debounced";

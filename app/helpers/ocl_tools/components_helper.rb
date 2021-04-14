@@ -73,8 +73,12 @@ module OclTools
       render HeaderComponent.new(*args, &blk)
     end
 
-    def table(*args, **kwargs, &blk)
-      render TableComponent.new(*args, **kwargs, &blk)
+    def search(*args, &blk)
+      render SearchComponent.new(*args, &blk)
+    end
+
+    def table(*args, row_url: nil, small: false, &blk)
+      render TableComponent.new(*args, row_url: row_url, small: small, &blk)
     end
   end
 end

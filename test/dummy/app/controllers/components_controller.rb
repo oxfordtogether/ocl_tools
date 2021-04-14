@@ -25,4 +25,9 @@ class ComponentsController < ApplicationController
       { name: "Alice", email: "alice@gmail.com" },
     ]
   end
+
+  def search
+    @status ||= :start
+    @results ||= []
+  end
 end

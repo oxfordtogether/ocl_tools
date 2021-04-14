@@ -1,7 +1,9 @@
 import Rails from "@rails/ujs";
 import Turbolinks from "turbolinks";
 import "channels";
-import ocl_tools from 'ocl_tools' // TO DO: required?
+
+import debounced from "debounced";
+debounced.initialize();
 
 import "css/application.css";
 

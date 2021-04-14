@@ -1,7 +1,8 @@
 <% module_namespacing do -%>
 class <%= controller_class_name %>Controller < <%= base_controller_class_name %>Controller
   def index
-    # TO DO
+    @status ||= :start
+    @results ||= []
   end
 end
 <% end %>
