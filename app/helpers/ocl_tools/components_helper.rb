@@ -84,5 +84,9 @@ module OclTools
     def table(*args, **kwargs, &blk)
       render TableComponent.new(*args, **kwargs, &blk)
     end
+
+    def timeline(*args, **kwargs, &blk)
+      render(Timeline::TimelineComponent.new(*args, **kwargs), &blk)
+    end
   end
 end
