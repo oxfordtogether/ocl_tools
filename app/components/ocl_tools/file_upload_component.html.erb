@@ -3,7 +3,7 @@
     <div class="flex text-sm text-gray-600">
       <label class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500">
         <span id="file-upload__label">Upload a file</span>
-        <%= @form.orig_file_field @field, { class: "hidden", "data-file-upload-target": "input", "data-action" => "change->file-upload#select" } %>
+        <%= @form.orig_file_field @field, { class: "hidden", "data-file-upload-target": "input", "data-action" => "change->file-upload#select" }.merge(@options) %>
       </label>
     </div>
   </div>
