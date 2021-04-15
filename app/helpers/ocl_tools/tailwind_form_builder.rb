@@ -58,11 +58,11 @@ module OclTools
       end
     end
 
-    def file_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
+    def file_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **opts)
       errors = object.errors[field]
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
-        @template.render(FileUploadComponent.new(form: self, field: field)) + error(errors.last) + info(info_message)
+        @template.render(FileUploadComponent.new(form: self, field: field, **opts)) + error(errors.last) + info(info_message)
       end
     end
 
