@@ -3,6 +3,8 @@ module OclTools
     INPUT_CLASSES = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md".freeze
     INPUT_ERROR_CLASSES = "shadow-sm block w-full sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500".freeze
 
+    alias orig_label label
+
     def label(field, label = nil, required_asterix: false)
       @template.content_tag :div, class: "flex text-sm font-medium text-gray-700" do
         if required_asterix
