@@ -2,6 +2,8 @@ import { Controller } from "stimulus";
 import "chart.js"
 import "chartjs-plugin-datalabels"
 
+Chart.platform.disableCSSInjection = true;
+
 export default class extends Controller {
   static targets = ['chart'];
 
