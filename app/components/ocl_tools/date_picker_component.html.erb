@@ -1,4 +1,4 @@
-<div data-controller="date-picker" data-date-picker-disabled="<%= @disabled %>" data-date-picker-date="<%= @value.strftime("%Y-%m-%d") %>" class="mt-1 relative">
+<div data-controller="date-picker" data-date-picker-disabled="<%= @disabled %>" data-date-picker-date="<%= @value&.strftime("%Y-%m-%d") %>" class="mt-1 relative">
   <div data-action="click->date-picker#show">
     <input data-date-picker-target="yearInput" name="<%= @names[:year] %>" id="<%= @ids[:year] %>" class="hidden" type="text">
     <input data-date-picker-target="monthInput" name="<%= @names[:month] %>" id="<%= @ids[:month] %>" class="hidden" type="text">
