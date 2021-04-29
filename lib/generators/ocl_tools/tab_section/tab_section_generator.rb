@@ -8,17 +8,17 @@ module OclTools
     def generate
       @tabs = options["tabs"]
 
-      template "_index_head.html.erb", File.join("app/views", regular_class_path, plural_name, "_index_head.html.erb")
+      template "_index_head.html.erb", File.join("app/views", regular_class_path, file_name, "_index_head.html.erb")
 
       route %(
-        resources :#{plural_name}, only: %i[index], to: redirect("/#{class_path.join("/")}/#{@tabs[0]}")
-      ), namespace: regular_class_path
+        get :#{file_name}, to: redirect("/#{class_path.join('/')}/#{@tabs[0]}")
+      ).strip_heredoc, namespace: regular_class_path
     end
 
     private
 
     def index_path(tab)
-      "#{class_path.join("_")}_#{tab}_path"
+      "#{class_path.join('_')}_#{tab}_path"
     end
   end
 end
