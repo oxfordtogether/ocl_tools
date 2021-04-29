@@ -7,7 +7,7 @@ module OclTools
 
     def generate
       @section = options["section"]
-      @index_head_path = "#{class_path.join("/")}/#{@section}/index_head"
+      @index_head_path = "#{class_path.join('/')}/#{@section}/index_head"
 
       @statuses = model_name.constantize.send("status_options_for_select").map(&:reverse).to_h
 
@@ -16,14 +16,14 @@ module OclTools
       template "controller.rb", File.join("app/controllers", regular_class_path, "#{plural_name}_controller.rb")
 
       route %(
-        resources :#{plural_name}, only: %i[index], path: "#{plural_name}/(:status)", constraints: { status: /all|#{@statuses.keys.join("|")}/ }
-      ), namespace: regular_class_path
+        resources :#{plural_name}, only: %i[index], path: "#{plural_name}/(:status)", constraints: { status: /all|#{@statuses.keys.join('|')}/ }
+      ).strip_heredoc, namespace: regular_class_path
     end
 
     private
 
     def index_path(name)
-      "#{class_path.join("_")}_#{name}_path"
+      "#{class_path.join('_')}_#{name}_path"
     end
 
     def model_name
@@ -35,4 +35,3 @@ module OclTools
     end
   end
 end
-
