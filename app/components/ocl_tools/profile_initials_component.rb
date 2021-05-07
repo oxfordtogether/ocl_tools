@@ -5,10 +5,9 @@ module OclTools
       @scheme = scheme
     end
 
+    # pick a colour scheme in an arbitrary but predictable way
     def scheme
-      char_to_number = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").zip((0..25).to_a).to_h
-
-      (char_to_number[@initials[0]] * char_to_number[@initials[0]]) % 5
+      @initials[0].ord % 5
     end
   end
 end
