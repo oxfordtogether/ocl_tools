@@ -1,7 +1,8 @@
 module OclTools
   class BlockAlertComponent < ViewComponent::Base
     delegate :icon, to: :helpers
-    with_content_areas :title, :info
+    renders_one :title
+    renders_one :info
 
     def initialize; end
   end

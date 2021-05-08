@@ -1,6 +1,7 @@
 module OclTools
   class ModalComponent < ViewComponent::Base
-    with_content_areas :title, :body
+    renders_one :title
+    renders_one :body
 
     def initialize; end
   end
