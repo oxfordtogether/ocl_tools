@@ -7,7 +7,7 @@ module OclTools
 
     def generate
       @section = options["section"]
-      @index_head_path = "#{class_path.join("/")}/#{@section}/index_head"
+      @index_head_path = "#{class_path.join('/')}/#{@section}/index_head"
 
       template "index.html.erb", File.join("app/views", regular_class_path, singular_name, "index.html.erb")
 
@@ -15,13 +15,13 @@ module OclTools
 
       route %(
         get :search, to: "search#index"
-      ), namespace: regular_class_path
+      ).strip_heredoc, namespace: regular_class_path
     end
 
     private
 
     def index_path(name)
-      "#{class_path.join("_")}_#{name}_path"
+      "#{class_path.join('_')}_#{name}_path"
     end
 
     def model_name
@@ -37,4 +37,3 @@ module OclTools
     end
   end
 end
-

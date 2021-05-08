@@ -19,7 +19,7 @@ module OclTools
             get :edit, path: 'edit(/:page)'
           end
         end
-      ), namespace: regular_class_path
+      ).strip_heredoc, namespace: regular_class_path
     end
 
     private
