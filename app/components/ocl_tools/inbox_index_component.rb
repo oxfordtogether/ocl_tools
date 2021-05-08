@@ -2,7 +2,8 @@ module OclTools
   class InboxIndexComponent < ViewComponent::Base
     include Pagy::Frontend
     delegate :icon, to: :helpers
-    with_content_areas :body, :left_aligned_actions
+    renders_one :body
+    renders_one :left_aligned_actions
 
     def initialize(pagy:, items:)
       @pagy = pagy

@@ -1,6 +1,9 @@
 module OclTools
   class ExternalFormWrapperComponent < ViewComponent::Base
-    with_content_areas :image, :title, :info, :body
+    renders_one :image
+    renders_one :title
+    renders_one :info
+    renders_one :body
 
     def initialize; end
   end

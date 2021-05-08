@@ -1,7 +1,8 @@
 module OclTools
   class InboxShowComponent < ViewComponent::Base
     delegate :icon, to: :helpers
-    with_content_areas :body, :right_aligned_actions
+    renders_one :body
+    renders_one :right_aligned_actions
 
     def initialize(current_index:, total:, back_path:, prev_path:, next_path:)
       @current_index = current_index
