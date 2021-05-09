@@ -19,6 +19,7 @@ import { default as NoticeController } from "./notice_controller";
 import { default as SearchController } from "./search_controller";
 import { default as TableController } from "./table_controller";
 import { default as VisibilityToggleController } from "./visibility_toggle_controller";
+import { default as MultipleSelectController } from "./multiple_select_controller";
 
 const controllers = {
   autocomplete: AutocompleteController,
@@ -32,6 +33,7 @@ const controllers = {
   search: SearchController,
   table: TableController,
   "visibility-toggle": VisibilityToggleController,
+  "multiple-select": MultipleSelectController,
 };
 
 export default controllers;

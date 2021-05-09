@@ -35,6 +35,8 @@ var _table_controller = _interopRequireDefault(require("./table_controller"));
 
 var _visibility_toggle_controller = _interopRequireDefault(require("./visibility_toggle_controller"));
 
+var _multiple_select_controller = _interopRequireDefault(require("./multiple_select_controller"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const application = _stimulus.Application.start();
@@ -58,7 +60,8 @@ const controllers = {
   "file-upload": _file_upload_controller.default,
   search: _search_controller.default,
   table: _table_controller.default,
-  "visibility-toggle": _visibility_toggle_controller.default
+  "visibility-toggle": _visibility_toggle_controller.default,
+  "multiple-select": _multiple_select_controller.default
 };
 var _default = controllers;
 exports.default = _default;

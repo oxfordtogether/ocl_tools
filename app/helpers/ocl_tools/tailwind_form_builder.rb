@@ -79,6 +79,25 @@ module OclTools
       end
     end
 
+    def multiple_select(method, collection, include_blank: true, width: nil, required_asterix: false, info_message: nil, **options)
+      errors = object.errors[method]
+
+      label = options[:label]
+      disabled = options[:disabled] || false
+      options[:include_blank] = "Select..." if include_blank
+      classes = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
+
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+        @template.render(MultipleSelectComponent.new(
+                            method,
+                            collection,
+                            @object.send(method),
+                            id_for(method),
+                            name_for(method),
+                            errors: !errors.empty?)) + error(errors.last) + info(info_message)
+      end
+    end
+
     def collection_select(method, collection, value_method, text_method, include_blank: true, width: nil, required_asterix: false, info_message: nil, html_options: {}, **options)
       errors = object.errors[method]
 

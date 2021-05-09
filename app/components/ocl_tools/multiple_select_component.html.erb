@@ -1,0 +1,73 @@
+<div data-controller="multiple-select" data-multiple-select-initial-selected-options="<%= @initial_selected_options %>">
+
+  <% if false %>
+    <button data-action="click->multiple-select#close" tabindex="-1" class="hidden fixed inset-0 h-full w-full bg-black opacity-50 cursor-default">
+    </button>
+  <% end %>
+
+  <div>
+    <div class="my-2 p-1 flex border border-gray-200 bg-white rounded">
+      <div data-action="click->multiple-select#open" class="flex flex-auto flex-wrap">
+
+        <% @collection.each do |element| %>
+          <div data-multiple-select-target="tag" data-value="<%= element[1] %>"
+            class="hidden inline-block flex items-center border border-gray-300 rounded-md py-1 px-1.5 mr-2">
+            <div class="text-sm text-gray-600 pr-1.5">
+              <%= element[0] %>
+            </div>
+            <div data-action="click->multiple-select#remove" data-value="<%= element[1] %>"
+              class="p-0.5 rounded-full hover:bg-gray-200 font-bold text-gray-700" >
+              <%= icon("cross", class: "h-4 w-4") %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="flex-1">
+          <input placeholder="Select..." class="bg-transparent p-1 px-2 appearance-none outline-none h-full w-full text-gray-800">
+        </div>
+      </div>
+      <div class="text-gray-300 w-8 py-1 pl-2 pr-1 border-l flex items-center border-gray-200">
+        <button data-multiple-select-target="open" data-action="click->multiple-select#open" class="cursor-pointer w-6 h-6 text-gray-400 outline-none focus:outline-none">
+          <%= icon("caret-down", class: "w-4 h-4") %>
+        </button>
+        <button data-multiple-select-target="close" data-action="click->multiple-select#close" class="hidden cursor-pointer w-6 h-6 text-gray-400 outline-none focus:outline-none">
+          <%= icon("caret-up", class: "w-4 h-4") %>
+        </button>
+      </div>
+    </div>
+
+    <!-- close by clicking outside -->
+    <!-- styling? -->
+    <!-- width of dropdown -->
+    <!-- text/value method -->
+    <!-- do initial values work? -->
+
+    <div data-multiple-select-target="dropdown" class="hidden absolute shadow top-100 bg-white z-40 rounded max-h-select overflow-y-auto">
+      <div class="flex flex-col w-full">
+
+        <% @collection.each do |element| %>
+          <button data-action="click->multiple-select#select" value="<%= element[1] %>" class="flex cursor-pointer w-full border-gray-100 rounded-b focus:outline-none">
+            <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative">
+              <!-- <%= icon("check", class: "hidden text-gray-600 w-6 h-6") %> -->
+              <div class="w-full items-center flex">
+                <div class="mx-2 leading-6"><%= element[0] %></div>
+              </div>
+            </div>
+          </button>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- all hidden but used for submit -->
+  <% @collection.each do |element| %>
+    <input data-multiple-select-target="input"
+          name="<%= @name %>[]"
+          id="<%= @id %>"
+          type="hidden"
+          value="<%= element[1] %>"
+          disabled="true" />
+  <% end %>
+
+</div>
