@@ -11,7 +11,9 @@ module OclTools
 
       @errors = errors
 
-      @initial_selected_options = initial_selected_options
+      @initial_selected_options = @collection
+            .filter { |c| initial_selected_options.map(&:to_s).include?(c[1].to_s) }
+            .map { |c| [c[0].to_s, c[1].to_s] }
     end
   end
 end
