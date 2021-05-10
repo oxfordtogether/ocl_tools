@@ -1,9 +1,0 @@
-Description:
-    Generates an index page with filters by status
-
-Example:
-    rails generate ocl_tools:index_view_by_status admin/big --section people
-
-    This will create:
-        app/views/admin/bigs/index.html.erb
-        app/controllers/admin/bigs_controller.rb

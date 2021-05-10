@@ -1,9 +1,0 @@
-<%%= header title: "<%= plural_name.humanize %>" do |head| %>
-  <%% head.nav_tabs_section do %>
-    <%%= nav_tabs do |nav| %>
-      <%- @tabs.each do |tab| -%>
-      <%% nav.link "<%= tab.humanize %>", <%= index_path(tab) %>, partial_match: true %>
-      <%- end -%>
-    <%% end %>
-  <%% end %>
-<%% end %>

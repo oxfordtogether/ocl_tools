@@ -1,5 +1,0 @@
-class Current < ActiveSupport::CurrentAttributes
-  <%- user_classes_and_vars.each do |user_class, user_var| -%>
-  attribute :<%= user_var %>_id
-  <%- end -%>
-end
