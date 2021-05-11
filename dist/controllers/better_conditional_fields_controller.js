@@ -24,7 +24,7 @@ require("core-js/stable");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _templateObject2() {
-  const data = _taggedTemplateLiteral(["\n            Unsupported input type: ", " ", "\n\n            Conditional fields sources must be one of:\n              * select box\n              * radio button\n              * checkbox\n            "]);
+  const data = _taggedTemplateLiteral(["\n            Unsupported input type: ", " ", "\n\n            Conditional fields sources must be one of:\n              * select box\n              * radio button\n              * checkbox\n              * hidden\n            "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -69,6 +69,8 @@ class _class extends _stimulus.Controller {
         this.connectRadioSource(target);
       } else if (target.tagName === "INPUT" && targetType === "checkbox") {
         this.connectCheckBoxSource(target);
+      } else if (target.tagName === "INPUT" && targetType === "hidden") {
+        this.connectHiddenSource(target);
       } else {
         throw new Error(""(_templateObject2(), target.tagName, targetType || "")(_templateObject()));
       }
@@ -77,6 +79,7 @@ class _class extends _stimulus.Controller {
   }
 
   connectSelectSource(target) {
+    // BUG! This will ignore initial values
     const {
       name,
       value
@@ -109,6 +112,17 @@ class _class extends _stimulus.Controller {
     if (target.checked) this.addToken(name, value); // initial value
 
     debug("added listener to checkbox: addRemove(".concat(name, ", ").concat(value, ")"));
+  }
+
+  connectHiddenSource(target) {
+    const {
+      name,
+      value
+    } = getNameAndValue(target);
+    this.addListener(target, e => this.setToken(name, e.target.value));
+    this.setToken(name, value); // initial value
+
+    debug("added listener to hidden input: setToken(".concat(name, ", *)"));
   }
 
   addListener(target, fcn) {

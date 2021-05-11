@@ -23,6 +23,8 @@ export default class extends Controller {
         this.connectRadioSource(target);
       } else if (target.tagName === "INPUT" && targetType === "checkbox") {
         this.connectCheckBoxSource(target);
+      } else if (target.tagName === "INPUT" && targetType === "hidden") {
+        this.connectHiddenSource(target);
       } else {
         throw new Error(
           ```
@@ -32,6 +34,7 @@ export default class extends Controller {
               * select box
               * radio button
               * checkbox
+              * hidden
             ```
         );
       }
@@ -40,6 +43,7 @@ export default class extends Controller {
   }
 
   connectSelectSource(target) {
+    // BUG! This will ignore initial values
     const { name, value } = getNameAndValue(target);
     this.addListener(target, (e) => this.setToken(name, e.target.value));
     this.setToken(name, value); // initial value
@@ -62,6 +66,13 @@ export default class extends Controller {
     });
     if (target.checked) this.addToken(name, value); // initial value
     debug(`added listener to checkbox: addRemove(${name}, ${value})`);
+  }
+
+  connectHiddenSource(target) {
+    const { name, value } = getNameAndValue(target);
+    this.addListener(target, (e) => this.setToken(name, e.target.value));
+    this.setToken(name, value); // initial value
+    debug(`added listener to hidden input: setToken(${name}, *)`);
   }
 
   addListener(target, fcn) {
