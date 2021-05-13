@@ -60,6 +60,14 @@ module OclTools
       end
     end
 
+    def rich_text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil)
+      errors = object.errors[field]
+
+      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
+      end
+    end
+
     def file_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **opts)
       errors = object.errors[field]
 
