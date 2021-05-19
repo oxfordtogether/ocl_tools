@@ -14,7 +14,19 @@ end
 
 am_pm = "%l:%M%P"
 
+days_since = lambda do |date|
+  if date.today?
+    'today'
+  elsif (date + 1.day).today?
+    'yesterday'
+  else
+    "#{(Date.today - date.to_date).to_i} days ago"
+  end
+end
+
 Time::DATE_FORMATS[:day_long] = Date::DATE_FORMATS[:day_long] = day_long
 Time::DATE_FORMATS[:day_short] = Date::DATE_FORMATS[:day_short] = day_short
 Time::DATE_FORMATS[:relative] = Date::DATE_FORMATS[:relative] = relative
 Time::DATE_FORMATS[:am_pm] = am_pm
+Time::DATE_FORMATS[:days_since] = days_since
+

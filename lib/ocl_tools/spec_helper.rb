@@ -6,4 +6,5 @@ RSpec.configure do |config|
   config.include OclTools::AutocompleteSelect, type: :system
   config.include OclTools::DatePickerSelect, type: :system
   config.include OclTools::WaitForTurbolinks, type: :system
+  config.include OclTools::DateFieldFillIn, type: :system
 end
