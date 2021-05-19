@@ -88,5 +88,13 @@ module OclTools
     def timeline(*args, **kwargs, &blk)
       render(Timeline::TimelineComponent.new(*args, **kwargs), &blk)
     end
+
+    def full_page_dialog(*args, **kwargs, &blk)
+      render(FullPageDialogComponent.new(*args, **kwargs), &blk)
+    end
+
+    def external_form_wrapper(*args, **kwargs, &blk)
+      render(ExternalFormWrapperComponent.new(*args, **kwargs), &blk)
+    end
   end
 end
