@@ -2,6 +2,7 @@ module OclTools
   class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     INPUT_CLASSES = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md".freeze
     INPUT_ERROR_CLASSES = "shadow-sm block w-full sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500".freeze
+    COL_OPTIONS = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2", sixth: "sm:col-span-1" }.freeze
 
     alias orig_label label
 
@@ -234,8 +235,7 @@ module OclTools
     end
 
     def spacer(width:)
-      col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
-      @template.content_tag(:div, class: col_classes.fetch(width) { "sm:col-span-2" }) {}
+      @template.content_tag(:div, class: COL_OPTIONS.fetch(width) { "sm:col-span-2" }) {}
     end
 
     def autocomplete_field(method, value_method, text_method, search_params, label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil)
@@ -247,8 +247,7 @@ module OclTools
         selected = relation && object.send(relation)
       end
 
-      col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
-      col_class = col_classes.fetch(width || :full)
+      col_class = COL_OPTIONS.fetch(width || :full)
       @template.content_tag :div, class: col_class do
         @template.render(AutocompleteComponent.new(
                            label: label || method.to_s.humanize,
@@ -298,8 +297,7 @@ module OclTools
     def tailwind_field(field, label_text = nil, width: :full, required_asterix: false, &block)
       # NOTE: need to ensure that the actual strings e.g. sm:col-span-3 appear in the file
       # or tailwind won't include them in the optimized css
-      col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
-      col_class = col_classes.fetch(width || :full)
+      col_class = COL_OPTIONS.fetch(width || :full)
       @template.content_tag :div, class: col_class do
         label(field, label_text, required_asterix: required_asterix) + @template.content_tag(:div, class: "mt-1", &block)
       end
