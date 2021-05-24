@@ -96,5 +96,9 @@ module OclTools
     def external_form_wrapper(*args, **kwargs, &blk)
       render(ExternalFormWrapperComponent.new(*args, **kwargs), &blk)
     end
+
+    def inbox_show_body(*args, &blk)
+      render InboxShowBodyComponent.new(*args, &blk)
+    end
   end
 end
