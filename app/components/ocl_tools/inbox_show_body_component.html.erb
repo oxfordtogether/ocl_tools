@@ -1,0 +1,47 @@
+<div class="mt-8 mb-3 sm:px-2 flex justify-between">
+  <div class="flex flex-col">
+    <div class="text-2xl font-medium text-gray-900">
+      <%= name %>
+      <span class="text-sm text-gray-500"><%= subtitle %></span>
+      <span class="mr-1">
+        <%= status_blk.contents %>
+      </span>
+    </div>
+    <% if sub_header_blk %>
+      <div class="text-sm text-gray-500">
+        <div class="flex flex-wrap">
+          <%= sub_header_blk.contents %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <% if right_aligned_actions_blk %>
+    <%= right_aligned_actions_blk.contents %>
+  <% end %>
+</div>
+
+<div class="sm:px-2">
+  <% section_blocks.each do |section| %>
+    <div class="mt-6">
+      <h3 class="text-base leading-6 font-medium text-gray-900">
+        <%= section.title %>
+      </h3>
+    </div>
+
+    <div class="mt-1 border-t border-gray-200">
+      <dl class="sm:divide-y sm:divide-gray-200">
+        <% section.label_and_texts.each_with_index do |label_and_text, index| %>
+          <div class="<%= "bg-gray-50" if index % 2 == 0 %> py-1 sm:py-2 sm:grid sm:grid-cols-3 sm:gap-4">
+            <dt class="text-sm font-medium text-gray-500">
+              <%= label_and_text.label %>
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              <%= label_and_text.text %>
+            </dd>
+          </div>
+        <% end %>
+      </dl>
+    </div>
+  <% end %>
+
+</div>
