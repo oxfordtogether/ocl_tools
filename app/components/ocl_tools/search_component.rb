@@ -2,11 +2,12 @@ module OclTools
   class SearchComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
-    attr_reader :results, :search_result_blk
+    attr_reader :results, :search_result_blk, :class_name
 
-    def initialize(results, status, &blk)
+    def initialize(results, status, class_name: nil, &blk)
       @results = results
       @status = status
+      @class_name = class_name
 
       yield self if blk
     end
