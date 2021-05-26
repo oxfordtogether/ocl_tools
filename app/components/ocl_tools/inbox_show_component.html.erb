@@ -3,13 +3,13 @@
     <%= link_to back_path, class: "back flex-1" do %>
       <%= icon("arrow-left", class: "w-6 h-6") %>
     <% end %>
-    <div class="flex items-center mr-5">
+    <div class="flex items-center mr-7">
       <%= right_aligned_actions %>
     </div>
-    <div class="text-sm mr-1 text-gray-700">
+    <div class="text-sm mr-2 text-gray-700">
       <%= current_index + 1 %> of <%= total %>
     </div>
-    <%= link_to prev_path, class: "previous mr-3 flex items-center justify-center w-8 h-8 rounded-full #{current_index == 0 ? 'text-gray-300 cursor-default' : 'hover:bg-gray-200'}" do %>
+    <%= link_to prev_path, class: "previous mr-1 flex items-center justify-center w-8 h-8 rounded-full #{current_index == 0 ? 'text-gray-300 cursor-default' : 'hover:bg-gray-200'}" do %>
       <%= icon("chevron-left", class: "w-5 h-5") %>
     <% end %>
     <%= link_to next_path, class: "next flex items-center justify-center w-8 h-8 rounded-full #{current_index == total - 1 ? 'text-gray-300 cursor-default' : 'hover:bg-gray-200'}" do %>

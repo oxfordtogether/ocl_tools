@@ -7,6 +7,7 @@ module OclTools
       Style.new("pale-yellow", "text-gray-800", "bg-yellow-100"),
       Style.new("pale-blue", "text-gray-800", "bg-blue-100"),
       Style.new("pale-purple", "text-gray-800", "bg-purple-100"),
+      Style.new("purple", "text-gray-900", "bg-purple-300"),
       Style.new("pale-gray", "text-gray-800", "bg-gray-100"),
       Style.new("yellow", "text-gray-800", "bg-yellow-300"),
     ]
