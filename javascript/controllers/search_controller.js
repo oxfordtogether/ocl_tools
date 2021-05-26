@@ -10,6 +10,13 @@ export default class extends ApplicationController {
 
   perform(event) {
     event.preventDefault();
-    this.stimulate("SearchReflex#perform", this.queryTarget.value);
+
+    this.classname = this.data.get("classname")
+
+    if (this.classname) {
+      this.stimulate("SearchReflex#perform", this.queryTarget.value, this.classname);
+    } else {
+      this.stimulate("SearchReflex#perform", this.queryTarget.value);
+    }
   }
 }

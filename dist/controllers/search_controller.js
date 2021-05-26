@@ -19,7 +19,13 @@ class _class extends _application_controller.default {
 
   perform(event) {
     event.preventDefault();
-    this.stimulate("SearchReflex#perform", this.queryTarget.value);
+    this.classname = this.data.get("classname");
+
+    if (this.classname) {
+      this.stimulate("SearchReflex#perform", this.queryTarget.value, this.classname);
+    } else {
+      this.stimulate("SearchReflex#perform", this.queryTarget.value);
+    }
   }
 
 }
