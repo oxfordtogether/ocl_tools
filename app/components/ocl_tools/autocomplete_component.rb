@@ -14,8 +14,6 @@ module OclTools
       @disabled = disabled
       @list_item_component = list_item_component
       @error = error
-
-      validate_search_params
     end
 
     def signed_params
@@ -34,11 +32,6 @@ module OclTools
 
     def has_custom_list_item_component?
       !!list_item_component
-    end
-
-    def validate_search_params
-      raise "Search class missing. Please provide a :class property in the search params." unless search_params[:class]
-      raise "Search method missing. Please provide a :method property in the search params." unless search_params[:method]
     end
 
     attr_reader :results, :label, :field_id, :field_name, :value_method, :text_method, :search_params, :disabled, :object, :list_item_component

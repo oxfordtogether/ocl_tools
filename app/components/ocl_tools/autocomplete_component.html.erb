@@ -12,7 +12,7 @@
       </span>
     </div>
   </div>
-  <% if @results  %>
+  <% if @results %>
     <div data-autocomplete-target="dropdown" class="absolute mt-1 w-full rounded-md bg-white shadow-lg z-10">
       <% if @results.any? %>
         <div class="max-h-60 overflow-auto">
@@ -26,7 +26,8 @@
                     <% else %>
                       <%= result.send(text_method) %>
                     <% end %>
-                  </span></div>
+                  </span>
+                </div>
               </li>
             <% end %>
           </ul>
