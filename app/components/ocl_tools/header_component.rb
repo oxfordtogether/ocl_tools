@@ -1,5 +1,17 @@
 module OclTools
   class HeaderComponent < ViewComponent::Base
+    Heading = Struct.new(:header_component, :blk) do
+      def contents(*args)
+        header_component.call_block(*args, &blk)
+      end
+    end
+
+    SubHeading = Struct.new(:header_component, :blk) do
+      def contents(*args)
+        header_component.call_block(*args, &blk)
+      end
+    end
+
     Badge = Struct.new(:header_component, :blk) do
       def contents(*args)
         header_component.call_block(*args, &blk)
@@ -28,12 +40,12 @@ module OclTools
 
     delegate :icon, to: :helpers
 
-    attr_reader :title, :subtitle, :badges, :actions, :icon_and_texts, :label_and_texts, :nav_tabs_sections
+    attr_reader :title, :headings, :sub_headings, :badges, :actions, :icon_and_texts, :label_and_texts, :nav_tabs_sections
 
-    def initialize(title: nil, subtitle: nil)
+    def initialize(title: nil)
       super
-      @title = title
-      @subtitle = subtitle
+      @headings = []
+      @sub_headings = []
 
       @badges = []
       @actions = []
@@ -43,7 +55,17 @@ module OclTools
 
       @nav_tabs_sections = nil
 
+      @title = title
+
       yield self
+    end
+
+    def heading(&blk)
+      @headings << Heading.new(self, blk)
+    end
+
+    def sub_heading(&blk)
+      @sub_headings << SubHeading.new(self, blk)
     end
 
     def badge(&blk)
