@@ -40,9 +40,9 @@ module OclTools
 
     delegate :icon, to: :helpers
 
-    attr_reader :headings, :sub_headings, :badges, :actions, :icon_and_texts, :label_and_texts, :nav_tabs_sections
+    attr_reader :title, :headings, :sub_headings, :badges, :actions, :icon_and_texts, :label_and_texts, :nav_tabs_sections
 
-    def initialize
+    def initialize(title: nil)
       super
       @headings = []
       @sub_headings = []
@@ -54,6 +54,8 @@ module OclTools
       @label_and_texts = []
 
       @nav_tabs_sections = nil
+
+      @title = title
 
       yield self
     end
