@@ -18,9 +18,9 @@
         <% if @status == :start %>
           Type something to start the search.
         <% elsif results.length < results.total_count %>
-          <%= results.total_count %> people found. Showing <%= results.length %> of them. Keep typing to refine your search.
+          <%= results.total_count %> <%= class_name.pluralize %> found. Showing <%= results.length %> of them. Keep typing to refine your search.
         <% else %>
-          <%= results.length %> <%= "person".pluralize(results&.length) %> found
+          <%= results.length %> <%= class_name.pluralize(results&.length) %> found
         <% end %>
       </div>
     </div>
