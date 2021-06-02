@@ -172,7 +172,7 @@ module OclTools
 
       @template.content_tag :div, class: "flex items-center #{col_class}" do
         # if not checked, the check_box will have {"method" => ""} in the params hash which may need to be cleaned in the controller
-        @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
+        @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + error(errors.last) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
       end
     end
 
