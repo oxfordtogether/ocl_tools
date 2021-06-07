@@ -119,14 +119,14 @@ module OclTools
       end
     end
 
-    def time_select(method, label: nil, width: nil, required_asterix: false, info_message: nil)
+    def time_select(method, label: nil, width: nil, minute_step: 5, required_asterix: false, info_message: nil)
       input_classes = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
       input_error_classes = "shadow-sm sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500"
 
       errors = object.errors[method]
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
-        super(method, { minute_step: 5, ignore_date: true }, { class: errors.empty? ? input_classes : input_error_classes }) + error(errors.last) + info(info_message)
+        super(method, { minute_step: minute_step, ignore_date: true }, { class: errors.empty? ? input_classes : input_error_classes }) + error(errors.last) + info(info_message)
       end
     end
 
