@@ -12,11 +12,38 @@ module OclTools
       Style.new("yellow", "text-gray-800", "bg-yellow-300"),
     ]
 
-    def initialize(text, style)
+    Size = Struct.new(:name, :classes)
+    SIZES = [
+      Size.new("small", "px-2.5 py-0.5 text-xs"),
+      Size.new("large", "px-3 py-0.5 text-sm"),
+    ]
+
+    def initialize(text, style, size: "large")
       @text = text
-      @style = STYLES.find { |s| s.name == style } or raise "Unrecognised style: #{style}. Allowed styles: #{STYLES.map(&:name).join(', ')}"
+      @style = STYLES.find { |s| s.name == style.to_s } or raise(StyleError, style)
+      @size = SIZES.find { |s| s.name == size.to_s } or raise(SizeError, size)
     end
 
-    attr_reader :text, :style
+    attr_reader :text, :style, :size
+
+    class StyleError < ArgumentError
+      def initialize(style)
+        @style = style
+      end
+
+      def message
+        "Unrecognised style: #{@style}. Allowed styles: #{STYLES.map(&:name).join(', ')}"
+      end
+    end
+
+    class SizeError < ArgumentError
+      def initialize(size)
+        @size = size
+      end
+
+      def message
+        "Unrecognised size: #{@size}. Allowed sizes: #{SIZES.map(&:name).join(', ')}"
+      end
+    end
   end
 end

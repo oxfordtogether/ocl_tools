@@ -22,10 +22,30 @@ module OclTools
       @icon_name = icon
       @options = options
 
-      @style = STYLES.find { |s| s.name == style } or raise "Unrecognised style: #{style}"
-      @size = SIZES.find { |s| s.name == size } or raise "Unrecognised size: #{size}"
+      @style = STYLES.find { |s| s.name == style } or raise(StyleError, style)
+      @size = SIZES.find { |s| s.name == size } or raise(SizeError, size)
     end
 
     attr_reader :text, :path, :style, :size, :icon_name, :options
+
+    class StyleError < ArgumentError
+      def initialize(style)
+        @style = style
+      end
+
+      def message
+        "Unrecognised style: #{@style}. Allowed styles: #{STYLES.map(&:name).join(', ')}"
+      end
+    end
+
+    class SizeError < ArgumentError
+      def initialize(size)
+        @size = size
+      end
+
+      def message
+        "Unrecognised size: #{@size}. Allowed styles: #{SIZES.map(&:name).join(', ')}"
+      end
+    end
   end
 end
