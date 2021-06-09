@@ -45,27 +45,30 @@ module OclTools
       end
     end
 
-    def email_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
+    def email_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object.errors[field]
+      options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
-        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
+        super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
-    def number_field(field, label: nil, width: nil, required_asterix: false, info_message: nil)
+    def number_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object.errors[field]
+      options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
-        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
+        super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
-    def rich_text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil)
+    def rich_text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object.errors[field]
+      options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
-        super(field, class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES) + error(errors.last) + info(info_message)
+        super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
