@@ -1,5 +1,4 @@
 <div class="relative" data-controller="autocomplete" data-autocomplete-params-value="<%= signed_params -%>" id="<%= field_id %>__autocomplete">
-  <label for="account_number" class="block text-sm font-medium text-gray-700"><%= label %></label>
   <div class="mt-1 relative rounded-md shadow-sm">
     <input data-autocomplete-target="value" type="hidden" id="<%= field_id %>" name="<%= field_name -%>" value="<%= object&.send(value_method)-%>" >
     <input data-autocomplete-target="query" data-action="debounced:input->autocomplete#search" <%= 'disabled' if disabled %> autocomplete="off" type="text" id="<%=field_id-%>__query" class="block w-full pr-10 sm:text-sm rounded-md <%= @error ? 'border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500' : 'focus:ring-indigo-500 focus:border-indigo-500 border-gray-300' %>" value="<%= object&.send(text_method)%>">
@@ -33,14 +32,14 @@
           </ul>
           <% if @results.total_count > @results.length %>
             <div class="m-4 pl-4 text-xs text-gray-500">
-              Showing <%= @results.length %> out of <%= @results.total_count %> people. <br>
+              Showing <%= @results.length %> out of <%= @results.total_count %> records. <br>
               Keep typing to refine your search.
             </div>
           <% end %>
         </div>
       <% else %>
         <div class="m-4 pl-4 text-xs text-gray-500">
-          0 people found
+          0 records found
         </div>
       <% end %>
     </div>

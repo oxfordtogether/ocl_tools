@@ -241,7 +241,7 @@ module OclTools
       @template.content_tag(:div, class: COL_OPTIONS.fetch(width) { "sm:col-span-2" }) {}
     end
 
-    def autocomplete_field(method, value_method, text_method, search_params, label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil)
+    def autocomplete_field(method, value_method, text_method, search_params, label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false)
       errors = object.errors[method]
 
       # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
@@ -251,7 +251,8 @@ module OclTools
       end
 
       col_class = COL_OPTIONS.fetch(width || :full)
-      @template.content_tag :div, class: col_class do
+
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
         @template.render(AutocompleteComponent.new(
                            label: label || method.to_s.humanize,
                            field_id: id_for(method),
