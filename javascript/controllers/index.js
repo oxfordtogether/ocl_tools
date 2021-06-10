@@ -17,6 +17,7 @@ import { default as FileUploadController } from "./file_upload_controller";
 import { default as IconSelectController } from "./icon_select_controller";
 import { default as NoticeController } from "./notice_controller";
 import { default as SearchController } from "./search_controller";
+import { default as StarRatingController } from "./star_rating_controller";
 import { default as TableController } from "./table_controller";
 import { default as VisibilityToggleController } from "./visibility_toggle_controller";
 
@@ -30,6 +31,7 @@ const controllers = {
   notice: NoticeController,
   "file-upload": FileUploadController,
   search: SearchController,
+  "star-rating": StarRatingController,
   table: TableController,
   "visibility-toggle": VisibilityToggleController,
 };
