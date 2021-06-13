@@ -3,7 +3,7 @@ module OclTools
     delegate :icon, to: :helpers
 
     def initialize(label:, field_id:, field_name:, value_method: :id, text_method: :name, search_params:, disabled: false, object: nil, results: nil, list_item_component: nil, error: false)
-      @results = results
+      @results = results || search_params[:results]
       @object = object
       @label = label
       @field_id = field_id

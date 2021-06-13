@@ -43,8 +43,9 @@ export default class extends Controller {
   }
 
   connectSelectSource(target) {
-    // BUG! This will ignore initial values
-    const { name, value } = getNameAndValue(target);
+    const name = target.getAttribute("data-name")
+    const value = target.value
+
     this.addListener(target, (e) => this.setToken(name, e.target.value));
     this.setToken(name, value); // initial value
     debug(`added listener to select: setToken(${name}, *)`);
