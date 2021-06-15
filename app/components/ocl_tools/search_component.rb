@@ -2,14 +2,19 @@ module OclTools
   class SearchComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
-    attr_reader :results, :search_result_blk, :class_name
+    attr_reader :results, :search_result_blk, :class_name, :search_params
 
-    def initialize(results, status, class_name: nil, &blk)
+    def initialize(results, status, class_name: nil, search_params: {}, &blk)
       @results = results
       @status = status
       @class_name = class_name
+      @search_params = search_params
 
       yield self if blk
+    end
+
+    def stringified_search_params
+      search_params && JSON.generate(search_params)
     end
 
     def search_result(&blk)
