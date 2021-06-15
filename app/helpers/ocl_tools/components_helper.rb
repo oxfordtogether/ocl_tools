@@ -49,8 +49,8 @@ module OclTools
       render NavTabsComponent.new(&blk)
     end
 
-    def navbar(brand_name, &blk)
-      render NavbarComponent.new(brand_name, &blk)
+    def navbar(brand_name, home_path: "/", &blk)
+      render NavbarComponent.new(brand_name, home_path, &blk)
     end
 
     def notice_component(*args)

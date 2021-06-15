@@ -6,10 +6,11 @@ module OclTools
     LinkWithActive = Struct.new(:name, :path, :icon, :active?)
     delegate :icon, to: :helpers
 
-    attr_reader :brand_name, :email
+    attr_reader :brand_name, :email, :home_path
 
-    def initialize(brand_name)
+    def initialize(brand_name, home_path)
       super
+      @home_path = home_path
       @links = []
       @right_links = []
       @profile_links = []

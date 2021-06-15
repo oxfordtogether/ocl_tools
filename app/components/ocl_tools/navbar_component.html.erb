@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between h-16">
       <div class="flex items-center">
         <div class="flex-shrink-0 w-20 text-center leading-5 text-primary-200">
-          <%= link_to brand_name, "/" %>
+          <%= link_to brand_name, home_path %>
         </div>
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-4">
@@ -23,7 +23,8 @@
             <% if link.icon %>
               <div>
                 <%= link_to link.path, class: "flex bg-primary-600 p-1 rounded-full text-primary-200 hover:text-white" do %>
-                  <%= icon(link.icon, class: "h-6 w-6") %><span class="ml-2"><%= link.name %></span>
+                  <%= icon(link.icon, class: "h-6 w-6") %>
+                  <span class="ml-2"><%= link.name %></span>
                 <% end %>
               </div>
             <% else %>
@@ -96,7 +97,8 @@
       <% right_links.each do |link| %>
         <% if link.icon %>
           <%= link_to link.path, class: "flex text-white hover:bg-primary-500 hover:bg-opacity-75 px-3 py-2 rounded-md text-base font-medium" do %>
-            <%= icon(link.icon, class: "h-6 w-6") %><span class="ml-2"><%= link.name %></span>
+            <%= icon(link.icon, class: "h-6 w-6") %>
+            <span class="ml-2"><%= link.name %></span>
           <% end %>
         <% else %>
           <%= link_to link.name, link.path, class: "text-white hover:bg-primary-500 hover:bg-opacity-75 block px-3 py-2 rounded-md text-base font-medium"%>
