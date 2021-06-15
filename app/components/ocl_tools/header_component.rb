@@ -12,6 +12,12 @@ module OclTools
       end
     end
 
+    Alert = Struct.new(:header_component, :blk) do
+      def contents(*args)
+        header_component.call_block(*args, &blk)
+      end
+    end
+
     Badge = Struct.new(:header_component, :blk) do
       def contents(*args)
         header_component.call_block(*args, &blk)
@@ -40,12 +46,13 @@ module OclTools
 
     delegate :icon, to: :helpers
 
-    attr_reader :title, :headings, :sub_headings, :badges, :actions, :icon_and_texts, :label_and_texts, :nav_tabs_sections
+    attr_reader :title, :headings, :sub_headings, :alerts, :badges, :actions, :icon_and_texts, :label_and_texts, :nav_tabs_sections
 
     def initialize(title: nil)
       super
       @headings = []
       @sub_headings = []
+      @alerts = []
 
       @badges = []
       @actions = []
@@ -66,6 +73,10 @@ module OclTools
 
     def sub_heading(&blk)
       @sub_headings << SubHeading.new(self, blk)
+    end
+
+    def alert(&blk)
+      @alerts << Alert.new(self, blk)
     end
 
     def badge(&blk)

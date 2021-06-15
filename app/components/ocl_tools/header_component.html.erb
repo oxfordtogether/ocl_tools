@@ -47,6 +47,11 @@
     <% end %>
   </div>
 </div>
+<div class="mt-4">
+  <% alerts.each do |alert| %>
+    <%= alert.contents %>
+  <% end %>
+</div>
 <% if nav_tabs_sections %>
   <%= nav_tabs_sections.contents %>
 <% else %>
