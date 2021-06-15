@@ -19,12 +19,11 @@ class _class extends _application_controller.default {
 
   perform(event) {
     event.preventDefault();
-    this.classname = this.data.get("classname");
 
-    if (this.classname) {
-      this.stimulate("SearchReflex#perform", this.queryTarget.value, this.classname);
-    } else {
+    if (isEmptyObject(this.paramsValue)) {
       this.stimulate("SearchReflex#perform", this.queryTarget.value);
+    } else {
+      this.stimulate("SearchReflex#perform", this.queryTarget.value, this.paramsValue);
     }
   }
 
@@ -33,3 +32,13 @@ class _class extends _application_controller.default {
 exports.default = _class;
 
 _defineProperty(_class, "targets", ["query", "activity", "count"]);
+
+_defineProperty(_class, "values", {
+  params: Object
+});
+
+function isEmptyObject(obj) {
+  for (const i in obj) return false;
+
+  return true;
+}

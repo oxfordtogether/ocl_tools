@@ -2,6 +2,9 @@ import ApplicationController from "./application_controller";
 
 export default class extends ApplicationController {
   static targets = ["query", "activity", "count"];
+  static values = {
+    params: Object,
+  };
 
   beforePerform() {
     this.activityTarget.hidden = false;
@@ -11,12 +14,19 @@ export default class extends ApplicationController {
   perform(event) {
     event.preventDefault();
 
-    this.classname = this.data.get("classname")
-
-    if (this.classname) {
-      this.stimulate("SearchReflex#perform", this.queryTarget.value, this.classname);
-    } else {
+    if (isEmptyObject(this.paramsValue)) {
       this.stimulate("SearchReflex#perform", this.queryTarget.value);
+    } else {
+      this.stimulate(
+        "SearchReflex#perform",
+        this.queryTarget.value,
+        this.paramsValue
+      );
     }
   }
+}
+
+function isEmptyObject(obj) {
+  for (const i in obj) return false;
+  return true;
 }
