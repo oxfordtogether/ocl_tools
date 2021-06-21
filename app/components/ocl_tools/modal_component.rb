@@ -3,6 +3,10 @@ module OclTools
     renders_one :title
     renders_one :body
 
-    def initialize; end
+    attr_reader :modal_width
+
+    def initialize(modal_width: "max-w-lg")
+      @modal_width = modal_width
+    end
   end
 end
