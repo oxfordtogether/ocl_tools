@@ -65,7 +65,9 @@ module OclTools
 
     def rich_text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object.errors[field]
-      options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
+      existing_classes = options[:class]
+      classes = "#{errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES} #{existing_classes}".strip
+      options = options.merge({ class: classes })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
         super(field, **options) + error(errors.last) + info(info_message)
