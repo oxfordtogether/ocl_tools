@@ -134,6 +134,34 @@ class _class extends _stimulus.Controller {
     });
   }
   /**
+   * To be used as a data-action to manually set the value of a hidden field. Useful
+   * for creating buttons/images/icons that control form elements
+   *
+   * Example:
+   *
+   *  <div data-action='click->better-conditional-fields#setField' data-token='rating:4'>
+   */
+
+
+  setField(event) {
+    const token = event.currentTarget.getAttribute("data-token");
+    debug("setField(token: '".concat(token, "')"));
+    const {
+      name,
+      value
+    } = splitToken(token);
+    const source = this.sourceTargets.find(target => {
+      const {
+        name: targetName
+      } = getNameAndValue(target);
+      return name === targetName;
+    });
+    if (!source) throw Error("Couldn't find field with name ".concat(name));
+    if (source.getAttribute("type") !== "hidden") throw Error("setField only supported for hidden fields");
+    source.value = value;
+    this.setToken(name, value);
+  }
+  /**
    * Sets a unique token for the given name, removing any existing tokens
    */
 

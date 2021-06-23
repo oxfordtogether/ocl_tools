@@ -43,8 +43,8 @@ export default class extends Controller {
   }
 
   connectSelectSource(target) {
-    const name = target.getAttribute("data-name")
-    const value = target.value
+    const name = target.getAttribute("data-name");
+    const value = target.value;
 
     this.addListener(target, (e) => this.setToken(name, e.target.value));
     this.setToken(name, value); // initial value
@@ -85,6 +85,30 @@ export default class extends Controller {
     this.listeners.forEach(([target, fcn]) =>
       target.removeEventListener("change", fcn)
     );
+  }
+
+  /**
+   * To be used as a data-action to manually set the value of a hidden field. Useful
+   * for creating buttons/images/icons that control form elements
+   *
+   * Example:
+   *
+   *  <div data-action='click->better-conditional-fields#setField' data-token='rating:4'>
+   */
+  setField(event) {
+    const token = event.currentTarget.getAttribute("data-token");
+    debug(`setField(token: '${token}')`);
+    const { name, value } = splitToken(token);
+    const source = this.sourceTargets.find((target) => {
+      const { name: targetName } = getNameAndValue(target);
+      return name === targetName;
+    });
+    if (!source) throw Error(`Couldn't find field with name ${name}`);
+    if (source.getAttribute("type") !== "hidden")
+      throw Error(`setField only supported for hidden fields`);
+
+    source.value = value;
+    this.setToken(name, value);
   }
 
   /**
