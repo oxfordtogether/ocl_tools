@@ -9,9 +9,11 @@
         <%= icon('exclamation', class: "h-5 w-5 text-red-400" ) %>
       <% end %>
     </div>
-    <div class="ml-3">
+    <div class="ml-3 flex-1">
       <h3 class="text-sm font-semibold <%= {warn: "text-yellow-800", info: "text-blue-800", danger: "text-red-800"}[type] %>">
-        <%= title %><% if info %>: <span class="mt-2 text-sm font-normal"><%= info %></span><% end %>
+        <%= title %><% if info %>:
+          <span class="mt-2 text-sm font-normal"><%= info %></span>
+        <% end %>
       </h3>
 
       <div class="mt-2 text-sm <%= {warn: "text-yellow-700", info: "text-blue-700", danger: "text-red-700"}[type] %>">
