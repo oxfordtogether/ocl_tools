@@ -9,7 +9,7 @@ module OclTools
     def initialize(title: nil, info: nil, type: :warn)
       @title = title
       @info = info
-      raise "Unsupported type: #{type}" unless SUPPORTED_TYPES.include?(type)
+      raise "Unsupported type: #{type}. Allowed types are: #{SUPPORTED_TYPES.map(&:inspect).join(', ')}" unless SUPPORTED_TYPES.include?(type)
 
       @type = type
     end
