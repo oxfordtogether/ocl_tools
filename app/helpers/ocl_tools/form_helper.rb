@@ -1,7 +1,7 @@
 module OclTools
   module FormHelper
     def tailwind_form_with(model:, **kwargs)
-      form_with(model: model, **kwargs) do |form|
+      form_with(model: model, builder: TailwindFormBuilder, **kwargs) do |form|
         content_tag(:div) do
           yield form
         end
@@ -18,7 +18,7 @@ module OclTools
       # ]
       # <%= form.select :blah, grouped_and_ungrouped_options_for_select(blah_options) %>
 
-      body = ''
+      body = ""
       grouped_options.each do |group_label, group_options|
         if group_label.nil?
           group_options.each do |label, value|
