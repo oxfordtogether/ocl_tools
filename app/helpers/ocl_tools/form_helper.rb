@@ -1,6 +1,6 @@
 module OclTools
   module FormHelper
-    def tailwind_form_with(model:, **kwargs)
+    def tailwind_form_with(model: nil, **kwargs)
       form_with(model: model, builder: TailwindFormBuilder, **kwargs) do |form|
         content_tag(:div) do
           yield form

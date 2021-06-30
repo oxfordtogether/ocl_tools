@@ -28,7 +28,7 @@ module OclTools
     alias orig_file_field file_field
 
     def text_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **kwargs)
-      errors = object.errors[field]
+      errors = object ? object.errors[field] : []
       kwargs[:class] = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
@@ -37,7 +37,7 @@ module OclTools
     end
 
     def text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
-      errors = object.errors[field]
+      errors = object ? object.errors[field] : []
       options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
@@ -46,7 +46,7 @@ module OclTools
     end
 
     def email_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
-      errors = object.errors[field]
+      errors = object ? object.errors[field] : []
       options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
@@ -55,7 +55,7 @@ module OclTools
     end
 
     def number_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
-      errors = object.errors[field]
+      errors = object ? object.errors[field] : []
       options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
@@ -64,7 +64,7 @@ module OclTools
     end
 
     def rich_text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
-      errors = object.errors[field]
+      errors = object ? object.errors[field] : []
       existing_classes = options[:class]
       classes = "#{errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES} #{existing_classes}".strip
       options = options.merge({ class: classes })
@@ -75,7 +75,7 @@ module OclTools
     end
 
     def file_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **opts)
-      errors = object.errors[field]
+      errors = object ? object.errors[field] : []
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
         @template.render(FileUploadComponent.new(form: self, field: field, **opts)) + error(errors.last) + info(info_message)
@@ -83,7 +83,7 @@ module OclTools
     end
 
     def select(field, options, include_blank: true, label: nil, width: nil, required_asterix: false, info_message: nil, html_options: {})
-      errors = object.errors[field]
+      errors = object ? object.errors[field] : []
 
       choices = include_blank ? { include_blank: "Select..." } : {}
       classes = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
@@ -94,7 +94,7 @@ module OclTools
     end
 
     def collection_select(method, collection, value_method, text_method, include_blank: true, width: nil, required_asterix: false, info_message: nil, html_options: {}, **options)
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       label = options[:label]
       disabled = options[:disabled] || false
@@ -107,7 +107,7 @@ module OclTools
     end
 
     def date_picker(method, placeholder = "Select...", label: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
       names = { "year": name_for("#{method}(1i)"), "month": name_for("#{method}(2i)"), "day": name_for("#{method}(3i)") }
       ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"), "base": id_for(method) }
 
@@ -117,7 +117,7 @@ module OclTools
     end
 
     def date_field(method, label: nil, width: nil, required_asterix: false, info_message: nil)
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
         @template.render(DateFieldComponent.new(form: self, method: method, value: @object.send(method), errors: !errors.empty?)) + error(errors.last) + info(info_message)
@@ -128,7 +128,7 @@ module OclTools
       input_classes = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
       input_error_classes = "shadow-sm sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500"
 
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
         super(method, { minute_step: minute_step, ignore_date: true }, { class: errors.empty? ? input_classes : input_error_classes }) + error(errors.last) + info(info_message)
@@ -136,7 +136,7 @@ module OclTools
     end
 
     def radio_group(method, label: nil, required_asterix: false, info_message: nil, &block)
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       @template.content_tag :div, class: "sm:col-span-6" do
         label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
@@ -144,7 +144,7 @@ module OclTools
     end
 
     def radio_button(method, value, label, required_asterix: false, info_message: nil, options: {})
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       input_classes = "form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400"
       input_error_classes = "form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300"
@@ -157,7 +157,7 @@ module OclTools
     end
 
     def check_box_group(method, label: nil, required_asterix: false, info_message: nil, &block)
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       @template.content_tag :div, class: "sm:col-span-6" do
         label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
@@ -165,7 +165,7 @@ module OclTools
     end
 
     def check_box(method, value, label, width: :full, required_asterix: false, info_message: nil, options: {})
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       input_classes = "h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400 rounded-md"
       input_error_classes = "h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300 rounded-md"
@@ -182,7 +182,7 @@ module OclTools
     end
 
     def icon_select(method, select_options, label: nil, width: :full, required_asterix: false, info_message: nil)
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
         @template.render(IconSelectComponent.new(name_for(method), id_for(method), select_options, value: @object.send(method))) + error(errors.last) + info(info_message)
@@ -244,7 +244,7 @@ module OclTools
     end
 
     def autocomplete_field(method, value_method, text_method, search_params, label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false)
-      errors = object.errors[method]
+      errors = object ? object.errors[method] : []
 
       # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
       if selected == :not_specified
