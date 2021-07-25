@@ -29,11 +29,15 @@ var _icon_select_controller = _interopRequireDefault(require("./icon_select_cont
 
 var _notice_controller = _interopRequireDefault(require("./notice_controller"));
 
+var _pie_chart_controller = _interopRequireDefault(require("./pie_chart_controller"));
+
 var _search_controller = _interopRequireDefault(require("./search_controller"));
 
 var _star_rating_controller = _interopRequireDefault(require("./star_rating_controller"));
 
 var _table_controller = _interopRequireDefault(require("./table_controller"));
+
+var _time_chart_controller = _interopRequireDefault(require("./time_chart_controller"));
 
 var _visibility_toggle_controller = _interopRequireDefault(require("./visibility_toggle_controller"));
 
@@ -55,11 +59,13 @@ const controllers = {
   "better-conditional-fields": _better_conditional_fields_controller.default,
   "conditional-fields": _conditional_fields_controller.default,
   "date-picker": _date_picker_controller.default,
+  "file-upload": _file_upload_controller.default,
   "icon-select": _icon_select_controller.default,
   notice: _notice_controller.default,
-  "file-upload": _file_upload_controller.default,
+  "pie-chart": _pie_chart_controller.default,
   search: _search_controller.default,
   "star-rating": _star_rating_controller.default,
+  "time-chart": _time_chart_controller.default,
   table: _table_controller.default,
   "visibility-toggle": _visibility_toggle_controller.default
 };

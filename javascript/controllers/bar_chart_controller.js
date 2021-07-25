@@ -1,56 +1,59 @@
-import { Controller } from "stimulus";
-import "chart.js"
-import "chartjs-plugin-datalabels"
+import ChartController from './chart_controller'
 
-Chart.platform.disableCSSInjection = true;
 
-export default class extends Controller {
-  static targets = ['chart'];
+export default class extends ChartController {
+  getExtraConfigOptions() {
+    return {
+    };
+  }
 
-  connect() {
-    const title = this.data.get("title")
-    const maintainAspectRatio = !this.data.get("squashable");
-    const data = JSON.parse(this.data.get('data'))
-    new Chart(this.chartTarget, {
+
+  getGraphSettings() {
+    return {
       type: 'bar',
       data: {
-        labels: data.map( d => d.label ),
+        labels: this.config.data.map(d => d.label),
         datasets: [{
           label: '',
-          data: data.map ( d => d.value ),
-          backgroundColor: data.map ( d => d.background_color || 'rgb(169, 169, 169, 0.4)' ),
-          borderColor: data.map ( d => d.border_color || 'rgb(169, 169, 169, 1.0)' ),
+          data: this.config.data.map(d => d.value),
+          backgroundColor: this.config.data.map(d => d.background_color || 'rgb(169, 169, 169, 0.4)'),
+          borderColor: this.config.data.map(d => d.border_color || 'rgb(169, 169, 169, 1.0)'),
           borderWidth: 1,
           datalabels: {
             align: 'top',
-            anchor: 'end'
+            anchor: 'end',
+            clamp: true,
+            clip: false,
           }
         }]
       },
       options: {
-        maintainAspectRatio,
+        maintainAspectRatio: !this.config.squashable,
         plugins: {
           datalabels: {
             font: {
-              weight: 'bold'
+              weight: 'bold',
             },
-          }
+          },
+          legend: {
+            display: this.config.showLegend,
+          },
         },
         title: {
           display: true,
-          text: title,
+          text: this.config.title,
         },
         legend: {
           display: false
         },
         scales: {
-          yAxes: [{
+          y: {
             ticks: {
               beginAtZero: true
             }
-          }]
+          }
         }
       }
-    });
+    };
   }
 }

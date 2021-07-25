@@ -16,9 +16,11 @@ import { default as DatePickerController } from "./date_picker_controller";
 import { default as FileUploadController } from "./file_upload_controller";
 import { default as IconSelectController } from "./icon_select_controller";
 import { default as NoticeController } from "./notice_controller";
+import { default as PieChartController } from "./pie_chart_controller";
 import { default as SearchController } from "./search_controller";
 import { default as StarRatingController } from "./star_rating_controller";
 import { default as TableController } from "./table_controller";
+import { default as TimeChartController } from "./time_chart_controller";
 import { default as VisibilityToggleController } from "./visibility_toggle_controller";
 
 const controllers = {
@@ -27,11 +29,13 @@ const controllers = {
   "better-conditional-fields": BetterConditionalFieldsController,
   "conditional-fields": ConditionalFieldsController,
   "date-picker": DatePickerController,
+  "file-upload": FileUploadController,
   "icon-select": IconSelectController,
   notice: NoticeController,
-  "file-upload": FileUploadController,
+  "pie-chart": PieChartController,
   search: SearchController,
   "star-rating": StarRatingController,
+  "time-chart": TimeChartController,
   table: TableController,
   "visibility-toggle": VisibilityToggleController,
 };
