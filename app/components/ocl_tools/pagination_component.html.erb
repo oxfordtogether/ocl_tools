@@ -27,16 +27,16 @@
             <%= icon("chevron-left", class: "h-5 w-5") %>
           </div>
         <% else %>
-          <a href="<%== pagy_url_for(@pagy.prev, @pagy) %>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <a href="<%== pagy_url_for(@pagy, @pagy.prev) %>" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Previous</span>
             <%= icon("chevron-left", class: "h-5 w-5") %>
           </a>
         <% end %>
         <% @pagy.series([1,2,2,1]).each do |item| %>
           <% if item.is_a?(Integer) # not the current page %>
-            <%= link_to item, pagy_url_for(item, @pagy), class: "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50" %>
+            <%= link_to item, pagy_url_for(@pagy, item), class: "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50" %>
           <% elsif item.is_a?(String) # the current page %>
-            <%= link_to item, pagy_url_for(item, @pagy), class: "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-gray-200" %>
+            <%= link_to item, pagy_url_for(@pagy, item), class: "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 bg-gray-200" %>
           <% elsif item == :gap %>
             <div class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700">...</div>
           <% end %>
@@ -47,7 +47,7 @@
             <%= icon("chevron-right", class: "h-5 w-5") %>
           </div>
         <% else %>
-          <a href="<%== pagy_url_for(@pagy.next, @pagy) %>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
+          <a href="<%== pagy_url_for(@pagy, @pagy.next) %>" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 text-sm font-medium text-gray-500 hover:bg-gray-50">
             <span class="sr-only">Next</span>
             <%= icon("chevron-right", class: "h-5 w-5") %>
           </a>
