@@ -13,7 +13,7 @@ Chart.register(BarController, LineController, PieController, ArcElement, BarElem
 export default class ChartController extends Controller {
     static targets = ['chart'];
 
-    jsonConfigFields = ['data', 'colors'];
+    jsonConfigFields = ['data', 'colors', 'explode'];
 
     config = {
         data: [],
@@ -90,9 +90,8 @@ export default class ChartController extends Controller {
         // Crude attempt at autosizing, should probably do something in a chart callback
         if (this.config.labelSize === 'auto') {
             this.config.labelSize = Math.min(32, 12 + 20 / Math.max(1, Object.values(this.config.data).length - 10));
-            console.log(this.config.labelSize, this.config.data);
         }
-
+        console.log(this.getGraphSettings());
         // Create the chart
         new Chart(this.chartTarget, this.getGraphSettings());
     }
