@@ -40,7 +40,7 @@ module OclTools
           builder.instance_eval(&blk)
 
           # we're going to lean on rails' enum helper for most of this
-          converted_definitions = { name => builder.all_options.map {|o| [o.id, o.description]}.to_h }
+          converted_definitions = { name => builder.all_options.map {|o| [o.id, o.id.to_s]}.to_h }
           converted_definitions[:_prefix] = prefix if prefix
           enum converted_definitions
 
