@@ -2,13 +2,6 @@ module OclTools
   class ButtonLinkToComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
-    Style = Struct.new(:name, :link_classes, :icon_classes)
-    STYLES = [
-      Style.new("gray-outline", "border-gray-300 text-gray-700 bg-white hover:bg-gray-50", "text-gray-500"),
-      Style.new("primary-outline", "border-transparent text-primary-700 bg-primary-100 hover:bg-primary-200", "text-primary-500"),
-      Style.new("primary-filled", "border-transparent text-white bg-primary-600 hover:bg-primary-700", "text-white"),
-    ]
-
     Size = Struct.new(:name, :link_classes, :icon_classes)
     SIZES = [
       Size.new("very_small", "px-2 py-0.5 text-xs", "-ml-0.5 mr-1 h-4 w-4"),
@@ -22,21 +15,11 @@ module OclTools
       @icon_name = icon
       @options = options
 
-      @style = STYLES.find { |s| s.name == style } or raise(StyleError, style)
+      @style = ButtonStyle.find(style)
       @size = SIZES.find { |s| s.name == size } or raise(SizeError, size)
     end
 
     attr_reader :text, :path, :style, :size, :icon_name, :options
-
-    class StyleError < ArgumentError
-      def initialize(style)
-        @style = style
-      end
-
-      def message
-        "Unrecognised style: #{@style}. Allowed styles: #{STYLES.map(&:name).join(', ')}"
-      end
-    end
 
     class SizeError < ArgumentError
       def initialize(size)

@@ -193,12 +193,10 @@ module OclTools
       @template.content_tag(:div, class: "grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", &block)
     end
 
-    def submit(label = "Save", secondary: false, compact: false)
-      if secondary
-        super(label, class: "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border border-transparent shadow-sm text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
-      else
-        super(label, class: "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
-      end
+    def submit(label = "Save", secondary: false, style: nil, compact: false)
+      style ||= secondary ? "primary-outline" : "primary-filled"
+      button_style = ButtonStyle.find(style)
+      super(label, class: "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border shadow-sm text-sm font-medium rounded-md #{button_style.link_classes} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
     end
 
     def cancel(action, label = "Cancel", compact: false)
@@ -305,7 +303,10 @@ module OclTools
       # or tailwind won't include them in the optimized css
       col_class = COL_OPTIONS.fetch(width || :full)
       @template.content_tag :div, class: col_class do
-        label(field, label_text, required_asterix: required_asterix) + @template.content_tag(:div, class: "mt-1", &block)
+        content = ""
+        content << label(field, label_text, required_asterix: required_asterix) unless label_text == :none
+        content << @template.content_tag(:div, class: "mt-1", &block)
+        content.html_safe
       end
     end
   end
