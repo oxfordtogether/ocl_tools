@@ -22,6 +22,8 @@ bg-gray-50
 bg-gray-500
 bg-green-400
 bg-opacity-75
+bg-primary-600
+bg-primary-700
 bg-red-50
 bg-white
 bg-yellow-50
@@ -39,6 +41,7 @@ border-green-300
 border-indigo-300
 border-indigo-500
 border-pink-300
+border-primary-700
 border-red-300
 border-t
 border-transparent
@@ -71,6 +74,7 @@ focus:ring-2
 focus:ring-gray-200
 focus:ring-indigo-500
 focus:ring-offset-2
+focus:ring-offset-primary-600
 focus:ring-red-500
 focus:ring-white
 focus:ring-yellow-300
@@ -95,6 +99,7 @@ hover:bg-gray-100
 hover:bg-gray-200
 hover:bg-gray-50
 hover:bg-opacity-75
+hover:bg-primary-500
 hover:border-gray-300
 hover:text-gray-500
 hover:text-gray-700
@@ -323,6 +328,8 @@ text-indigo-600
 text-left
 text-lg
 text-pink-500
+text-primary-200
+text-primary-300
 text-red-400
 text-red-700
 text-red-800
