@@ -80,7 +80,7 @@ folder on changes:
 ```
 # in ocl_tools
 yarn link
-yarn run debug
+yarn watch
 
 # in your app
 yarn link ocl_tools
