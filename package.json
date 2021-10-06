@@ -15,7 +15,7 @@
     "stimulus_reflex": "^3.4.1",
     "turbolinks": "^5.2.0"
   },
-  "version": "0.1.0",
+  "version": "0.2.0",
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
