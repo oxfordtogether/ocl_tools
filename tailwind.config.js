@@ -5,7 +5,7 @@ module.exports = {
   purge: [
     "./app/**/*.html.erb",
     "./app/components/ocl_tools/*",
-    "./app/helpers/*",
+    "./app/helpers/ocl_tools/*",
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -18,5 +18,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };

@@ -46,6 +46,7 @@ border-blue-300
 border-dashed
 border-gray-200
 border-gray-300
+border-gray-400
 border-green-300
 border-indigo-300
 border-indigo-500
@@ -72,6 +73,7 @@ flex
 flex-1
 flex-col
 flex-col-reverse
+flex-row
 flex-shrink-0
 flex-wrap
 flow-root
@@ -91,6 +93,11 @@ font-bold
 font-medium
 font-normal
 font-semibold
+gap-x-4
+gap-y-1
+gap-y-6
+grid
+grid-cols-1
 group
 group-hover:text-gray-500
 h-0
@@ -115,6 +122,7 @@ hover:text-gray-500
 hover:text-gray-700
 hover:text-gray-900
 hover:text-indigo-500
+hover:text-red-700
 hover:text-white
 inline
 inline-block
@@ -130,6 +138,7 @@ justify-between
 justify-center
 justify-end
 justify-evenly
+justify-start
 leading-4
 leading-5
 leading-6
@@ -156,6 +165,7 @@ mb-2
 mb-3
 mb-4
 mb-6
+mb-8
 md:block
 md:flex
 md:flex-row
@@ -200,6 +210,7 @@ mt-6
 mt-8
 mx-auto
 my-1
+my-3
 opacity-0
 opacity-100
 opacity-50
@@ -213,6 +224,7 @@ p-1
 p-2
 p-4
 p-8
+pb-1
 pb-2
 pb-20
 pb-3
@@ -277,7 +289,10 @@ shadow-sm
 sm:-mx-6
 sm:align-middle
 sm:block
+sm:col-span-1
 sm:col-span-2
+sm:col-span-3
+sm:col-span-4
 sm:col-span-6
 sm:divide-gray-200
 sm:divide-y
@@ -289,6 +304,7 @@ sm:flex-wrap
 sm:gap-4
 sm:grid
 sm:grid-cols-3
+sm:grid-cols-6
 sm:h-screen
 sm:hidden
 sm:inline-block
@@ -349,12 +365,15 @@ text-pink-500
 text-primary-200
 text-primary-300
 text-red-400
+text-red-500
+text-red-600
 text-red-700
 text-red-800
 text-red-900
 text-right
 text-sm
 text-white
+text-xl
 text-xs
 text-yellow-400
 text-yellow-500
@@ -370,6 +389,7 @@ transition-opacity
 translate-y-0
 translate-y-2
 truncate
+underline
 uppercase
 w-0
 w-0.5
