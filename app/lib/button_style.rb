@@ -9,7 +9,7 @@ class ButtonStyle < Struct.new(:name, :link_classes, :icon_classes)
   end
 
   def self.find(id)
-    all.find { |s| s.name == id.to_s } or raise(StyleError, style)
+    all.find { |s| s.name == id.to_s } or raise(StyleError, id)
   end
 
   class StyleError < ArgumentError
