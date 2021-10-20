@@ -112,7 +112,7 @@ module OclTools
       ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"), "base": id_for(method) }
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
-        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.send(method), placeholder: placeholder, disabled: disabled, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
+        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.try(method), placeholder: placeholder, disabled: disabled, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
@@ -120,7 +120,7 @@ module OclTools
       errors = object ? object.errors[method] : []
 
       tailwind_field(method, label, width: width, required_asterix: required_asterix) do
-        @template.render(DateFieldComponent.new(form: self, method: method, value: @object.send(method), errors: !errors.empty?)) + error(errors.last) + info(info_message)
+        @template.render(DateFieldComponent.new(form: self, method: method, value: @object.try(method), errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
