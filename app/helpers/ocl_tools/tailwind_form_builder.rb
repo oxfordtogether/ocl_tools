@@ -247,7 +247,7 @@ module OclTools
 
       # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
       if selected == :not_specified
-        relation = object.class.try(:reflect_on_all_associations)&.find { |x| x.is_a?(ActiveRecord::Reflection::BelongsToReflection) && x.foreign_key == method.to_s }&.name
+        relation = object.class.try(:reflect_on_all_associations)&.find { |x| x.is_a?(ActiveRecord::Reflection::BelongsToReflection) && x.foreign_key.to_s == method.to_s }&.name
         selected = relation && object.send(relation)
       end
 
