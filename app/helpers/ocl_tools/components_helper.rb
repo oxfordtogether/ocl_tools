@@ -100,5 +100,9 @@ module OclTools
     def inbox_show_body(*args, &blk)
       render InboxShowBodyComponent.new(*args, &blk)
     end
+
+    def dropdown_button(label, &blk)
+      render DropdownButtonComponent.new(label, &blk)
+    end
   end
 end
