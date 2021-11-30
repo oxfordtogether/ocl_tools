@@ -6,6 +6,7 @@
 -ml-0.5
 -ml-1
 -ml-px
+-mr-1
 -mr-2
 -mx-1
 -my-2
@@ -89,6 +90,7 @@ focus:ring-2
 focus:ring-gray-200
 focus:ring-indigo-500
 focus:ring-offset-2
+focus:ring-offset-gray-100
 focus:ring-offset-primary-600
 focus:ring-red-500
 focus:ring-white
@@ -97,6 +99,7 @@ font-bold
 font-medium
 font-normal
 font-semibold
+gap-1
 gap-x-4
 gap-y-1
 gap-y-6
@@ -109,6 +112,8 @@ h-0.5
 h-10
 h-12
 h-16
+h-3
+h-3.5
 h-4
 h-5
 h-6
@@ -409,8 +414,11 @@ w-10
 w-12
 w-20
 w-24
+w-3
+w-3.5
 w-4
 w-5
+w-56
 w-6
 w-8
 w-full
