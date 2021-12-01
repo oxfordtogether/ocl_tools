@@ -194,10 +194,25 @@ module OclTools
       @template.content_tag(:div, class: "grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", &block)
     end
 
-    def submit(label = "Save", secondary: false, style: nil, compact: false)
+    def submit(label = "Save", secondary: false, style: nil, compact: false, **options)
       style ||= secondary ? "primary-outline" : "primary-filled"
       button_style = ButtonStyle.find(style)
-      super(label, class: "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border shadow-sm text-sm font-medium rounded-md #{button_style.link_classes} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")
+      options[:class] = "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border shadow-sm text-sm font-medium rounded-md #{button_style.link_classes} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
+      super(label, options)
+    end
+
+    def button(label = nil, secondary: false, style: nil, compact: false, name: nil, value: nil, **options, &block)
+      if value
+        options[:value] = value
+        options[:name] = "#{object_name}[#{name || 'commit'}]"
+      end
+
+      style ||= secondary ? "primary-outline" : "primary-filled"
+      button_style = ButtonStyle.find(style)
+      options[:class] = "inline-flex justify-center #{compact ? 'py-1 px-2' : 'py-2 px-4'} border shadow-sm text-sm font-medium rounded-md #{button_style.link_classes} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
+      super(label, options, &block)
     end
 
     def cancel(action, label = "Cancel", compact: false)
