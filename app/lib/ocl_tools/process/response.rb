@@ -4,6 +4,7 @@ module OclTools
       include OclTools::Process::Attributes
       include ActiveModel::Model
       include OclTools::Actions::OptionsField
+      include ActiveRecord::AttributeAssignment
 
       def assign_attributes(params = {})
         params.try(:permit!)
