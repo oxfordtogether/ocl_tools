@@ -1,0 +1,20 @@
+<div class="inline-flex -space-x-px">
+
+  <% if include_all %>
+    <div class="<%="#{size.link_classes}"%> <%= params.include?(key) ? "bg-white" : "bg-yellow-300" %> rounded-l-md border-gray-300 border cursor-pointer">
+      <%= link_to "All", params.except(key) %>
+    </div>
+  <% end %>
+
+  <% options.each_with_index do |(v, k), i| %>
+    <% if params[key]== k.to_s %>
+      <div class="bg-yellow-300 <%="#{size.link_classes}"%> <%= "rounded-l-md" if i.zero? && !include_all %> <%= 'rounded-r-md' if i == options.length - 1 %> border-gray-300 border cursor-pointer">
+        <%= link_to v, params.merge(key => k) %>
+      </div>
+    <% else %>
+      <div class="bg-white <%="#{size.link_classes}"%> <%= "rounded-l-md " if i.zero? && !include_all %> <%= 'rounded-r-md ' if i == options.length - 1 %> border-gray-300 border cursor-pointer">
+        <%= link_to v, params.merge(key => k) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
