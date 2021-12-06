@@ -53,11 +53,29 @@ module OclTools
           # get the field to always return a symbol
           define_method(name) { attributes[name.to_s]&.to_sym }
           define_method("humanized_#{name}") { builder.find(send(name))&.description }
+          define_method("#{name}_option") { builder.find(send(name)) }
         end
 
-        class Option < Struct.new(:id, :description, :archived)
+        class Option
+          attr_reader :id, :description, :colour, :label
+
+          def initialize(id, description=nil, archived: false, terminal: false, colour: nil, label: nil)
+            raise ArgmentError.new("option's id must be a symbol") unless id.is_a?(Symbol)
+
+            @id = id
+            @description = description || id.to_s.humanize
+            @terminal = terminal
+            @archived = archived
+            @label = label || @description
+            @colour = colour.nil? ? BadgeColour.default : BadgeColour.check(colour)
+          end
+
           def archived?
             archived
+          end
+
+          def terminal?
+            terminal
           end
         end
 
@@ -76,14 +94,12 @@ module OclTools
             @options + @archived_options
           end
 
-          def option(id, name = nil)
-            raise "first argument of option must be a symbol" unless id.is_a?(Symbol)
-            @options << Option.new(id, name || id.to_s.humanize, false)
+          def option(id, name = nil, terminal: false, label: nil, colour: nil)
+            @options << Option.new(id, name, terminal: terminal, label: label, colour: colour)
           end
 
-          def archived_option(id, name = nil)
-            raise "first argument of archived_option must be a symbol" unless id.is_a?(Symbol)
-            @archived_options << Option.new(id, name || id.to_s.humanize, true)
+          def archived_option(id, name = nil, terminal: false, label: nil, colour: nil)
+            @archived_options << Option.new(id, name, terminal: terminal, label: label, colour: colour, archived: true)
           end
         end
       end

@@ -7,5 +7,6 @@ module OclTools
     def current_webpacker_instance
       OclTools.webpacker
     end
+
   end
 end
