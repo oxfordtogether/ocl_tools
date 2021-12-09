@@ -202,6 +202,7 @@ module OclTools
       super(label, options)
     end
 
+    alias orig_button button
     def button(label = nil, secondary: false, style: nil, compact: false, name: nil, value: nil, **options, &block)
       if value
         options[:value] = value
