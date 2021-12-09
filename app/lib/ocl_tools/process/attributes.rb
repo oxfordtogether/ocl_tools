@@ -3,7 +3,7 @@ module OclTools
     module Attributes
       extend ActiveSupport::Concern
 
-      ALLOWED_TYPES = %i[string date]
+      ALLOWED_TYPES = %i[string integer date]
 
       class_methods do
         def attribute_names
@@ -11,11 +11,7 @@ module OclTools
         end
 
         def attribute(name, type: :string)
-          if !ALLOWED_TYPES.include?(type)
-            raise AttributeError.new(
-              "Type #{type.inspect} is not supported. Choose one of: #{ALLOWED_TYPES.map(&:inspect).join(', ')}"
-            )
-          end
+          raise AttributesError.new(type) if !ALLOWED_TYPES.include?(type)
 
           attr_reader name
 
@@ -26,6 +22,7 @@ module OclTools
             when :string
               instance_variable_set("@#{name}", value)
             when :integer
+              instance_variable_set("@#{name}", value&.to_i)
             when :date
               date_or_string = value
               # ActiveRecord::AttributeAssignment will pass through a hash of the form:
@@ -47,6 +44,16 @@ module OclTools
 
       def attributes 
         self.class.attribute_names.map {|a| [a, send(a)]}.to_h
+      end
+    end
+
+    class AttributesError < ArgumentError
+      def initialize(type)
+        @type = type
+      end
+  
+      def message
+        "Type #{@type.inspect} is not supported. Choose one of: #{Attributes::ALLOWED_TYPES.map(&:inspect).join(', ')}"
       end
     end
   end
