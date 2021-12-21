@@ -10,5 +10,10 @@ module OclTools
     def self.from(obj, prefix: :address)
       new(ATTRS.map { |a| [a, obj.try("#{prefix}_#{a}")] }.to_h)
     end
+
+
+    def single_line
+      [line_1, line_2, line_3, town, city, postcode].compact.join(", ")
+    end
   end
 end
