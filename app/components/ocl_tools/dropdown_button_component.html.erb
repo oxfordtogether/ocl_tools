@@ -19,7 +19,14 @@
     <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
       <div class="py-1" role="none">
         <% links.each do |link| %>
-          <%= link_to link.name, link.path, class: "text-gray-700 hover:bg-gray-100 hover:text-gray-900 block px-4 py-2 text-sm", html_options: { role: "menuitem", tabindex: "-1"} %>
+          <%= link_to link.path, class: "text-gray-700 hover:bg-gray-100 hover:text-gray-900 block px-4 py-2 text-sm flex items-center", html_options: { role: "menuitem", tabindex: "-1"} do %>
+            <% if link.icon %>
+              <%= icon link.icon, class: "text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
+            <% end %>
+            <span class="truncate">
+              <%= link.name %>
+            </span>
+          <% end %>
         <% end %>
       </div>
     </div>

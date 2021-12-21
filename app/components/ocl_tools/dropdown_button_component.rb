@@ -14,10 +14,10 @@ module OclTools
       yield self
     end
 
-    def link(name, path)
-      @links << DropdownLink.new(name, path)
+    def link(name, path, icon: nil)
+      @links << DropdownLink.new(name, path, icon)
     end
 
-    DropdownLink = Struct.new(:name, :path)
+    DropdownLink = Struct.new(:name, :path, :icon)
   end
 end
