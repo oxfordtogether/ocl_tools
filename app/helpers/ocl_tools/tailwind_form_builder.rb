@@ -285,6 +285,10 @@ module OclTools
       end
     end
 
+    def error_summary
+      @template.render(FormErrorComponent.new(object))
+    end
+
     private
 
     def section_heading(title, subtitle = nil)
