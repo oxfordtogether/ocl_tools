@@ -5,6 +5,12 @@ module OclTools
 
       ALLOWED_TYPES = %i[string integer date]
 
+      included do
+        include ActiveModel::Model # for validations?
+        include OclTools::Actions::OptionsField
+        include ActiveRecord::AttributeAssignment
+      end
+
       class_methods do
         def attribute_names
           @attribute_names ||= []
@@ -44,6 +50,12 @@ module OclTools
 
       def attributes 
         self.class.attribute_names.map {|a| [a, send(a)]}.to_h
+      end
+
+      def assign_attributes(params = {})
+        params.try(:permit!)
+        attribute_params = (params || {}).slice(self.class.attribute_names)
+        super(attribute_params)
       end
     end
 

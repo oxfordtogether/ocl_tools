@@ -21,6 +21,10 @@ module OclTools
           define_singleton_method("humanized_#{name}") { |val| builder.find(val)&.description }
           define_singleton_method("#{name}_options") { builder.all_options }
 
+          define_method("#{name}_options_for_select") { builder.options.map { |o| [o.description, o.id] } }
+          define_method("#{name}_all_options_for_select") { builder.all_options.map { |o| [o.description, o.id] } }
+          define_method("#{name}_options") { builder.all_options }
+
           define_method(name) { instance_variable_get(instance_variable) }
           define_method("#{name}=") do |val|
             if builder.options.map(&:id).map(&:to_s).include?(val.to_s)
