@@ -55,52 +55,52 @@ module OclTools
           define_method("humanized_#{name}") { builder.find(send(name))&.description }
           define_method("#{name}_option") { builder.find(send(name)) }
         end
+      end
 
-        class Option
-          attr_reader :id, :description, :colour, :label
+      class Option
+        attr_reader :id, :description, :colour, :label
 
-          def initialize(id, description=nil, archived: false, terminal: false, colour: nil, label: nil)
-            raise ArgmentError.new("option's id must be a symbol") unless id.is_a?(Symbol)
+        def initialize(id, description=nil, archived: false, terminal: false, colour: nil, label: nil)
+          raise ArgmentError.new("option's id must be a symbol") unless id.is_a?(Symbol)
 
-            @id = id
-            @description = description || id.to_s.humanize
-            @terminal = terminal
-            @archived = archived
-            @label = label || @description
-            @colour = colour.nil? ? BadgeColour.default : BadgeColour.check(colour)
-          end
-
-          def archived?
-            archived
-          end
-
-          def terminal?
-            terminal
-          end
+          @id = id
+          @description = description || id.to_s.humanize
+          @terminal = terminal
+          @archived = archived
+          @label = label || @description
+          @colour = colour.nil? ? BadgeColour.default : BadgeColour.check(colour)
         end
 
-        class OptionsBuilder
-          attr_accessor :options, :archived_options
-          def initialize
-            @options = []
-            @archived_options = []
-          end
+        def archived?
+          archived
+        end
 
-          def find(id)
-            all_options.find { |x| x.id.to_s == id.to_s }
-          end
+        def terminal?
+          terminal
+        end
+      end
 
-          def all_options
-            @options + @archived_options
-          end
+      class OptionsBuilder
+        attr_accessor :options, :archived_options
+        def initialize
+          @options = []
+          @archived_options = []
+        end
 
-          def option(id, name = nil, terminal: false, label: nil, colour: nil)
-            @options << Option.new(id, name, terminal: terminal, label: label, colour: colour)
-          end
+        def find(id)
+          all_options.find { |x| x.id.to_s == id.to_s }
+        end
 
-          def archived_option(id, name = nil, terminal: false, label: nil, colour: nil)
-            @archived_options << Option.new(id, name, terminal: terminal, label: label, colour: colour, archived: true)
-          end
+        def all_options
+          @options + @archived_options
+        end
+
+        def option(id, name = nil, terminal: false, label: nil, colour: nil)
+          @options << Option.new(id, name, terminal: terminal, label: label, colour: colour)
+        end
+
+        def archived_option(id, name = nil, terminal: false, label: nil, colour: nil)
+          @archived_options << Option.new(id, name, terminal: terminal, label: label, colour: colour, archived: true)
         end
       end
     end

@@ -11,7 +11,7 @@ module OclTools
         #   archived_option :in_person, "In person"
         # end
         def better_options_field(name, prefix: true, &blk)
-          builder = OptionsBuilder.new
+          builder = OclTools::Concerns::OptionsField::OptionsBuilder.new
           builder.instance_eval(&blk)
           instance_variable = "@#{name}"
 
@@ -38,38 +38,6 @@ module OclTools
           builder.options.each do |option|
             option_name = prefix ? "#{name}_#{option.id}" : option.id
             define_method("#{option_name}?") { send(name) == option.id }
-          end
-        end
-
-        class Option < Struct.new(:id, :description, :archived)
-          def archived?
-            archived
-          end
-        end
-
-        class OptionsBuilder
-          attr_accessor :options, :archived_options
-          def initialize
-            @options = []
-            @archived_options = []
-          end
-
-          def find(id)
-            all_options.find { |x| x.id.to_s == id.to_s }
-          end
-
-          def all_options
-            @options + @archived_options
-          end
-
-          def option(id, name = nil)
-            raise "first argument of option must be a symbol" unless id.is_a?(Symbol)
-            @options << Option.new(id, name || id.to_s.humanize, false)
-          end
-
-          def archived_option(id, name = nil)
-            raise "first argument of archived_option must be a symbol" unless id.is_a?(Symbol)
-            @archived_options << Option.new(id, name || id.to_s.humanize, true)
           end
         end
       end
