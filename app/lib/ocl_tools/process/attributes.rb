@@ -16,7 +16,7 @@ module OclTools
       include OclTools::Actions::OptionsField
       include ActiveRecord::AttributeAssignment
 
-      ALLOWED_TYPES = %i[string integer date]
+      ALLOWED_TYPES = %i[string integer date datetime]
 
 
       class_methods do
@@ -60,6 +60,33 @@ module OclTools
                 end
 
                 self.send("#{name}=", date)
+              end
+            when :datetime
+              # note: we don't do any checks on type here
+              return self.send("#{name}=", params[name]) if params.has_key?(name)
+
+              year_key = "#{name}(1i)"
+              month_key = "#{name}(2i)"
+              day_key = "#{name}(3i)"
+              hour_key = "#{name}(4i)"
+              minute_key = "#{name}(5i)"
+
+              if [year_key, month_key, day_key, hour_key, minute_key].all? {|k| params.has_key?(k)}
+                # note: nil.to_i == "".to_i == 0
+                year = params[year_key]&.to_i
+                month = params[month_key]&.to_i
+                day = params[day_key]&.to_i
+                hour = params[hour_key]&.to_i
+                minute = params[minute_key]&.to_i
+
+                begin
+                  datetime = Time.zone.local(year, month, day, hour, minute)
+                rescue ArgumentError
+                  # note: if part of date is missing, this will clear others
+                  datetime = nil
+                end
+
+                self.send("#{name}=", datetime)
               end
             end
           end
