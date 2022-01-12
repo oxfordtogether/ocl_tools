@@ -165,7 +165,7 @@ module OclTools
       end
     end
 
-    def check_box(method, value, label, width: :full, required_asterix: false, info_message: nil, options: {})
+    def check_box(method, value, label, width: :full, required_asterix: false, info_message: nil, skip_pr: false, options: {})
       errors = object ? object.errors[method] : []
 
       input_classes = "h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400 rounded-md"
@@ -178,7 +178,7 @@ module OclTools
 
       @template.content_tag :div, class: "flex items-center #{col_class}" do
         # if not checked, the check_box will have {"method" => ""} in the params hash which may need to be cleaned in the controller
-        @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + error(errors.last) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
+        @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + error(errors.last) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: skip_pr ? "" : "pr-10")
       end
     end
 
