@@ -105,6 +105,10 @@ module OclTools
       render DropdownButtonComponent.new(label, &blk)
     end
 
+    def button_link_group(*args, **kwargs, &blk)
+      render(ButtonLinkGroupComponent.new(*args, **kwargs, &blk))
+    end
+
     def option_badge(option)
       classes = BadgeColour.css(option.colour)
       tag.span option.label, class: "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium #{classes}"
