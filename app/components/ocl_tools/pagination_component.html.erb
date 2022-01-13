@@ -32,7 +32,7 @@
             <%= icon("chevron-left", class: "h-5 w-5") %>
           </a>
         <% end %>
-        <% @pagy.series([1,2,2,1]).each do |item| %>
+        <% @pagy.series.each do |item| %>
           <% if item.is_a?(Integer) # not the current page %>
             <%= link_to item, pagy_url_for(@pagy, item), class: "relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50" %>
           <% elsif item.is_a?(String) # the current page %>
