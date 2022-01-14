@@ -45,29 +45,43 @@ module OclTools
           enum converted_definitions
 
           # rails' select will accept arrays like [["Some description", :some_option], ..]
-          define_singleton_method("#{name}_options_for_select") { builder.options.map { |o| [o.description, o.id] } }
-          define_singleton_method("#{name}_all_options_for_select") { builder.all_options.map { |o| [o.description, o.id] } }
-          define_singleton_method("humanized_#{name}") { |val| builder.find(val)&.description }
+          define_singleton_method("#{name}_options_for_select") { builder.options.map { |o| [o.label, o.id] } }
+          define_singleton_method("#{name}_all_options_for_select") { builder.all_options.map { |o| [o.label, o.id] } }
+          define_singleton_method("humanized_#{name}") { |val| builder.find(val)&.label }
+          define_method("#{name}_option") { |val| builder.find(val) }
           define_singleton_method("#{name}_options") { builder.all_options }
 
           # get the field to always return a symbol
           define_method(name) { attributes[name.to_s]&.to_sym }
-          define_method("humanized_#{name}") { builder.find(send(name))&.description }
+          define_method("humanized_#{name}") { builder.find(send(name))&.label }
           define_method("#{name}_option") { builder.find(send(name)) }
+        end
+
+        def better_options_group(name, &blk)
+          plural_name = name.to_s.pluralize
+          builder = OptionsBuilder.new
+          builder.instance_eval(&blk)
+
+          define_singleton_method("all_#{plural_name}_options") { builder.all_options }
+          define_singleton_method("#{plural_name}_options") { builder.options }
+
+          define_method(plural_name) { builder.all_options.select {|x| send(x.id) } }
+          define_method("#{plural_name}_ids") { send(plural_name).map(&:id) }
+          define_method("humanized_#{plural_name}") { send(plural_name).map(&:label) }
         end
       end
 
       class Option
         attr_reader :id, :description, :colour, :label
 
-        def initialize(id, description=nil, archived: false, terminal: false, colour: nil, label: nil)
+        def initialize(id, label=nil, archived: false, final: false, colour: nil, description: nil)
           raise ArgmentError.new("option's id must be a symbol") unless id.is_a?(Symbol)
 
           @id = id
-          @description = description || id.to_s.humanize
-          @terminal = terminal
+          @label = label || id.to_s.humanize
+          @description = description || @label
+          @final = final
           @archived = archived
-          @label = label || @description
           @colour = colour.nil? ? BadgeColour.default : BadgeColour.check(colour)
         end
 
@@ -75,8 +89,8 @@ module OclTools
           archived
         end
 
-        def terminal?
-          terminal
+        def final?
+          final
         end
       end
 
@@ -95,12 +109,12 @@ module OclTools
           @options + @archived_options
         end
 
-        def option(id, name = nil, terminal: false, label: nil, colour: nil)
-          @options << Option.new(id, name, terminal: terminal, label: label, colour: colour)
+        def option(id, label = nil, final: false, colour: nil, description: nil)
+          @options << Option.new(id, label, final: final, colour: colour, description: description)
         end
 
-        def archived_option(id, name = nil, terminal: false, label: nil, colour: nil)
-          @archived_options << Option.new(id, name, terminal: terminal, label: label, colour: colour, archived: true)
+        def archived_option(id, label = nil, final: false, colour: nil, description: nil)
+          @archived_options << Option.new(id, label, final: final, colour: colour, archived: true, description: description)
         end
       end
     end
