@@ -82,14 +82,28 @@ module OclTools
       end
     end
 
-    def select(field, options, include_blank: true, label: nil, width: nil, required_asterix: false, info_message: nil, html_options: {})
+    def select(field, options, include_blank: true, label: nil, width: nil, required_asterix: false, info_message: nil, can_condition_on: false, html_options: {})
       errors = object ? object.errors[field] : []
 
       choices = include_blank ? { include_blank: "Select..." } : {}
       classes = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
+      html_options.merge!({ "data-better-conditional-fields-target" => "source", "data-name": field }) if can_condition_on
+
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
         super(field, options, choices, html_options.merge({ class: classes })) + error(errors.last) + info(info_message)
+      end
+    end
+
+    def conditional(display_if: nil, display_unless: nil, width: :full)
+      if (display_if.nil? && display_unless.nil?) || (display_if && display_unless)
+        raise "You must provide exactly one of display_if and display_unless. Currently display_if=#{display_if.inspect}, display_unless=#{display_unless.inspect}"
+      end
+      col_class = COL_OPTIONS.fetch(width || :full) 
+      condition = display_if ? { display_if: display_if } : { display_unless: display_unless }
+
+      @template.content_tag :div, class: "#{col_class}", data: { better_conditional_fields_target: :target }.merge(condition) do
+        yield
       end
     end
 

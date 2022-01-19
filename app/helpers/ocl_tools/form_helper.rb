@@ -2,7 +2,7 @@ module OclTools
   module FormHelper
     def tailwind_form_with(model: nil, **kwargs)
       form_with(model: model, builder: TailwindFormBuilder, **kwargs) do |form|
-        content_tag(:div) do
+        content_tag(:div, { data: { controller: "better-conditional-fields"} }) do
           yield form
         end
       end
