@@ -149,10 +149,12 @@ module OclTools
       end
     end
 
-    def radio_group(method, label: nil, required_asterix: false, info_message: nil, &block)
+    def radio_group(method, label: nil, required_asterix: false, info_message: nil, width: :full, &block)
       errors = object ? object.errors[method] : []
 
-      @template.content_tag :div, class: "sm:col-span-6" do
+      col_class = COL_OPTIONS.fetch(width || :full)
+
+      @template.content_tag :div, class: col_class do
         label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
       end
     end
@@ -171,10 +173,12 @@ module OclTools
       end
     end
 
-    def check_box_group(method, label: nil, required_asterix: false, info_message: nil, &block)
+    def check_box_group(method, label: nil, required_asterix: false, width: :full, info_message: nil, &block)
       errors = object ? object.errors[method] : []
 
-      @template.content_tag :div, class: "sm:col-span-6" do
+      col_class = COL_OPTIONS.fetch(width || :full)
+
+      @template.content_tag :div, class: col_class do
         label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
       end
     end
@@ -281,7 +285,7 @@ module OclTools
       @template.content_tag(:div, class: COL_OPTIONS.fetch(width) { "sm:col-span-2" }) {}
     end
 
-    def autocomplete_field(method, value_method, text_method, search_params, label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false)
+    def autocomplete_field(method, value_method, text_method, search_params = {}, label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false)
       errors = object ? object.errors[method] : []
 
       # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
