@@ -16,7 +16,7 @@ module OclTools
       include OclTools::Actions::OptionsField
       include ActiveRecord::AttributeAssignment
 
-      ALLOWED_TYPES = %i[string integer date datetime boolean]
+      ALLOWED_TYPES = %i[string integer date datetime boolean rich_text]
 
 
       class_methods do
@@ -40,6 +40,8 @@ module OclTools
               self.send("#{name}=", params[name]&.to_i) if params.has_key?(name)
             when :boolean
               self.send("#{name}=", ActiveModel::Type::Boolean.new.cast(params[name])) if params.has_key?(name)
+            when :rich_text
+              self.send("#{name}=", ActionText::RichText.new(body: params[name])) if params.has_key?(name)
             when :date
               # note: we don't do any checks on type here
               return self.send("#{name}=", params[name]) if params.has_key?(name)
