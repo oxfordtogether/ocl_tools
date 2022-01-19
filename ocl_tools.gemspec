@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{app,config,lib}/**/*", "Rakefile", "README.md"]
 
-  spec.add_dependency "pagy"
+  spec.add_dependency "pagy", '~> 5.8' 
   spec.add_dependency "rails"
   spec.add_dependency "stimulus_reflex"
   spec.add_dependency "view_component"
