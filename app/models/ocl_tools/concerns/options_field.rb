@@ -35,9 +35,12 @@ module OclTools
         #   option :in_person_not_home, "In person (not at home)"
         #   archived_option :in_person, "In person"
         # end
-        def better_options_field(name, prefix: true, &blk)
-          builder = OptionsBuilder.new
-          builder.instance_eval(&blk)
+        def better_options_field(name, prefix: true, options: nil, &blk)
+          builder = options || OptionsBuilder.new
+
+          # we don't want to execute the block on another model's builder, as that will change its options too
+          raise "Can't provide both options and a block" if options && block_given?
+          builder.instance_eval(&blk) if block_given?
 
           # we're going to lean on rails' enum helper for most of this
           converted_definitions = { name => builder.all_options.map {|o| [o.id, o.id.to_s]}.to_h }
@@ -49,7 +52,8 @@ module OclTools
           define_singleton_method("#{name}_all_options_for_select") { builder.all_options.map { |o| [o.label, o.id] } }
           define_singleton_method("humanized_#{name}") { |val| builder.find(val)&.label }
           define_method("#{name}_option") { |val| builder.find(val) }
-          define_singleton_method("#{name}_options") { builder.all_options }
+          define_singleton_method("#{name}_options") { builder }
+          define_singleton_method("all_#{name}_options") { builder.all_options }
 
           # get the field to always return a symbol
           define_method(name) { attributes[name.to_s]&.to_sym }
@@ -57,13 +61,16 @@ module OclTools
           define_method("#{name}_option") { builder.find(send(name)) }
         end
 
-        def better_options_group(name, &blk)
+        def better_options_group(name, options: nil, &blk)
           plural_name = name.to_s.pluralize
-          builder = OptionsBuilder.new
-          builder.instance_eval(&blk)
+          builder = options || OptionsBuilder.new
+
+          # we don't want to execute the block on another model's builder, as that will change its options too
+          raise "Can't provide both options and a block" if options && block_given?
+          builder.instance_eval(&blk) if block_given?
 
           define_singleton_method("all_#{plural_name}_options") { builder.all_options }
-          define_singleton_method("#{plural_name}_options") { builder.options }
+          define_singleton_method("#{plural_name}_options") { builder }
 
           define_method(plural_name) { builder.all_options.select {|x| send(x.id) } }
           define_method("#{plural_name}_ids") { send(plural_name).map(&:id) }
@@ -94,7 +101,10 @@ module OclTools
         end
       end
 
+
       class OptionsBuilder
+        include Enumerable
+
         attr_accessor :options, :archived_options
         def initialize
           @options = []
@@ -103,6 +113,10 @@ module OclTools
 
         def find(id)
           all_options.find { |x| x.id.to_s == id.to_s }
+        end
+
+        def each
+          options.each { |o| yield o }
         end
 
         def all_options

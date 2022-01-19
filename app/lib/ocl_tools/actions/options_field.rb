@@ -10,9 +10,12 @@ module OclTools
         #   option :in_person_not_home, "In person (not at home)"
         #   archived_option :in_person, "In person"
         # end
-        def better_options_field(name, prefix: true, &blk)
-          builder = OclTools::Concerns::OptionsField::OptionsBuilder.new
-          builder.instance_eval(&blk)
+        def better_options_field(name, prefix: true, options: nil, &blk)
+          builder = options || OclTools::Concerns::OptionsField::OptionsBuilder.new
+
+          # we don't want to execute the block on another model's builder, as that will change its options too
+          raise "Can't provide both options and a block" if options && block_given?
+          builder.instance_eval(&blk) if block_given?
           instance_variable = "@#{name}"
 
           # rails' select will accept arrays like [["Some description", :some_option], ..]
@@ -23,7 +26,8 @@ module OclTools
 
           define_method("#{name}_options_for_select") { builder.options.map { |o| [o.description, o.id] } }
           define_method("#{name}_all_options_for_select") { builder.all_options.map { |o| [o.description, o.id] } }
-          define_method("#{name}_options") { builder.all_options }
+          define_method("#{name}_options") { builder }
+          define_method("all_#{name}_options") { builder.all_options }
 
           define_method(name) { instance_variable_get(instance_variable) }
           define_method("#{name}=") do |val|
