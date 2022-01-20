@@ -33,6 +33,8 @@ module OclTools
           define_method("#{name}=") do |val|
             if builder.options.map(&:id).map(&:to_s).include?(val.to_s)
               instance_variable_set(instance_variable, val.to_sym)
+            elsif val.nil?
+              instance_variable_set(instance_variable, nil)
             else
               raise ArgumentError.new("#{val.inspect} is not a valid option for #{name}")
             end
