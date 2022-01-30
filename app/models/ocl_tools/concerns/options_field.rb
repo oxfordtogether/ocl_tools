@@ -51,7 +51,7 @@ module OclTools
           define_singleton_method("#{name}_options_for_select") { builder.options.map { |o| [o.label, o.id] } }
           define_singleton_method("#{name}_all_options_for_select") { builder.all_options.map { |o| [o.label, o.id] } }
           define_singleton_method("humanized_#{name}") { |val| builder.find(val)&.label }
-          define_method("#{name}_option") { |val| builder.find(val) }
+          define_singleton_method("#{name}_option") { |val| builder.find(val) }
           define_singleton_method("#{name}_options") { builder }
           define_singleton_method("all_#{name}_options") { builder.all_options }
 
