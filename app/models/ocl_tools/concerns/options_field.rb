@@ -119,6 +119,10 @@ module OclTools
           options.each { |o| yield o }
         end
 
+        def sample
+          options.sample
+        end
+
         def all_options
           @options + @archived_options
         end

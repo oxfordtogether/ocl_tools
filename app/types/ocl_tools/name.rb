@@ -22,5 +22,9 @@ module OclTools
         "#{first_name} #{last_name}"
       end
     end
+
+    def to_s
+      preferred_full_name
+    end
   end
 end
