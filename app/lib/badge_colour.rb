@@ -27,7 +27,7 @@ class BadgeColour
   end
 
   def self.check(colour_key)
-    (valid? && colour_key) || raise(BadgeColourError.new(colour_key))
+    (valid?(colour_key) && colour_key) || raise(BadgeColourError.new(colour_key))
   end
 
   class BadgeColourError < ArgumentError
