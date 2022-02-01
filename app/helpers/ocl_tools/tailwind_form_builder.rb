@@ -56,7 +56,10 @@ module OclTools
 
     def number_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object ? object.errors[field] : []
-      options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
+      options = options.merge({
+        class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES,
+        onwheel: "this.blur()" # disable scrolling with the mouse wheel
+      })
 
       tailwind_field(field, label, width: width, required_asterix: required_asterix) do
         super(field, **options) + error(errors.last) + info(info_message)
