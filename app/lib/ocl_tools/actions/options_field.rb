@@ -48,6 +48,33 @@ module OclTools
             define_method("#{option_name}?") { send(name) == option.id }
           end
         end
+
+
+        def better_options_group(name, options: nil, &blk)
+          plural_name = name.to_s.pluralize
+          singular_name = name.to_s.singularize
+          builder = options || OclTools::Concerns::OptionsField::OptionsBuilder.new
+
+          # we don't want to execute the block on another model's builder, as that will change its options too
+          raise "Can't provide both options and a block" if options && block_given?
+          builder.instance_eval(&blk) if block_given?
+
+          define_singleton_method("all_#{singular_name}_options") { builder.all_options }
+          define_singleton_method("#{singular_name}_options") { builder }
+
+          define_method("has_#{singular_name}?") do |opt_or_id|
+            id = opt_or_id.is_a?(OclTools::Concerns::OptionsField::Option) ? opt_or_id.id : opt_or_id
+            send(id)
+          end
+          define_method(plural_name) { builder.all_options.select {|x| send(x.id) } }
+          define_method("#{singular_name}_ids") { send(plural_name).map(&:id) }
+          define_method("humanized_#{plural_name}") { send(plural_name).map(&:label) }
+
+          builder.options.each do |option|
+            attr_accessor option.id
+            define_method("#{option.id}?") { send(option_id) }
+          end
+        end
       end
     end
   end
