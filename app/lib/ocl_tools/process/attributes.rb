@@ -97,8 +97,9 @@ module OclTools
         end
       end
 
-      def attributes 
-        self.class.attribute_names.map {|a| [a, send(a)]}.to_h
+      # map keys allows us to change the names of some attributes
+      def attributes(map_keys: {})
+        self.class.attribute_names.map {|a| [map_keys[a] || a, send(a)]}.to_h
       end
 
       def assign_attributes(params = {})
