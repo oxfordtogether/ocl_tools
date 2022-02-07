@@ -5,7 +5,8 @@ module OclTools
     def initialize(form:, method:, value: nil, errors: false)
       @form = form
       @method = method
-      @value = value
+
+      @value = value.instance_of?(String) ? Date.parse(value) : value
       @errors = errors
 
       classes = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 inline w-full sm:text-sm border-gray-300 rounded-md".freeze
