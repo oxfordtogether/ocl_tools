@@ -102,7 +102,7 @@ module OclTools
       if (display_if.nil? && display_unless.nil?) || (display_if && display_unless)
         raise "You must provide exactly one of display_if and display_unless. Currently display_if=#{display_if.inspect}, display_unless=#{display_unless.inspect}"
       end
-      col_class = COL_OPTIONS.fetch(width || :full) 
+      col_class = COL_OPTIONS.fetch(width || :full)
       condition = display_if ? { display_if: display_if } : { display_unless: display_unless }
 
       @template.content_tag :div, class: "#{col_class}", data: { better_conditional_fields_target: :target }.merge(condition) do
@@ -163,12 +163,13 @@ module OclTools
     end
 
     alias orig_radio_button radio_button
-    def radio_button(method, value, label, required_asterix: false, info_message: nil, options: {})
+    def radio_button(method, value, label, required_asterix: false, info_message: nil, can_condition_on: false, options: {})
       errors = object ? object.errors[method] : []
 
       input_classes = "form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400"
       input_error_classes = "form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300"
 
+      options.merge!({ "data-better-conditional-fields-target" => "source", "data-name": method }) if can_condition_on
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
 
       @template.content_tag :div, class: "flex items-center sm:col-span-6" do
@@ -197,9 +198,12 @@ module OclTools
       col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
       col_class = col_classes.fetch(width || :full)
 
+      checked_value = value == "true_false_strings" ? "true" : value
+      unchecked_value = value == "true_false_strings" ? "false" : ""
+
       @template.content_tag :div, class: "flex items-center #{col_class}" do
         # if not checked, the check_box will have {"method" => ""} in the params hash which may need to be cleaned in the controller
-        @template.content_tag(:div, super(method, options_with_class, value, ""), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + error(errors.last) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: skip_pr ? "" : "pr-10")
+        @template.content_tag(:div, super(method, options_with_class, checked_value, unchecked_value), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + error(errors.last) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: skip_pr ? "" : "pr-10")
       end
     end
 
@@ -254,13 +258,36 @@ module OclTools
       @template.link_to(label, url, method: :delete, class: "inline-flex items-center #{compact ? 'py-1 px-2' : 'py-2 px-2'} text-sm font-medium text-red-500 hover:text-red-700 underline")
     end
 
+    def styled_back(label = "Back", name: nil, value: "back", **options, &block)
+      if value
+        options[:value] = value
+        options[:name] = "#{object_name}[#{name || 'commit'}]"
+      end
+
+      options[:class] = "inline-flex justify-center text-gray-500 hover:text-gray-700 text-sm font-medium underline"
+
+      orig_button(label, options, &block)
+    end
+
+
+    def styled_cancel(label = "Cancel", name: nil, value: "cancel", **options, &block)
+      if value
+        options[:value] = value
+        options[:name] = "#{object_name}[#{name || 'commit'}]"
+      end
+
+      options[:class] = "inline-flex justify-start text-blue-500 hover:text-blue-700 text-sm font-medium underline"
+
+      orig_button(label, options, &block)
+    end
+
     def title(title)
       @template.content_tag(:h1, title, class: "text-xl leading-6 font-medium text-gray-900 pb-6")
     end
 
-    def section(title = nil, subtitle = nil, &block)
+    def section(title = nil, subtitle = nil, border: true, &block)
       heading = title ? section_heading(title, subtitle) : "".html_safe
-      @template.content_tag :div, class: "pb-8 mb-8 border-b border-gray-200" do
+      @template.content_tag :div, class: "pb-8 mb-8 #{border && 'border-b border-gray-200'}" do
         heading + @template.content_tag(:div, class: "#{title ? 'mt-6' : ''} grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", &block)
       end
     end
