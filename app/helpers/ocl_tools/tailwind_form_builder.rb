@@ -6,13 +6,15 @@ module OclTools
 
     alias orig_label label
 
-    def label(field, label = nil, required_asterix: false)
+    def label(field, label = nil, description: nil, required_asterix: false)
+      label_text = super(field, label)
+      label_text += @template.content_tag(:div, "*", class: "ml-1 text-red-500") if required_asterix
+
+      description_text = description ? @template.content_tag(:div, description, class: "mt-1 mb-2 text-gray-500 text-xs") : nil
+
       @template.content_tag :div, class: "flex text-sm font-medium text-gray-700" do
-        if required_asterix
-          super(field, label) + @template.content_tag(:div, "*", class: "ml-1 text-red-500")
-        else
-          super(field, label)
-        end
+        label_text_div = @template.content_tag(:div, label_text, class: "flex")
+        @template.content_tag(:div, label_text_div + description_text)
       end
     end
 
@@ -24,68 +26,79 @@ module OclTools
       @template.content_tag(:p, message, class: "mt-1 text-xs text-gray-400")
     end
 
+    def paragraph(label, description = nil, width: :full)
+      col_class = COL_OPTIONS.fetch(width || :full)
+
+      @template.content_tag :div, class: "#{col_class}" do
+        p = @template.content_tag(:p, label, class: "flex text-sm font-medium")
+        p += @template.content_tag(:p, description, class: "flex text-sm text-gray-700") if description
+
+        p
+      end
+    end
+
     alias orig_text_field text_field
     alias orig_file_field file_field
 
-    def text_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **kwargs)
+    def text_field(field, label: nil, description: nil, width: nil, required_asterix: false, info_message: nil, **kwargs)
       errors = object ? object.errors[field] : []
       kwargs[:class] = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
-      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(field, label, description: description, width: width, required_asterix: required_asterix) do
         super(field, **kwargs) + error(errors.last) + info(info_message)
       end
     end
 
-    def text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
+    def text_area(field, label: nil, description: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object ? object.errors[field] : []
       options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
-      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(field, label, description: description, width: width, required_asterix: required_asterix) do
         super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
-    def email_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
+    def email_field(field, label: nil, width: nil, description: nil, required_asterix: false, info_message: nil, **options)
       errors = object ? object.errors[field] : []
       options = options.merge({ class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES })
 
-      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(field, label, width: width, description: description, required_asterix: required_asterix) do
         super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
-    def number_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
+    def number_field(field, label: nil, width: nil, description: nil, required_asterix: false, info_message: nil, **options)
       errors = object ? object.errors[field] : []
       options = options.merge({
         class: errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES,
         onwheel: "this.blur()" # disable scrolling with the mouse wheel
       })
 
-      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(field, label, description: description, width: width, required_asterix: required_asterix) do
         super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
-    def rich_text_area(field, label: nil, width: nil, required_asterix: false, info_message: nil, **options)
+    def rich_text_area(field, label: nil, description: nil, width: nil, required_asterix: false, info_message: nil, **options)
       errors = object ? object.errors[field] : []
       existing_classes = options[:class]
       classes = "#{errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES} #{existing_classes}".strip
       options = options.merge({ class: classes })
 
-      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(field, label, width: width, description: description, required_asterix: required_asterix) do
         super(field, **options) + error(errors.last) + info(info_message)
       end
     end
 
-    def file_field(field, label: nil, width: nil, required_asterix: false, info_message: nil, **opts)
+    def file_field(field, label: nil, width: nil, description: nil, required_asterix: false, info_message: nil, **opts)
       errors = object ? object.errors[field] : []
 
-      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(field, label, width: width, description: description, required_asterix: required_asterix) do
         @template.render(FileUploadComponent.new(form: self, field: field, **opts)) + error(errors.last) + info(info_message)
       end
     end
 
-    def select(field, options, include_blank: true, label: nil, width: nil, required_asterix: false, info_message: nil, can_condition_on: false, html_options: {})
+    def select(field, options, include_blank: true, label: nil, description: nil, width: nil, required_asterix: false, info_message: nil, can_condition_on: false, html_options: {})
       errors = object ? object.errors[field] : []
 
       choices = include_blank ? { include_blank: "Select..." } : {}
@@ -93,7 +106,7 @@ module OclTools
 
       html_options.merge!({ "data-better-conditional-fields-target" => "source", "data-name": field }) if can_condition_on
 
-      tailwind_field(field, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(field, label, width: width, description: description, required_asterix: required_asterix) do
         super(field, options, choices, html_options.merge({ class: classes })) + error(errors.last) + info(info_message)
       end
     end
@@ -105,12 +118,12 @@ module OclTools
       col_class = COL_OPTIONS.fetch(width || :full)
       condition = display_if ? { display_if: display_if } : { display_unless: display_unless }
 
-      @template.content_tag :div, class: "#{col_class}", data: { better_conditional_fields_target: :target }.merge(condition) do
+      @template.content_tag :div, class: "#{col_class} grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", data: { better_conditional_fields_target: :target }.merge(condition) do
         yield
       end
     end
 
-    def collection_select(method, collection, value_method, text_method, include_blank: true, width: nil, required_asterix: false, info_message: nil, html_options: {}, **options)
+    def collection_select(method, collection, value_method, text_method, description: nil, include_blank: true, width: nil, required_asterix: false, info_message: nil, html_options: {}, **options)
       errors = object ? object.errors[method] : []
 
       label = options[:label]
@@ -118,52 +131,56 @@ module OclTools
       options[:include_blank] = "Select..." if include_blank
       classes = errors.empty? ? INPUT_CLASSES : INPUT_ERROR_CLASSES
 
-      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(method, label, width: width, description: description, required_asterix: required_asterix) do
         super(method, collection, value_method, text_method, options, html_options.merge({ class: classes, disabled: disabled })) + error(errors.last) + info(info_message)
       end
     end
 
-    def date_picker(method, placeholder = "Select...", label: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
+    def date_picker(method, placeholder = "Select...", label: nil, description: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
       errors = object ? object.errors[method] : []
       names = { "year": name_for("#{method}(1i)"), "month": name_for("#{method}(2i)"), "day": name_for("#{method}(3i)") }
       ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"), "base": id_for(method) }
 
-      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(method, label, description: description, width: width, required_asterix: required_asterix) do
         @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.try(method), placeholder: placeholder, disabled: disabled, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
-    def date_field(method, label: nil, width: nil, required_asterix: false, info_message: nil)
+    def date_field(method, label: nil, description: nil, width: nil, required_asterix: false, info_message: nil)
       errors = object ? object.errors[method] : []
 
-      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(method, label, description: description, width: width, required_asterix: required_asterix) do
         @template.render(DateFieldComponent.new(form: self, method: method, value: @object.try(method), errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
-    def time_select(method, label: nil, width: nil, minute_step: 5, required_asterix: false, info_message: nil)
+    def time_select(method, label: nil, description: nil, width: nil, minute_step: 5, required_asterix: false, info_message: nil)
       input_classes = "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
       input_error_classes = "shadow-sm sm:text-sm rounded-md border-red-300 text-red-900 placeholder-red-900 focus:outline-none focus:ring-red-500 focus:border-red-500"
 
       errors = object ? object.errors[method] : []
 
-      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(method, label, description: description, width: width, required_asterix: required_asterix) do
         super(method, { minute_step: minute_step, ignore_date: true }, { class: errors.empty? ? input_classes : input_error_classes }) + error(errors.last) + info(info_message)
       end
     end
 
-    def radio_group(method, label: nil, required_asterix: false, info_message: nil, width: :full, &block)
+    def radio_group(method, label: nil, description: nil, required_asterix: false, info_message: nil, width: :full, columns: :auto, &block)
+      raise "columns parameter must be one of: :auto, :single" unless [:auto, :single].include?(columns)
+
       errors = object ? object.errors[method] : []
 
       col_class = COL_OPTIONS.fetch(width || :full)
 
+      classes = "flex #{columns == :auto ? 'flex-row' : 'flex-col'} flex-wrap justify-start"
+
       @template.content_tag :div, class: col_class do
-        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
+        label(method, label, description: description, required_asterix: required_asterix) + @template.content_tag(:div, class: classes, &block) + error(errors.last) + info(info_message)
       end
     end
 
     alias orig_radio_button radio_button
-    def radio_button(method, value, label, required_asterix: false, info_message: nil, can_condition_on: false, options: {})
+    def radio_button(method, value, label, description: nil, required_asterix: false, info_message: nil, can_condition_on: false, options: {})
       errors = object ? object.errors[method] : []
 
       input_classes = "form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400"
@@ -173,26 +190,31 @@ module OclTools
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
 
       @template.content_tag :div, class: "flex items-center sm:col-span-6" do
-        @template.content_tag(:div, orig_radio_button(method, value, options_with_class), class: "") + @template.content_tag(:div, label("#{method}_#{value}", label, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
+        @template.content_tag(:div, orig_radio_button(method, value, options_with_class), class: "") + @template.content_tag(:div, label("#{method}_#{value}", label, description: description, required_asterix: required_asterix) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: "pr-10")
       end
     end
 
-    def check_box_group(method, label: nil, required_asterix: false, width: :full, info_message: nil, &block)
+    def check_box_group(method, label: nil, description: nil, required_asterix: false, width: :full, info_message: nil, columns: :auto, &block)
+      raise "columns parameter must be one of: :auto, :single" unless [:auto, :single].include?(columns)
+
       errors = object ? object.errors[method] : []
 
       col_class = COL_OPTIONS.fetch(width || :full)
 
+      classes = "flex #{columns == :auto ? 'flex-row' : 'flex-col'} flex-wrap justify-start"
+
       @template.content_tag :div, class: col_class do
-        label(method, label, required_asterix: required_asterix) + @template.content_tag(:div, class: "flex flex-row flex-wrap justify-start", &block) + error(errors.last) + info(info_message)
+        label(method, label, description: description, required_asterix: required_asterix) + @template.content_tag(:div, class: classes, &block) + error(errors.last) + info(info_message)
       end
     end
 
-    def check_box(method, value, label, width: :full, required_asterix: false, info_message: nil, skip_pr: false, options: {})
+    def check_box(method, value, label, description: nil, width: :full, required_asterix: false, info_message: nil, skip_pr: false, can_condition_on: false, options: {})
       errors = object ? object.errors[method] : []
 
       input_classes = "h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400 rounded-md"
       input_error_classes = "h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300 rounded-md"
 
+      options.merge!({ "data-better-conditional-fields-target" => "source", "data-name": method }) if can_condition_on
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
 
       col_classes = { full: "sm:col-span-6", two_thirds: "sm:col-span-4", half: "sm:col-span-3", third: "sm:col-span-2" }
@@ -203,14 +225,14 @@ module OclTools
 
       @template.content_tag :div, class: "flex items-center #{col_class}" do
         # if not checked, the check_box will have {"method" => ""} in the params hash which may need to be cleaned in the controller
-        @template.content_tag(:div, super(method, options_with_class, checked_value, unchecked_value), class: "") + @template.content_tag(:div, label(method, label, required_asterix: required_asterix) + error(errors.last) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: skip_pr ? "" : "pr-10")
+        @template.content_tag(:div, super(method, options_with_class, checked_value, unchecked_value), class: "") + @template.content_tag(:div, label(method, label, description: description, required_asterix: required_asterix) + error(errors.last) + @template.content_tag(:p, info_message, class: "text-xs text-gray-400"), class: skip_pr ? "" : "pr-10")
       end
     end
 
-    def icon_select(method, select_options, label: nil, width: :full, required_asterix: false, info_message: nil)
+    def icon_select(method, select_options, label: nil, description: nil, width: :full, required_asterix: false, info_message: nil)
       errors = object ? object.errors[method] : []
 
-      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+      tailwind_field(method, label, description: description, width: width, required_asterix: required_asterix) do
         @template.render(IconSelectComponent.new(name_for(method), id_for(method), select_options, value: @object.send(method))) + error(errors.last) + info(info_message)
       end
     end
@@ -376,13 +398,13 @@ module OclTools
       @template.content_tag(:p, subtitle, class: "mt-1 text-sm text-gray-500")
     end
 
-    def tailwind_field(field, label_text = nil, width: :full, required_asterix: false, &block)
+    def tailwind_field(field, label_text = nil, description: nil, width: :full, required_asterix: false, &block)
       # NOTE: need to ensure that the actual strings e.g. sm:col-span-3 appear in the file
       # or tailwind won't include them in the optimized css
       col_class = COL_OPTIONS.fetch(width || :full)
       @template.content_tag :div, class: col_class do
         content = ""
-        content << label(field, label_text, required_asterix: required_asterix) unless label_text == :none
+        content << label(field, label_text, description: description, required_asterix: required_asterix) unless label_text == :none
         content << @template.content_tag(:div, class: "mt-1", &block)
         content.html_safe
       end
