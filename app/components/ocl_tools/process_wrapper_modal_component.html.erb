@@ -10,7 +10,7 @@
         </div>
       </div>
       <%= form_with(scope: scope, builder: OclTools::TailwindFormBuilder, url: current_path, method: :put, local: true) do |form| %>
-        <%= form.unstyled_button name: :cancelled, value: true do %>
+        <%= form.unstyled_button value: 'cancel' do %>
           <%= icon('cross', class: "h-5 w-5") %>
         <% end %>
       <% end %>
