@@ -1,7 +1,7 @@
 module OclTools
   module DatePickerSelect
     def date_picker_select(date, from:)
-      container = find(:label, text: from).find(:xpath, "../..")
+      container = find(:label, text: from).find(:xpath, "../../../..")
 
       container.find("input").click
       container.find("#date-picker__change-year").click
