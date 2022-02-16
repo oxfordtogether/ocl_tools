@@ -5,7 +5,7 @@ module OclTools
         def initialize(type)
           @type = type
         end
-    
+
         def message
           "Type #{@type.inspect} is not supported. Choose one of: #{Attributes::ALLOWED_TYPES.map(&:inspect).join(', ')}"
         end
@@ -18,14 +18,13 @@ module OclTools
 
       ALLOWED_TYPES = %i[string integer date datetime boolean rich_text]
 
-
       class_methods do
         def attribute_names
           @attribute_names ||= []
         end
 
-        def attribute(name, type: :string)
-          raise AttributesError.new(type) if !ALLOWED_TYPES.include?(type)
+        def attribute(name, type: :string, custom_type: nil)
+          raise AttributesError, type if custom_type.nil? && !ALLOWED_TYPES.include?(type)
 
           attr_accessor name
 
@@ -33,25 +32,33 @@ module OclTools
 
           define_method("extract_#{name}") do |params|
             params ||= {}
+
+            if custom_type
+              return unless params.key?(name)
+
+              val = params[name]
+              return send("#{name}=", val.is_a?(custom_type) ? val : custom_type.from_param(val))
+            end
+
             case type
             when :string
-              self.send("#{name}=", params[name]) if params.has_key?(name)
+              send("#{name}=", params[name]) if params.key?(name)
             when :integer
-              self.send("#{name}=", params[name]&.to_i) if params.has_key?(name)
+              send("#{name}=", params[name]&.to_i) if params.key?(name)
             when :boolean
-              self.send("#{name}=", ActiveModel::Type::Boolean.new.cast(params[name])) if params.has_key?(name)
+              send("#{name}=", ActiveModel::Type::Boolean.new.cast(params[name])) if params.key?(name)
             when :rich_text
-              self.send("#{name}=", ActionText::RichText.new(body: params[name])) if params.has_key?(name)
+              send("#{name}=", ActionText::RichText.new(body: params[name])) if params.key?(name)
             when :date
-              # note: we don't do any checks on type here
-              return self.send("#{name}=", params[name]) if params.has_key?(name)
+              # NOTE: we don't do any checks on type here
+              return send("#{name}=", params[name]) if params.key?(name)
 
               year_key = "#{name}(1i)"
               month_key = "#{name}(2i)"
               day_key = "#{name}(3i)"
 
-              if [year_key, month_key, day_key].all? {|k| params.has_key?(k)}
-                # note: nil.to_i == "".to_i == 0
+              if [year_key, month_key, day_key].all? { |k| params.key?(k) }
+                # NOTE: nil.to_i == "".to_i == 0
                 year = params[year_key]&.to_i
                 month = params[month_key]&.to_i
                 day = params[day_key]&.to_i
@@ -59,15 +66,15 @@ module OclTools
                 begin
                   date = Date.new(year, month, day)
                 rescue Date::Error
-                  # note: if part of date is missing, this will clear others
+                  # NOTE: if part of date is missing, this will clear others
                   date = nil
                 end
 
-                self.send("#{name}=", date)
+                send("#{name}=", date)
               end
             when :datetime
-              # note: we don't do any checks on type here
-              return self.send("#{name}=", params[name]) if params.has_key?(name)
+              # NOTE: we don't do any checks on type here
+              return send("#{name}=", params[name]) if params.key?(name)
 
               year_key = "#{name}(1i)"
               month_key = "#{name}(2i)"
@@ -75,8 +82,8 @@ module OclTools
               hour_key = "#{name}(4i)"
               minute_key = "#{name}(5i)"
 
-              if [year_key, month_key, day_key, hour_key, minute_key].all? {|k| params.has_key?(k)}
-                # note: nil.to_i == "".to_i == 0
+              if [year_key, month_key, day_key, hour_key, minute_key].all? { |k| params.key?(k) }
+                # NOTE: nil.to_i == "".to_i == 0
                 year = params[year_key]&.to_i
                 month = params[month_key]&.to_i
                 day = params[day_key]&.to_i
@@ -86,11 +93,11 @@ module OclTools
                 begin
                   datetime = Time.zone.local(year, month, day, hour, minute)
                 rescue ArgumentError
-                  # note: if part of date is missing, this will clear others
+                  # NOTE: if part of date is missing, this will clear others
                   datetime = nil
                 end
 
-                self.send("#{name}=", datetime)
+                send("#{name}=", datetime)
               end
             end
           end
@@ -99,12 +106,14 @@ module OclTools
 
       # map keys allows us to change the names of some attributes
       def attributes(map_keys: {})
-        self.class.attribute_names.map {|a| [map_keys[a] || a, send(a)]}.to_h
+        self.class.attribute_names.map { |a| [map_keys[a] || a, send(a)] }.to_h
       end
 
       def assign_attributes(params = {})
+        # TODO: we should probably split this into extract_attributes (which converts from params),
+        # and assign_attributes (which expects to get full-blooded objects)
         self.class.attribute_names.each do |a|
-          send("extract_#{a}", params) 
+          send("extract_#{a}", params)
         end
       end
     end
