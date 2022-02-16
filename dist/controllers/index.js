@@ -5,14 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _stimulus = require("stimulus");
-
-var _webpackHelpers = require("stimulus/webpack-helpers");
-
-var _stimulus_reflex = _interopRequireDefault(require("stimulus_reflex"));
-
-var _consumer = _interopRequireDefault(require("../channels/consumer"));
-
 var _autocomplete_controller = _interopRequireDefault(require("./autocomplete_controller"));
 
 var _bar_chart_controller = _interopRequireDefault(require("./bar_chart_controller"));
@@ -38,16 +30,6 @@ var _table_controller = _interopRequireDefault(require("./table_controller"));
 var _visibility_toggle_controller = _interopRequireDefault(require("./visibility_toggle_controller"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const application = _stimulus.Application.start();
-
-const context = require.context("controllers", true, /_controller\.js$/);
-
-application.load((0, _webpackHelpers.definitionsFromContext)(context));
-
-_stimulus_reflex.default.initialize(application, {
-  consumer: _consumer.default
-});
 
 const controllers = {
   autocomplete: _autocomplete_controller.default,
