@@ -1,60 +1,15 @@
-# defaults: https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
-
-AllCops:
-  NewCops: disable
-  Include:
-    - "**/*.rb"
-
-# documentation
-Style/Documentation:
-  Enabled: false
-
-Style/CommentedKeyword:
-  Enabled: false
-
-# other
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/CaseEquality:
-  Enabled: false
-
-Style/DoubleNegation:
-  Enabled: false
-
-Style/ClassVars:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-# strings/quotes
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/StringLiterals:
+Lint/UnusedMethodArgument:
   Enabled: true
-  EnforcedStyle: double_quotes
-  ConsistentQuotesInMultiline: false
+  AutoCorrect: false
 
-# trailing commas
-Style/TrailingCommaInArguments:
+Lint/UnusedBlockArgument:
   Enabled: true
-  EnforcedStyleForMultiline: comma
+  AutoCorrect: false
 
-Style/TrailingCommaInArrayLiteral:
-  Enabled: true
-  EnforcedStyleForMultiline: comma
+Naming/VariableNumber:
+  CheckSymbols: false
 
-Style/TrailingCommaInBlockArgs:
-  Enabled: true
-
-Style/TrailingCommaInHashLiteral:
-  Enabled: true
-  EnforcedStyleForMultiline: comma
-
-# metrics
-Metrics/AbcSize:
+Metrics/ClassLength:
   Enabled: false
 
 Metrics/MethodLength:
@@ -63,48 +18,20 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Enabled: false
 
-Metrics/BlockNesting:
-  Enabled: false
+Lint/EndAlignment:
+  EnforcedStyleAlignWith: start_of_line
 
-Metrics/ClassLength:
-  Enabled: false
-
-Metrics/CyclomaticComplexity:
-  Enabled: false
-
-Metrics/ModuleLength:
-  Enabled: false
-
-Metrics/ParameterLists:
-  Enabled: false
-
-Metrics/PerceivedComplexity:
-  Enabled: false
-
-# Linting
-Lint/UselessAssignment:
-  Enabled: false
-
-Lint/ShadowingOuterLocalVariable:
-  Enabled: false
-
-Lint/MissingSuper:
-  Enabled: false
-
-# Naming
-Naming/MethodParameterName:
-  Enabled: false
-
-Naming/MemoizedInstanceVariableName:
-  Enabled: false
-
-Naming/PredicateName:
-  Enabled: false
-
-# layout
 Layout/LineLength:
   Enabled: false
 
-Layout/EndAlignment:
-  Enabled: true
-  AutoCorrect: true
+Layout/CaseIndentation:
+  EnforcedStyle: end
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstParameterIndentation:
+  EnforcedStyle: consistent
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
