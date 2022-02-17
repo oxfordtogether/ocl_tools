@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module OclTools
   class AddressLineComponent < ViewComponent::Base
     delegate :icon, to: :helpers
@@ -10,9 +11,7 @@ module OclTools
     end
 
     def address_line
-      return nil if address.nil?
-
-      [address.line_1, address.line_2, address.line_3, address.town, address.postcode].compact.join(", ")
+      address&.single_line
     end
   end
 end
