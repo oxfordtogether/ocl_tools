@@ -113,5 +113,9 @@ module OclTools
       classes = BadgeColour.css(option.colour)
       tag.span option.label, class: "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium #{classes}"
     end
+
+    def back_with_icon_link(*args, **kwargs)
+      render BackWithIconLinkComponent.new(*args, **kwargs)
+    end
   end
 end
