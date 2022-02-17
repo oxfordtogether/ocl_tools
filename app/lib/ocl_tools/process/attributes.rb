@@ -50,8 +50,11 @@ module OclTools
             when :rich_text
               send("#{name}=", ActionText::RichText.new(body: params[name])) if params.key?(name)
             when :date
-              # NOTE: we don't do any checks on type here
-              return send("#{name}=", params[name]) if params.key?(name)
+              if params.key?(name)
+                val = params[name]
+                val = nil unless val.present?
+                return send("#{name}=", val)
+              end
 
               year_key = "#{name}(1i)"
               month_key = "#{name}(2i)"
