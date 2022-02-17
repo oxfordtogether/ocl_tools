@@ -37,6 +37,17 @@ module OclTools
       end
     end
 
+    def paragraph(label, description = nil, width: :full)
+      col_class = COL_OPTIONS.fetch(width || :full)
+
+      @template.content_tag :div, class: "#{col_class}" do
+        p = @template.content_tag(:p, label, class: "flex text-sm font-medium")
+        p += @template.content_tag(:p, description, class: "flex text-sm text-gray-700") if description
+
+        p
+      end
+    end
+
     alias orig_text_field text_field
     alias orig_file_field file_field
 
@@ -133,16 +144,13 @@ module OclTools
       end
     end
 
-    def date_picker(method, placeholder = 'Select...', label: nil, description: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
+    def date_picker(method, placeholder = "Select...", label: nil, description: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
       errors = object ? object.errors[method] : []
-      names = { "year": name_for("#{method}(1i)"), "month": name_for("#{method}(2i)"),
-                "day": name_for("#{method}(3i)") }
-      ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"),
-              "base": id_for(method) }
+      names = { "year": name_for("#{method}(1i)"), "month": name_for("#{method}(2i)"), "day": name_for("#{method}(3i)") }
+      ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"), "base": id_for(method) }
 
       tailwind_field(method, label, description: description, width: width, required_asterix: required_asterix) do
-        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.try(method),
-          placeholder: placeholder, disabled: disabled, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
+        @template.render(DatePickerComponent.new(ids: ids, names: names, value: @object.try(method), placeholder: placeholder, disabled: disabled, options: options, start_year: start_year, end_year: end_year, errors: !errors.empty?)) + error(errors.last) + info(info_message)
       end
     end
 
@@ -167,7 +175,8 @@ module OclTools
     end
 
     def radio_group(method, label: nil, description: nil, required_asterix: false, info_message: nil, width: :full, columns: :auto, &block)
-      raise 'columns parameter must be one of: :auto, :single' unless %i[auto single].include?(columns)
+      # to do: allow user to clear answer
+      raise "columns parameter must be one of: :auto, :single" unless %i[auto single].include?(columns)
 
       errors = object ? object.errors[method] : []
 
@@ -295,7 +304,7 @@ module OclTools
 
       options[:class] = 'inline-flex justify-center text-gray-500 hover:text-gray-700 text-sm font-medium underline'
 
-      orig_button(label, options, &block)
+      @template.render(BackWithIconLinkComponent.new(self, label, options))
     end
 
     def styled_cancel(label = 'Cancel', name: nil, value: 'cancel', **options, &block)
@@ -304,7 +313,7 @@ module OclTools
         options[:name] = "#{object_name}[#{name || 'commit'}]"
       end
 
-      options[:class] = 'inline-flex justify-start text-blue-500 hover:text-blue-700 text-sm font-medium underline'
+      options[:class] = "py-2 px-4 inline-flex justify-start text-blue-500 hover:text-blue-700 text-sm font-medium underline"
 
       orig_button(label, options, &block)
     end
