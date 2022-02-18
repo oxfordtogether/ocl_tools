@@ -16,17 +16,24 @@ module OclTools
       include OclTools::Actions::OptionsField
       include ActiveRecord::AttributeAssignment
 
-      ALLOWED_TYPES = %i[string integer date datetime boolean rich_text]
+      ALLOWED_TYPES = %i[string integer date datetime boolean rich_text array].freeze
 
       class_methods do
         def attribute_names
           @attribute_names ||= []
         end
 
-        def attribute(name, type: :string, custom_type: nil)
+        def attribute(name, type: :string, custom_type: nil, &blk)
           raise AttributesError, type if custom_type.nil? && !ALLOWED_TYPES.include?(type)
 
           attr_accessor name
+
+          if type == :array
+            array_class = Class.new do
+              include Attributes
+              class_eval(&blk) if blk
+            end
+          end
 
           attribute_names.push(name)
 
@@ -49,6 +56,8 @@ module OclTools
               send("#{name}=", ActiveModel::Type::Boolean.new.cast(params[name])) if params.key?(name)
             when :rich_text
               send("#{name}=", ActionText::RichText.new(body: params[name])) if params.key?(name)
+            when :array
+              send("#{name}=", params[name].map { |x| array_class.new.tap { |c| c.assign_attributes(x) } }) if params.key?(name)
             when :date
               if params.key?(name)
                 val = params[name]
