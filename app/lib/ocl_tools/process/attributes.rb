@@ -23,16 +23,21 @@ module OclTools
           @attribute_names ||= []
         end
 
-        def attribute(name, type: :string, custom_type: nil, &blk)
+        def attribute(name, type: :string, custom_type: nil, default: nil, &blk)
           raise AttributesError, type if custom_type.nil? && !ALLOWED_TYPES.include?(type)
 
-          attr_accessor name
+          attr_writer name
 
           if type == :array
             array_class = Class.new do
               include Attributes
               class_eval(&blk) if blk
             end
+            default ||= []
+          end
+
+          define_method(name) do
+            instance_variable_get("@#{name}") || default
           end
 
           attribute_names.push(name)
