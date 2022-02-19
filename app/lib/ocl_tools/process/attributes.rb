@@ -28,16 +28,20 @@ module OclTools
 
           attr_writer name
 
+          define_method(name) do
+            instance_variable_get("@#{name}") || default
+          end
+
           if type == :array
             array_class = Class.new do
               include Attributes
               class_eval(&blk) if blk
             end
             default ||= []
-          end
 
-          define_method(name) do
-            instance_variable_get("@#{name}") || default
+            define_method("push_#{name}_attributes") do |index, attrs|
+              send(name).insert(index, array_class.new.tap { |c| c.assign_attributes(attrs) })
+            end
           end
 
           attribute_names.push(name)
