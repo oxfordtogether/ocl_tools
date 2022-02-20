@@ -66,7 +66,15 @@ module OclTools
             when :rich_text
               send("#{name}=", ActionText::RichText.new(body: params[name])) if params.key?(name)
             when :array
-              send("#{name}=", params[name].map { |x| array_class.new.tap { |c| c.assign_attributes(x) } }) if params.key?(name)
+              return unless params.key?(name)
+              if params[name].is_a?(Array)
+                send("#{name}=", params[name].map { |x| array_class.new.tap { |c| c.assign_attributes(x) } }) if params.key?(name)
+              elsif params[name].is_a?(ActionController::Parameters)
+                # we'll get {"0" => {...}, "1" => {...}} back from the frontend
+                send("#{name}=", params[name].values.map { |x| array_class.new.tap { |c| c.assign_attributes(x) } }) if params.key?(name)
+              else
+                raise "Unexpected type for array attributes: #{params[name].inspect}"
+              end
             when :date
               if params.key?(name)
                 val = params[name]
