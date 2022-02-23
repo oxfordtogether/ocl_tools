@@ -2,15 +2,15 @@ module OclTools
   module ComponentsHelper
     def icon(name, options = {})
       # use icon from app if it exists, else use icon from ocl_tools
-      app_icons_file = Rails.root.join("app", "icons", "#{name}.svg")
+      app_icons_file = Rails.root.join('app', 'icons', "#{name}.svg")
       file = if File.exist?(app_icons_file)
-               File.read(app_icons_file)
-             else
-               File.read(OclTools::Engine.root.join("app", "icons", "#{name}.svg"))
-             end
+        File.read(app_icons_file)
+      else
+        File.read(OclTools::Engine.root.join('app', 'icons', "#{name}.svg"))
+      end
 
       doc = Nokogiri::HTML::DocumentFragment.parse file
-      svg = doc.at_css "svg"
+      svg = doc.at_css 'svg'
 
       options.each { |attr, value| svg[attr.to_s] = value }
 
@@ -49,7 +49,7 @@ module OclTools
       render NavTabsComponent.new(&blk)
     end
 
-    def navbar(brand_name, home_path: "/", size: "max-w-7xl", &blk)
+    def navbar(brand_name, home_path: '/', size: 'max-w-7xl', &blk)
       render NavbarComponent.new(brand_name, home_path, size: size, &blk)
     end
 
@@ -103,6 +103,10 @@ module OclTools
 
     def dropdown_button(label, &blk)
       render DropdownButtonComponent.new(label, &blk)
+    end
+
+    def dropdown_dots(&blk)
+      render DropdownDotsComponent.new(&blk)
     end
 
     def button_link_group(*args, **kwargs, &blk)

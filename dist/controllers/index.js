@@ -21,6 +21,8 @@ var _icon_select_controller = _interopRequireDefault(require("./icon_select_cont
 
 var _notice_controller = _interopRequireDefault(require("./notice_controller"));
 
+var _popper_controller = _interopRequireDefault(require("./popper_controller"));
+
 var _search_controller = _interopRequireDefault(require("./search_controller"));
 
 var _star_rating_controller = _interopRequireDefault(require("./star_rating_controller"));
@@ -40,6 +42,7 @@ const controllers = {
   "icon-select": _icon_select_controller.default,
   notice: _notice_controller.default,
   "file-upload": _file_upload_controller.default,
+  popper: _popper_controller.default,
   search: _search_controller.default,
   "star-rating": _star_rating_controller.default,
   table: _table_controller.default,

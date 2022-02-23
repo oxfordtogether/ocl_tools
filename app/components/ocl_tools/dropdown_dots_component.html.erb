@@ -1,19 +1,16 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <div class="inline-block text-left" data-controller='popper'>
   <div>
-    <button data-action="click->popper#toggle" data-popper-target="element" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-      <%= label %>
-      <%= icon 'chevron-down', class: "h-5 w-5 -mr-1 ml-2" %>
+    <button data-action="click->popper#toggle" data-popper-target='element' type="button" class="inline-flex justify-center w-full rounded-full p-2 bg-white text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+      <%= icon 'dots-vertical', class: "h-5 w-5" %>
     </button>
   </div>
   <div>
-    <button data-action="click->popper#close" tabindex="-1" class="hidden fixed inset-0 h-full w-full cursor-default"
-      data-popper-target='overlay'
-      ></button>
+    <button data-action="click->popper#close" tabindex="-1" class="hidden fixed inset-0 h-full w-full cursor-default" data-popper-target='overlay'></button>
   </div>
 
   <div data-popper-target="popup">
-    <div class="hidden w-56 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu"
+    <div class="hidden rounded-md w-56 shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu"
     data-popper-target='content'
     data-transition-enter="transition ease-out duration-100"
     data-transition-enter-start="transform opacity-0 scale-95"

@@ -64,6 +64,7 @@ border-red-700
 border-t
 border-transparent
 border-yellow-300
+content-center
 contents
 cursor-default
 cursor-not-allowed
@@ -214,12 +215,16 @@ ml-3
 ml-4
 ml-5
 ml-8
+mr-0
+mr-0.5
 mr-1
 mr-1.5
 mr-2
 mr-3
 mr-6
 mr-7
+mt-0
+mt-0.5
 mt-1
 mt-12
 mt-2
@@ -232,6 +237,7 @@ mx-auto
 my-1
 my-3
 opacity-0
+opacity-10
 opacity-100
 opacity-25
 opacity-50
