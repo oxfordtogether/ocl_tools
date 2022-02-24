@@ -114,8 +114,12 @@ module OclTools
     end
 
     def option_badge(option)
-      classes = BadgeColour.css(option.colour)
-      tag.span option.label, class: "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium #{classes}"
+      square_badge(option.label, option.colour)
+    end
+
+    def square_badge(label, colour)
+      classes = BadgeColour.css(colour)
+      tag.span label, class: "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium #{classes}"
     end
 
     def back_with_icon_link(*args, **kwargs)
