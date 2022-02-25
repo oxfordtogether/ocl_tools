@@ -11,7 +11,7 @@
     "debug": "^4.3.1",
     "el-transition": "https://github.com/tomclose/el-transition.git#d9ddd55",
     "nodemon": "^2.0.7",
-    "@hotwired/stimulus": "^3.0.1",
+    "stimulus": "^3.0.1",
     "stimulus-use": "^0.50.0-2",
     "stimulus_reflex": "^3.5.0-pre8",
     "turbolinks": "^5.2.0"

@@ -237,7 +237,6 @@ mx-auto
 my-1
 my-3
 opacity-0
-opacity-10
 opacity-100
 opacity-25
 opacity-50
