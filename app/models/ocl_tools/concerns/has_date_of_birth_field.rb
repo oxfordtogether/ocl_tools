@@ -5,9 +5,9 @@ module OclTools
 
       class_methods do
         def has_date_of_birth_field(field_name)
-          raise "Date of birth field must end with date_of_birth" unless field_name.to_s.ends_with?("date_of_birth")
+          raise 'Date of birth field must end with date_of_birth' unless field_name.to_s.ends_with?('date_of_birth')
 
-          prefix = field_name.to_s.split("date_of_birth").first || ""
+          prefix = field_name.to_s.split('date_of_birth').first || ''
 
           define_method("#{prefix}age") do |on = nil|
             dob = send(field_name)
