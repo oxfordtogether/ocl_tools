@@ -182,7 +182,7 @@ module OclTools
 
       col_class = COL_OPTIONS.fetch(width || :full)
 
-      classes = "flex #{columns == :auto ? 'flex-row' : 'flex-col'} flex-wrap justify-start"
+      classes = "flex #{columns == :auto ? 'flex-row' : 'flex-col'} flex-wrap justify-start mt-3"
 
       @template.content_tag :div, class: col_class do
         label(method, label, description: description, required_asterix: required_asterix) + @template.content_tag(:div, class: classes, &block) + error(errors.last) + info(info_message)
@@ -193,8 +193,8 @@ module OclTools
     def radio_button(method, value, label, description: nil, required_asterix: false, info_message: nil, can_condition_on: false, options: {})
       errors = object ? object.errors[method] : []
 
-      input_classes = 'form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400'
-      input_error_classes = 'form-radio h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300'
+      input_classes = 'form-radio h-5 w-5 my-2 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400'
+      input_error_classes = 'form-radio h-5 w-5 my-2 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300'
 
       options.merge!({ 'data-better-conditional-fields-target' => 'source', "data-name": method }) if can_condition_on
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
