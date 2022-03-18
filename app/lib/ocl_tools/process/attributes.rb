@@ -16,7 +16,7 @@ module OclTools
       include OclTools::Actions::OptionsField
       include ActiveRecord::AttributeAssignment
 
-      ALLOWED_TYPES = %i[string integer date datetime boolean rich_text array].freeze
+      ALLOWED_TYPES = %i[string integer date datetime time boolean rich_text array].freeze
 
       class_methods do
         def attribute_names
@@ -121,6 +121,28 @@ module OclTools
 
                 begin
                   datetime = Time.zone.local(year, month, day, hour, minute)
+                rescue ArgumentError
+                  # NOTE: if part of date is missing, this will clear others
+                  datetime = nil
+                end
+
+                send("#{name}=", datetime)
+              end
+            when :time
+              # re-implements :datetime without any reference to year/month/day
+              # NOTE: we don't do any checks on type here
+              return send("#{name}=", params[name]) if params.key?(name)
+
+              hour_key = "#{name}(4i)"
+              minute_key = "#{name}(5i)"
+
+              if [hour_key, minute_key].all? { |k| params.key?(k) }
+                # NOTE: nil.to_i == "".to_i == 0
+                hour = params[hour_key]&.to_i
+                minute = params[minute_key]&.to_i
+
+                begin
+                  datetime = Time.zone.local(1970, 1, 1, hour, minute)
                 rescue ArgumentError
                   # NOTE: if part of date is missing, this will clear others
                   datetime = nil

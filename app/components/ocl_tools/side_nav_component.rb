@@ -8,18 +8,23 @@ module OclTools
       yield self
     end
 
-    def link(name, path, icon)
-      @links << SideNavLink.new(name, path, icon)
+    def link(name, path, icon, partial_match: false)
+      @links << SideNavLink.new(name, path, icon, partial_match)
     end
 
     def links
       # view components only allow you to call controller helpers like current_page? at render time
       @links.map do |link|
-        SideNavLinkWithActive.new(link.name, link.path, link.icon, current_page?(link.path))
+        is_current = link.partial_match ? request.fullpath.start_with?(link.path) : current_page?(link.path)
+        SideNavLinkWithActive.new(link.name, link.path, link.icon, is_current)
       end
     end
   end
 
-  SideNavLink = Struct.new(:name, :path, :icon)
+  SideNavLink = Struct.new(:name, :path, :icon, :partial_match)
   SideNavLinkWithActive = Struct.new(:name, :path, :icon, :active?)
+end
+
+def link(name, path, partial_match: false)
+  @links << NavTabsLink.new(name, path, partial_match)
 end
