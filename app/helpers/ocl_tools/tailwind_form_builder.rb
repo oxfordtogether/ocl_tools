@@ -213,7 +213,7 @@ module OclTools
 
       col_class = COL_OPTIONS.fetch(width || :full)
 
-      classes = "flex #{columns == :auto ? 'flex-row' : 'flex-col'} flex-wrap justify-start"
+      classes = "flex #{columns == :auto ? 'flex-row' : 'flex-col'} flex-wrap justify-start mt-3"
 
       @template.content_tag :div, class: col_class do
         label(method, label, description: description, required_asterix: required_asterix) + @template.content_tag(:div, class: classes, &block) + error(errors.last) + info(info_message)
@@ -223,8 +223,8 @@ module OclTools
     def check_box(method, value, label, description: nil, width: :full, required_asterix: false, info_message: nil, skip_pr: false, can_condition_on: false, options: {})
       errors = object ? object.errors[method] : []
 
-      input_classes = 'h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400 rounded-md'
-      input_error_classes = 'h-5 w-5 my-3 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300 rounded-md'
+      input_classes = 'h-5 w-5 my-2 ml-1 mr-2 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-400 rounded-md'
+      input_error_classes = 'h-5 w-5 my-2 ml-1 mr-2 shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500 border-red-300 rounded-md'
 
       options.merge!({ 'data-better-conditional-fields-target' => 'source', "data-name": method }) if can_condition_on
       options_with_class = options.merge({ class: errors.empty? ? input_classes : input_error_classes })
