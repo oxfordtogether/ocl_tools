@@ -12,7 +12,7 @@ module OclTools
       yield self if blk
     end
 
-    def col(name, width = "", classes: "", &blk)
+    def col(name, width = '', classes: '', &blk)
       @cols << Column.new(name, width, classes, self, blk)
     end
 

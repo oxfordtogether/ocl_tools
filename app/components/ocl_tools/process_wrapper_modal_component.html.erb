@@ -17,18 +17,6 @@
     </div>
   <% end %>
   <% component.body do %>
-    <%#
-    tailwind_form_with doesn't work when called from a view_component.
-    I'm guessing because view components override form_with or some other trickery.
-    It seems to be similar to the problem solved in our view components with renders_one_form,
-    exepct instead of a form being called in a view_component, it's a helper
-    Possibly related: https://viewcomponent.org/known_issues.html#forms-dont-use-the-default-form-builder
-    This way works. ¯\_(ツ)_/¯ 
-     %>
-    <%= form_with(scope: scope, builder: OclTools::TailwindFormBuilder, url: current_path, method: :put, local: true) do |form| %>
-      <div data-controller='better-conditional-fields'>
-        <%= render process_component.new(form, process) %>
-      </div>
-    <% end %>
+    <%= render OclTools::ProcessFormComponent.new(process, scope: scope, component: component) %>
   <% end %>
 <% end %>
