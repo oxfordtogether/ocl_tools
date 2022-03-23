@@ -40,9 +40,9 @@ module OclTools
     def paragraph(label, description = nil, width: :full)
       col_class = COL_OPTIONS.fetch(width || :full)
 
-      @template.content_tag :div, class: "#{col_class}" do
-        p = @template.content_tag(:p, label, class: "flex text-sm font-medium")
-        p += @template.content_tag(:p, description, class: "flex text-sm text-gray-700") if description
+      @template.content_tag :div, class: col_class.to_s do
+        p = @template.content_tag(:p, label, class: 'flex text-sm font-medium')
+        p += @template.content_tag(:p, description, class: 'flex text-sm text-gray-700') if description
 
         p
       end
@@ -78,6 +78,7 @@ module OclTools
       end
     end
 
+    alias orig_number_field number_field
     def number_field(field, label: nil, width: nil, description: nil, required_asterix: false, info_message: nil, **options)
       errors = object ? object.errors[field] : []
       options = options.merge({
@@ -144,7 +145,7 @@ module OclTools
       end
     end
 
-    def date_picker(method, placeholder = "Select...", label: nil, description: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
+    def date_picker(method, placeholder = 'Select...', label: nil, description: nil, width: nil, disabled: false, start_year: nil, end_year: nil, required_asterix: false, info_message: nil, options: {})
       errors = object ? object.errors[method] : []
       names = { "year": name_for("#{method}(1i)"), "month": name_for("#{method}(2i)"), "day": name_for("#{method}(3i)") }
       ids = { "year": id_for("#{method}_1i"), "month": id_for("#{method}_2i"), "day": id_for("#{method}_3i"), "base": id_for(method) }
@@ -176,7 +177,7 @@ module OclTools
 
     def radio_group(method, label: nil, description: nil, required_asterix: false, info_message: nil, width: :full, columns: :auto, &block)
       # to do: allow user to clear answer
-      raise "columns parameter must be one of: :auto, :single" unless %i[auto single].include?(columns)
+      raise 'columns parameter must be one of: :auto, :single' unless %i[auto single].include?(columns)
 
       errors = object ? object.errors[method] : []
 
@@ -313,7 +314,7 @@ module OclTools
         options[:name] = "#{object_name}[#{name || 'commit'}]"
       end
 
-      options[:class] = "py-2 px-4 inline-flex justify-start text-blue-500 hover:text-blue-700 text-sm font-medium underline"
+      options[:class] = 'py-2 px-4 inline-flex justify-start text-blue-500 hover:text-blue-700 text-sm font-medium underline'
 
       orig_button(label, options, &block)
     end
