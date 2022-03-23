@@ -103,7 +103,11 @@ module OclTools
               end
             when :datetime
               # NOTE: we don't do any checks on type here
-              return send("#{name}=", params[name]) if params.key?(name)
+              if params.key?(name)
+                val = params[name]
+                val = nil unless val.present?
+                return send("#{name}=", Time.zone.parse(val))
+              end
 
               year_key = "#{name}(1i)"
               month_key = "#{name}(2i)"
@@ -131,7 +135,11 @@ module OclTools
             when :time
               # re-implements :datetime without any reference to year/month/day
               # NOTE: we don't do any checks on type here
-              return send("#{name}=", params[name]) if params.key?(name)
+              if params.key?(name)
+                val = params[name]
+                val = nil unless val.present?
+                return send("#{name}=", Time.zone.parse(val))
+              end
 
               hour_key = "#{name}(4i)"
               minute_key = "#{name}(5i)"
