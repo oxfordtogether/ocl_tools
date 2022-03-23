@@ -62,6 +62,7 @@ module OclTools
 
           define_singleton_method("all_#{singular_name}_options") { builder.all_options }
           define_singleton_method("#{singular_name}_options") { builder }
+          define_singleton_method("#{singular_name}_option") { |val| builder.find(val) }
 
           define_method("has_#{singular_name}?") do |opt_or_id|
             id = opt_or_id.is_a?(OclTools::Concerns::OptionsField::Option) ? opt_or_id.id : opt_or_id
