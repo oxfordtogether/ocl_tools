@@ -16,9 +16,11 @@
         <% end %>
       </h3>
 
-      <div class="mt-2 text-sm <%= {warn: "text-yellow-700", info: "text-blue-700", danger: "text-red-700"}[type] %>">
-        <%= content %>
-      </div>
+      <% if content %>
+        <div class="mt-2 text-sm <%= {warn: "text-yellow-700", info: "text-blue-700", danger: "text-red-700"}[type] %>">
+          <%= content %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
