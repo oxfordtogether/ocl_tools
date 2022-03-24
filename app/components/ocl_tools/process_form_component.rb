@@ -5,12 +5,12 @@ module OclTools
     def initialize(process, scope: nil, component: nil)
       @process = process
       @scope = scope
-      @component = component
+      @process_component = component
       super
     end
 
     def process_component
-      @component || "#{process.class.to_s.split('::Process').first}::Component".constantize
+      @process_component || "#{process.class.to_s.split('::Process').first}::Component".constantize
     end
 
     def scope

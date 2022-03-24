@@ -6,16 +6,17 @@ module OclTools
     WIDTHS ||= %i[wide narrow].freeze
 
     def initialize(process, scope: nil, width: nil, component: nil)
-      raise "Unknown width: #{width.inspect}. Allowed values: #{WIDTHS.map(&:inspect)}" if width && ! WIDTHS.include?(width)
+      raise "Unknown width: #{width.inspect}. Allowed values: #{WIDTHS.map(&:inspect)}" if width && !WIDTHS.include?(width)
+
       @width = width || :narrow
       @process = process
       @scope = scope
-      @component = component
+      @process_component = component
       super
     end
 
     def process_component
-      @component || "#{process.class.to_s.split('::Process').first}::Component".constantize
+      @process_component || "#{process.class.to_s.split('::Process').first}::Component".constantize
     end
 
     def scope
@@ -31,4 +32,3 @@ module OclTools
     end
   end
 end
-
