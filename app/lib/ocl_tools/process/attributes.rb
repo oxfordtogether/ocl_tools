@@ -16,7 +16,7 @@ module OclTools
       include OclTools::Actions::OptionsField
       include ActiveRecord::AttributeAssignment
 
-      ALLOWED_TYPES = %i[string integer date datetime time boolean rich_text array].freeze
+      ALLOWED_TYPES = %i[string integer date datetime time boolean rich_text array symbol].freeze
 
       class_methods do
         def attribute_names
@@ -61,12 +61,18 @@ module OclTools
               send("#{name}=", params[name]) if params.key?(name)
             when :integer
               send("#{name}=", params[name]&.to_i) if params.key?(name)
+            when :symbol
+              if params.key?(name)
+                val = params[name].present? ? params[name]&.to_sym : nil
+                send("#{name}=", val)
+              end
             when :boolean
               send("#{name}=", ActiveModel::Type::Boolean.new.cast(params[name])) if params.key?(name)
             when :rich_text
               send("#{name}=", ActionText::RichText.new(body: params[name])) if params.key?(name)
             when :array
               return unless params.key?(name)
+
               if params[name].is_a?(Array)
                 send("#{name}=", params[name].map { |x| array_class.new.tap { |c| c.assign_attributes(x) } }) if params.key?(name)
               elsif params[name].is_a?(ActionController::Parameters)
@@ -105,8 +111,8 @@ module OclTools
               # NOTE: we don't do any checks on type here
               if params.key?(name)
                 val = params[name]
-                val = nil unless val.present?
-                return send("#{name}=", Time.zone.parse(val))
+                val = val.present? ? Time.zone.parse(val) : nil
+                return send("#{name}=", val)
               end
 
               year_key = "#{name}(1i)"
@@ -137,8 +143,8 @@ module OclTools
               # NOTE: we don't do any checks on type here
               if params.key?(name)
                 val = params[name]
-                val = nil unless val.present?
-                return send("#{name}=", Time.zone.parse(val))
+                val = val.present? ? Time.zone.parse(val) : nil
+                return send("#{name}=", val)
               end
 
               hour_key = "#{name}(4i)"
