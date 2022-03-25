@@ -221,6 +221,7 @@ module OclTools
       end
     end
 
+    alias orig_check_box check_box
     def check_box(method, value, label, description: nil, width: :full, required_asterix: false, info_message: nil, skip_pr: false, can_condition_on: false, options: {})
       errors = object ? object.errors[method] : []
 
