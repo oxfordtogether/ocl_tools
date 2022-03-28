@@ -111,7 +111,7 @@ module OclTools
               # NOTE: we don't do any checks on type here
               if params.key?(name)
                 val = params[name]
-                val = val.present? ? Time.zone.parse(val) : nil
+                val = val.present? ? Time.zone.parse(val.to_s) : nil
                 return send("#{name}=", val)
               end
 
