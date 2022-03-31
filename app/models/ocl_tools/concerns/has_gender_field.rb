@@ -10,6 +10,7 @@ module OclTools
             option :male, "Male"
             option :other, "Other"
             option :prefer_not_to_say, "Prefer not to say"
+            option :none_of_these, "None of these"
           end
         end
       end
