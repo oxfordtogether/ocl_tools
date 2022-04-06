@@ -25,7 +25,6 @@ module OclTools
 
         def attribute(name, type: :string, custom_type: nil, default: nil, &blk)
           raise AttributesError, type if custom_type.nil? && !ALLOWED_TYPES.include?(type)
-
           attr_writer name
 
           define_method(name) do
@@ -60,7 +59,11 @@ module OclTools
             when :string
               send("#{name}=", params[name]) if params.key?(name)
             when :integer
-              send("#{name}=", params[name]&.to_i) if params.key?(name)
+              if params.key?(name)
+                val = params[name]
+                val = val.present? ? val.to_i : nil
+                return send("#{name}=", val)
+              end
             when :symbol
               if params.key?(name)
                 val = params[name].present? ? params[name]&.to_sym : nil
