@@ -184,6 +184,12 @@ module OclTools
           send("extract_#{a}", params)
         end
       end
+
+      def assign_attributes_from_active_record(record = nil)
+        self.class.attribute_names.each do |a|
+          send("#{a}=", record.send(a)) if record.respond_to?(a)
+        end
+      end
     end
   end
 end
