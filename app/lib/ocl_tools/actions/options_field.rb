@@ -50,7 +50,7 @@ module OclTools
           end
         end
 
-        def better_options_group(name, options: nil, &blk)
+        def better_options_group(name, prefix: false, options: nil, &blk)
           plural_name = name.to_s.pluralize
           singular_name = name.to_s.singularize
           builder = options || OclTools::Concerns::OptionsField::OptionsBuilder.new
@@ -68,14 +68,16 @@ module OclTools
             id = opt_or_id.is_a?(OclTools::Concerns::OptionsField::Option) ? opt_or_id.id : opt_or_id
             !!send(id)
           end
-          define_method(plural_name) { builder.all_options.select { |x| send(x.id) } }
+          define_method(plural_name) { builder.all_options.select { |x| send(prefix ? "#{singular_name}_#{x.id}" : x.id) } }
           define_method("#{singular_name}_ids") { send(plural_name).map(&:id) }
           define_method("humanized_#{plural_name}") { send(plural_name).map(&:label) }
 
           builder.options.each do |option|
-            attr_accessor option.id
+            option_name = prefix ? "#{singular_name}_#{option.id}" : option.id
 
-            define_method("#{option.id}?") { send(option_id) }
+            attr_accessor option_name
+
+            define_method("#{option_name}?") { send(option_name) }
           end
         end
       end
