@@ -39,6 +39,10 @@ module OclTools
       def empty?
         ATTRS.all?(&:empty?)
       end
+
+      def ==(other)
+        ATTRS.all? { |a| send(a) == other.send(a) }
+      end
     end
   end
 end
