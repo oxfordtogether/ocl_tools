@@ -16,6 +16,10 @@ module OclTools
         "#{preferred_name.present? ? preferred_name : first_name} #{last_name}"
       end
 
+      def official_full_name
+        "#{first_name} #{last_name}"
+      end
+
       def full_name
         if preferred_name.present?
           "#{first_name} (#{preferred_name}) #{last_name}"
