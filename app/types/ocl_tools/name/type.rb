@@ -1,6 +1,7 @@
 module OclTools
   module Name
     class Type
+      include Comparable
       ATTRS = %i[title first_name last_name preferred_name].freeze
       attr_accessor(*ATTRS)
 
@@ -42,6 +43,10 @@ module OclTools
 
       def ==(other)
         ATTRS.all? { |a| send(a) == other.send(a) }
+      end
+
+      def <=>(other)
+        to_s <=> other.to_s
       end
     end
   end
