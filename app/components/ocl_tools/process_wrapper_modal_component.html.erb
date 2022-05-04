@@ -6,7 +6,7 @@
           <%= process.title %>
         </div>
         <div class="text-gray-600">
-          <%= process.humanized_state %>
+          <%= process.try(:step_title) || process.humanized_state %>
         </div>
       </div>
       <%= form_with(scope: scope, builder: OclTools::TailwindFormBuilder, url: current_path, method: :put, local: true) do |form| %>
