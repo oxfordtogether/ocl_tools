@@ -36,10 +36,13 @@ module OclTools
               include Attributes
               class_eval(&blk) if blk
             end
-            default ||= []
 
             define_method("push_#{name}_attributes") do |index, attrs|
               send(name).insert(index, array_class.new.tap { |c| c.assign_attributes(attrs) })
+            end
+
+            define_method(name) do
+              instance_variable_get("@#{name}") || instance_variable_set("@#{name}", [])
             end
           end
 
@@ -74,8 +77,8 @@ module OclTools
             when :rich_text
               send("#{name}=", ActionText::RichText.new(body: params[name])) if params.key?(name)
             when :array
+              
               return unless params.key?(name)
-
               if params[name].is_a?(Array)
                 send("#{name}=", params[name].map { |x| array_class.new.tap { |c| c.assign_attributes(x) } }) if params.key?(name)
               elsif params[name].is_a?(ActionController::Parameters)
