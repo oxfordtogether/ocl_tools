@@ -6,7 +6,13 @@ module OclTools
       end
 
       def self.format_postcode(str)
-        str&.chars&.insert(-4, ' ')&.join&.upcase
+        return unless str
+
+        if str.length < 6 # not a real postcode
+          str
+        else
+          str&.chars&.insert(-4, ' ')&.join&.upcase
+        end
       end
     end
   end
