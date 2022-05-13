@@ -129,7 +129,7 @@ module OclTools
       col_class = COL_OPTIONS.fetch(width || :full)
       condition = display_if ? { display_if: display_if } : { display_unless: display_unless }
 
-      @template.content_tag :div, class: "#{col_class} grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", data: { better_conditional_fields_target: :target }.merge(condition), &block
+      @template.content_tag :fieldset, class: "#{col_class} grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6", data: { better_conditional_fields_target: :target }.merge(condition), &block
     end
 
     def collection_select(method, collection, value_method, text_method, description: nil, include_blank: true, width: nil, required_asterix: false, info_message: nil, html_options: {}, **options)

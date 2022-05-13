@@ -862,10 +862,6 @@ select {
 	margin-top: 0.5rem;
 	margin-bottom: 0.5rem;
 }
-.my-3 {
-	margin-top: 0.75rem;
-	margin-bottom: 0.75rem;
-}
 .my-1 {
 	margin-top: 0.25rem;
 	margin-bottom: 0.25rem;
@@ -2120,6 +2116,9 @@ select {
 }
 .focus\:ring-offset-2:focus {
 	--tw-ring-offset-width: 2px;
+}
+.focus\:ring-offset-1:focus {
+	--tw-ring-offset-width: 1px;
 }
 .focus\:ring-offset-gray-100:focus {
 	--tw-ring-offset-color: #f3f4f6;
