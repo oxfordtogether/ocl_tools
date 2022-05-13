@@ -162,8 +162,10 @@ export default class extends Controller {
           this.tokensValue.map((t) => !!t.match(token_regex)).some((v) => !!v)
         ) {
           target.classList.add("hidden");
+          target.setAttribute("disabled", true)
         } else {
           target.classList.remove("hidden");
+          target.setAttribute("disabled", false)
         }
       } else if (target.getAttribute("data-display-if")) {
         const token = target.getAttribute("data-display-if");
@@ -173,8 +175,10 @@ export default class extends Controller {
           this.tokensValue.map((t) => !!t.match(token_regex)).some((v) => !!v)
         ) {
           target.classList.remove("hidden");
+          target.setAttribute("disabled", false)
         } else {
           target.classList.add("hidden");
+          target.setAttribute("disabled", true)
         }
       }
     });

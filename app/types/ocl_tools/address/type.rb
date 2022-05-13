@@ -24,7 +24,7 @@ module OclTools
       end
 
       def lines
-        all_lines.compact
+        all_lines.filter { |l| l.present? }
       end
 
       def postcode
