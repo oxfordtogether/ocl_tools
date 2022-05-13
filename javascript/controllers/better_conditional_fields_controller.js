@@ -165,7 +165,7 @@ export default class extends Controller {
           target.setAttribute("disabled", true)
         } else {
           target.classList.remove("hidden");
-          target.setAttribute("disabled", false)
+          target.removeAttribute("disabled")
         }
       } else if (target.getAttribute("data-display-if")) {
         const token = target.getAttribute("data-display-if");
@@ -175,7 +175,7 @@ export default class extends Controller {
           this.tokensValue.map((t) => !!t.match(token_regex)).some((v) => !!v)
         ) {
           target.classList.remove("hidden");
-          target.setAttribute("disabled", false)
+          target.removeAttribute("disabled")
         } else {
           target.classList.add("hidden");
           target.setAttribute("disabled", true)

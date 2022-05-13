@@ -216,7 +216,7 @@ class _class extends _stimulus.Controller {
           target.setAttribute("disabled", true);
         } else {
           target.classList.remove("hidden");
-          target.setAttribute("disabled", false);
+          target.removeAttribute("disabled");
         }
       } else if (target.getAttribute("data-display-if")) {
         const token = target.getAttribute("data-display-if");
@@ -224,7 +224,7 @@ class _class extends _stimulus.Controller {
 
         if (this.tokensValue.map(t => !!t.match(token_regex)).some(v => !!v)) {
           target.classList.remove("hidden");
-          target.setAttribute("disabled", false);
+          target.removeAttribute("disabled");
         } else {
           target.classList.add("hidden");
           target.setAttribute("disabled", true);
