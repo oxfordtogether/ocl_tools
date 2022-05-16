@@ -28,7 +28,8 @@ module OclTools
           attr_writer name
 
           define_method(name) do
-            instance_variable_get("@#{name}") || default
+            val = instance_variable_get("@#{name}")
+            val.nil? ? default : val
           end
 
           if type == :array
