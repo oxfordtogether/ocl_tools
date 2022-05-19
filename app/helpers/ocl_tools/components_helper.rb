@@ -114,6 +114,8 @@ module OclTools
     end
 
     def option_badge(option)
+      return if option.nil?
+
       square_badge(option.label, option.colour)
     end
 
