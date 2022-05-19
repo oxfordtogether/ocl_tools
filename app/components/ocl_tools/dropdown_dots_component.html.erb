@@ -21,9 +21,9 @@
     >
       <div class="py-1" role="none">
         <% links.each do |link| %>
-          <%= link_to link.path, class: "text-gray-700 hover:bg-gray-100 hover:text-gray-900 block px-4 py-2 text-sm flex items-center", html_options: { role: "menuitem", tabindex: "-1"}.merge(link.new_tab ? {target: "_blank"} : {}) do %>
+          <%= link_to link.path, class: "text-gray-700 hover:bg-gray-100 hover:text-gray-900 block px-4 py-2 text-sm flex items-center", role: "menuitem", tabindex: "-1", target: link.new_tab ? "_blank" : nil do %>
             <% if link.icon %>
-              <%= icon link.icon, class: "text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %>
+              <%= icon link.icon, class: "text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" %> hi
             <% end %>
             <span class="truncate">
               <%= link.name %>
