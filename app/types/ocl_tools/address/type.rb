@@ -32,6 +32,8 @@ module OclTools
       end
 
       def ==(other)
+        return false unless other.is_a?(Type)
+
         all_lines == other.all_lines
       end
 
