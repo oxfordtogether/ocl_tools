@@ -9,6 +9,8 @@ var _autocomplete_controller = _interopRequireDefault(require("./autocomplete_co
 
 var _bar_chart_controller = _interopRequireDefault(require("./bar_chart_controller"));
 
+var _better_autocomplete_controller = _interopRequireDefault(require("./better_autocomplete_controller"));
+
 var _better_conditional_fields_controller = _interopRequireDefault(require("./better_conditional_fields_controller"));
 
 var _conditional_fields_controller = _interopRequireDefault(require("./conditional_fields_controller"));
@@ -36,6 +38,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const controllers = {
   autocomplete: _autocomplete_controller.default,
   "bar-chart": _bar_chart_controller.default,
+  "better-autocomplete": _better_autocomplete_controller.default,
   "better-conditional-fields": _better_conditional_fields_controller.default,
   "conditional-fields": _conditional_fields_controller.default,
   "date-picker": _date_picker_controller.default,
