@@ -1,5 +1,5 @@
 module OclTools
-  class AutocompleteComponent < ViewComponent::Base
+  class BetterAutocompleteComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
     def initialize(label:, field_id:, field_name:, value_method: :id, text_method: :name, reflex:, disabled: false, object: nil, results: nil, list_item_component: nil, error: false)

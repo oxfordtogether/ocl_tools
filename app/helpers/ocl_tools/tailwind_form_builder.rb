@@ -384,33 +384,33 @@ module OclTools
     end
 
     def better_autocomplete_field(method, value_method, text_method, reflex: "BetterAutocompleteReflex#perform", label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false)
-    errors = object ? object.errors[method] : []
+      errors = object ? object.errors[method] : []
 
-    # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
-    if selected == :not_specified
-      relation = object.class.try(:reflect_on_all_associations)&.find do |x|
-        x.is_a?(ActiveRecord::Reflection::BelongsToReflection) && x.foreign_key.to_s == method.to_s
-      end&.name
-      selected = relation && object.send(relation)
+      # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
+      if selected == :not_specified
+        relation = object.class.try(:reflect_on_all_associations)&.find do |x|
+          x.is_a?(ActiveRecord::Reflection::BelongsToReflection) && x.foreign_key.to_s == method.to_s
+        end&.name
+        selected = relation && object.send(relation)
+      end
+
+      col_class = COL_OPTIONS.fetch(width || :full)
+
+      tailwind_field(method, label, width: width, required_asterix: required_asterix) do
+        @template.render(BetterAutocompleteComponent.new(
+          label: label || method.to_s.humanize,
+          field_id: id_for(method),
+          field_name: name_for(method),
+          value_method: value_method,
+          text_method: text_method,
+          reflex: reflex,
+          object: selected,
+          disabled: disabled,
+          list_item_component: list_item_component,
+          error: !errors.empty?
+        )) + error(errors.last)
+      end
     end
-
-    col_class = COL_OPTIONS.fetch(width || :full)
-
-    tailwind_field(method, label, width: width, required_asterix: required_asterix) do
-      @template.render(AutocompleteComponent.new(
-        label: label || method.to_s.humanize,
-        field_id: id_for(method),
-        field_name: name_for(method),
-        value_method: value_method,
-        text_method: text_method,
-        reflex: reflex,
-        object: selected,
-        disabled: disabled,
-        list_item_component: list_item_component,
-        error: !errors.empty?
-      )) + error(errors.last)
-    end
-  end
 
     def error_summary
       @template.render(FormErrorComponent.new(object))
