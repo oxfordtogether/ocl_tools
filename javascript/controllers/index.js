@@ -1,6 +1,6 @@
 import { default as AutocompleteController } from "./autocomplete_controller";
 import { default as BarChartController } from "./bar_chart_controller";
-import { default as BetterAutocompleteController } from "./better-autocomplete_controller";
+import { default as BetterAutocompleteController } from "./better_autocomplete_controller";
 import { default as BetterConditionalFieldsController } from "./better_conditional_fields_controller";
 import { default as ConditionalFieldsController } from "./conditional_fields_controller";
 import { default as DatePickerController } from "./date_picker_controller";
