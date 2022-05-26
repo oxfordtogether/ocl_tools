@@ -25,6 +25,7 @@ module OclTools
 
         def attribute(name, type: :string, custom_type: nil, default: nil, &blk)
           raise AttributesError, type if custom_type.nil? && !ALLOWED_TYPES.include?(type)
+
           attr_writer name
 
           define_method(name) do
@@ -78,8 +79,9 @@ module OclTools
             when :rich_text
               send("#{name}=", ActionText::RichText.new(body: params[name])) if params.key?(name)
             when :array
-              
+
               return unless params.key?(name)
+
               if params[name].is_a?(Array)
                 send("#{name}=", params[name].map { |x| array_class.new.tap { |c| c.assign_attributes(x) } }) if params.key?(name)
               elsif params[name].is_a?(ActionController::Parameters)
@@ -92,6 +94,7 @@ module OclTools
               if params.key?(name)
                 val = params[name]
                 val = nil unless val.present?
+                val = Date.parse(val) if val.is_a?(String)
                 return send("#{name}=", val)
               end
 
