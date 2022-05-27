@@ -107,6 +107,14 @@ module OclTools
         def final?
           final
         end
+
+        def to_param
+          id
+        end
+
+        def to_s
+          label
+        end
       end
 
       class OptionsBuilder
