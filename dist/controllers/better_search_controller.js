@@ -18,7 +18,7 @@ class _class extends _application_controller.default {
 
   perform(event) {
     event.preventDefault();
-    this.stimulate("SearchReflex#perform", this.queryTarget.value);
+    this.stimulate(this.reflexValue, this.queryTarget.value);
   }
 
 }
@@ -28,5 +28,5 @@ exports.default = _class;
 _defineProperty(_class, "targets", ["query", "activity"]);
 
 _defineProperty(_class, "values", {
-  params: Object
+  reflex: String
 });

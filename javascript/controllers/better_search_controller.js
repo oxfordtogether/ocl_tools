@@ -3,7 +3,7 @@ import ApplicationController from "./application_controller";
 export default class extends ApplicationController {
   static targets = ["query", "activity"];
   static values = {
-    params: Object,
+    reflex: String,
   };
 
   beforePerform() {
@@ -13,6 +13,6 @@ export default class extends ApplicationController {
   perform(event) {
     event.preventDefault();
 
-    this.stimulate("SearchReflex#perform", this.queryTarget.value);
+    this.stimulate(this.reflexValue, this.queryTarget.value);
   }
 }

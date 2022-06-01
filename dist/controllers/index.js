@@ -27,6 +27,8 @@ var _popper_controller = _interopRequireDefault(require("./popper_controller"));
 
 var _search_controller = _interopRequireDefault(require("./search_controller"));
 
+var _better_search_controller = _interopRequireDefault(require("./better_search_controller"));
+
 var _star_rating_controller = _interopRequireDefault(require("./star_rating_controller"));
 
 var _table_controller = _interopRequireDefault(require("./table_controller"));
@@ -47,6 +49,7 @@ const controllers = {
   "file-upload": _file_upload_controller.default,
   popper: _popper_controller.default,
   search: _search_controller.default,
+  "better-search": _better_search_controller.default,
   "star-rating": _star_rating_controller.default,
   table: _table_controller.default,
   "visibility-toggle": _visibility_toggle_controller.default
