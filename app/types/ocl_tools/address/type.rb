@@ -31,6 +31,10 @@ module OclTools
         Helpers.format_postcode(normalized_postcode)
       end
 
+      def outcode
+        Helpers.format_outcode(normalized_postcode)
+      end
+
       def ==(other)
         return false unless other.is_a?(Type)
 
