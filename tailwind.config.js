@@ -1,18 +1,16 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  mode: "jit",
-  purge: ["./javascript/**/*", "./app/**/*"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./javascript/**/*", "./app/**/*"],
   theme: {
     extend: {
       colors: {
         primary: colors.violet,
+        green: colors.emerald,
+        yellow: colors.amber,
+        purple: colors.violet,
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };

@@ -6,6 +6,7 @@ require 'ocl_tools/spec_helpers/wait_for_turbolinks'
 require 'ocl_tools/spec_helpers/fill_in_date'
 require 'ocl_tools/spec_helpers/fill_in_rich_text'
 require 'ocl_tools/spec_helpers/radio_group_select'
+require 'ocl_tools/spec_helpers/fill_in_datetime'
 
 RSpec.configure do |config|
   config.include OclTools::AutocompleteSelect, type: :system
@@ -16,4 +17,5 @@ RSpec.configure do |config|
   config.include OclTools::FillInDate, type: :system
   config.include OclTools::FillInRichText, type: :system
   config.include OclTools::RadioGroupSelect, type: :system
+  config.include OclTools::FillInDatetime, type: :system
 end

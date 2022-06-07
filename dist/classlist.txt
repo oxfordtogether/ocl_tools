@@ -23,11 +23,10 @@ bg-gray-100
 bg-gray-200
 bg-gray-300
 bg-gray-50
-bg-gray-500
+bg-gray-500/75
 bg-green-100
 bg-green-400
 bg-indigo-100
-bg-opacity-75
 bg-pink-100
 bg-primary-100
 bg-primary-600
@@ -105,6 +104,8 @@ font-bold
 font-medium
 font-normal
 font-semibold
+form-checkbox
+form-radio
 gap-1
 gap-x-2
 gap-x-4
@@ -132,9 +133,9 @@ hover:bg-blue-600
 hover:bg-gray-100
 hover:bg-gray-200
 hover:bg-gray-50
-hover:bg-opacity-75
 hover:bg-primary-200
 hover:bg-primary-500
+hover:bg-primary-500/75
 hover:bg-primary-700
 hover:bg-red-700
 hover:border-gray-300
