@@ -22,12 +22,14 @@ module.exports = (opts = {}) => {
               // .md/:text-sm -> md:text-sm
               // .focus/:text-red-400:focus -> focus:text-red-400
               // .hover/:text-red-400:hover -> hover:text-red-400
+              // bg-gray-500\/75 -> bg-gray-500/75
               // but also
               // p-1/.5 -> p-1.5
               let formattedClass = rawClass
                 .replace(/(.*?)([^\\]):.*/, "$1$2") // strip off final :xxxx not preceded by \:
                 .replace(/^\./, "") // strip . from the beginning
                 .replace(/\\:/g, ":") // \: -> :
+                .replace(/\\\//, "/") // \/ -> /
                 .replace(/\\\./g, "."); // \. -> .
               classes.add(formattedClass);
             })
