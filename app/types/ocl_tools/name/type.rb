@@ -29,6 +29,10 @@ module OclTools
         end
       end
 
+      def initials
+        [preferred_name || first_name, last_name].map(&:first).join
+      end
+
       def has_preferred?
         preferred_name.present?
       end
