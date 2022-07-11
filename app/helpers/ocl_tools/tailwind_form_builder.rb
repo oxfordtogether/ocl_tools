@@ -383,7 +383,7 @@ module OclTools
       end
     end
 
-    def better_autocomplete_field(method, value_method, text_method, reflex: "BetterAutocompleteReflex#perform", label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false)
+    def better_autocomplete_field(method, value_method, text_method, reflex: "BetterAutocompleteReflex#perform", label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false, results: nil)
       errors = object ? object.errors[method] : []
 
       # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
@@ -407,7 +407,8 @@ module OclTools
           object: selected,
           disabled: disabled,
           list_item_component: list_item_component,
-          error: !errors.empty?
+          error: !errors.empty?,
+          results: results
         )) + error(errors.last)
       end
     end
