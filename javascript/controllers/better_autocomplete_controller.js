@@ -20,10 +20,7 @@ export default class extends ApplicationController {
     event.preventDefault();
     this.searchIconTarget.hidden = true;
     this.searchingIconTarget.hidden = false;
-    this.stimulate(
-      this.reflexValue,
-      this.queryTarget.value
-    );
+    this.stimulate(this.reflexValue, this.queryTarget.value);
   }
 
   select(event) {
