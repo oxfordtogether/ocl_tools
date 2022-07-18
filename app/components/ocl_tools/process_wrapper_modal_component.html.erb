@@ -17,6 +17,6 @@
     </div>
   <% end %>
   <% component.body do %>
-    <%= render OclTools::ProcessFormComponent.new(process, scope: scope, component: process_component) %>
+    <%= render OclTools::ProcessFormComponent.new(process, scope: scope, component: process_component, path: current_path) %>
   <% end %>
 <% end %>

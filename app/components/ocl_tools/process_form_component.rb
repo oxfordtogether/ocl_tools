@@ -2,10 +2,11 @@ module OclTools
   class ProcessFormComponent < ViewComponent::Base
     attr_reader :process
 
-    def initialize(process, scope: nil, component: nil)
+    def initialize(process, scope: nil, component: nil, path: nil)
       @process = process
       @scope = scope
       @process_component = component
+      @path = path
       super
     end
 
@@ -18,7 +19,7 @@ module OclTools
     end
 
     def current_path
-      request.fullpath
+      @path || request.fullpath
     end
   end
 end

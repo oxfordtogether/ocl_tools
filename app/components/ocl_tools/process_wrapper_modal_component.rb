@@ -5,13 +5,14 @@ module OclTools
 
     WIDTHS ||= %i[wide narrow].freeze
 
-    def initialize(process, scope: nil, width: nil, component: nil)
+    def initialize(process, scope: nil, width: nil, component: nil, path: nil)
       raise "Unknown width: #{width.inspect}. Allowed values: #{WIDTHS.map(&:inspect)}" if width && !WIDTHS.include?(width)
 
       @width = width || :narrow
       @process = process
       @scope = scope
       @process_component = component
+      @path = path
       super
     end
 
@@ -24,7 +25,7 @@ module OclTools
     end
 
     def current_path
-      request.fullpath
+      @path || request.fullpath
     end
 
     def narrow?

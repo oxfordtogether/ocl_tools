@@ -10,7 +10,7 @@ module OclTools
       label_text = super(field, label)
       label_text += @template.content_tag(:div, '*', class: 'ml-1 text-red-500') if required_asterix
 
-      description_text = (@template.content_tag(:div, description, class: 'mt-1 mb-2 text-gray-500 text-xs') if description)
+      description_text = (@template.content_tag(:div, description, class: 'mt-1 text-gray-500 text-xs font-normal') if description)
 
       @template.content_tag :div, class: 'flex text-sm font-medium text-gray-700' do
         label_text_div = @template.content_tag(:div, label_text, class: 'flex')
@@ -383,7 +383,7 @@ module OclTools
       end
     end
 
-    def better_autocomplete_field(method, value_method, text_method, reflex: "BetterAutocompleteReflex#perform", label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false, results: nil)
+    def better_autocomplete_field(method, value_method, text_method, reflex: 'BetterAutocompleteReflex#perform', label: nil, width: nil, disabled: false, selected: :not_specified, list_item_component: nil, required_asterix: false, results: nil, on_select: nil)
       errors = object ? object.errors[method] : []
 
       # try to look up the selected value if not specified (which allows the caller to explicitly pass in nil to bypass this behaviour)
@@ -407,6 +407,7 @@ module OclTools
           object: selected,
           disabled: disabled,
           list_item_component: list_item_component,
+          on_select: on_select,
           error: !errors.empty?,
           results: results
         )) + error(errors.last)
