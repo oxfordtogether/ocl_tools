@@ -2,7 +2,7 @@ module OclTools
   class BetterAutocompleteComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
-    def initialize(label:, field_id:, field_name:, value_method: :id, text_method: :name, reflex:, disabled: false, object: nil, results: nil, list_item_component: nil, error: false)
+    def initialize(label:, field_id:, field_name:, reflex:, value_method: :id, text_method: :name, disabled: false, object: nil, results: nil, list_item_component: nil, error: false, on_select: nil)
       @results = results
       @object = object
       @label = label
@@ -13,6 +13,7 @@ module OclTools
       @reflex = reflex
       @disabled = disabled
       @list_item_component = list_item_component
+      @on_select = on_select
       @error = error
     end
 
