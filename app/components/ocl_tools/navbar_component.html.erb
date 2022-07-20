@@ -2,13 +2,15 @@
   <div class="relative z-20 <%= size %> mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <div class="flex items-center">
-        <div class="flex-shrink-0 w-20 text-center leading-5 text-primary-200">
-          <% if brand_area %>
+        <% if brand_area %>
+          <div class="flex-shrink-0">
             <%= brand_area %>
-          <% else %>
+          </div>
+        <% else %>
+          <div class="flex-shrink-0 w-20 text-center leading-5 text-primary-200">
             <%= link_to brand_name, home_path %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-4">
             <% links.each do |link| %>
