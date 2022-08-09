@@ -8,7 +8,7 @@ Rails engine containing useful stuff for OCL rails applications.
 
 Add new elements to the dummy app so that other people can have a look.
 
-If you change any javascript, run `yarn run build` to re-bundle the js.
+If you change any javascript, run `yarn run build` to re-bundle the js AND bump the version in package.json.
 
 ## Installation
 
