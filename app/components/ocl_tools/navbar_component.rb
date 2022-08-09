@@ -2,7 +2,7 @@
 
 module OclTools
   class NavbarComponent < ViewComponent::Base
-    Link = Struct.new(:name, :path, :icon, :partial_match)
+    Link = Struct.new(:name, :path, :icon, :partial_match, :ignore_query_params)
     LinkWithActive = Struct.new(:name, :path, :icon, :active?)
     delegate :icon, to: :helpers
     renders_one :brand_area
@@ -21,16 +21,16 @@ module OclTools
       yield self
     end
 
-    def link(name, path, partial_match: false, icon: nil)
-      @links << Link.new(name, path, icon, partial_match)
+    def link(name, path, partial_match: false, ignore_query_params: false, icon: nil)
+      @links << Link.new(name, path, icon, partial_match, ignore_query_params)
     end
 
-    def right_link(name, path, partial_match: false, icon: nil)
-      @right_links << Link.new(name, path, icon, partial_match)
+    def right_link(name, path, partial_match: false, ignore_query_params: false, icon: nil)
+      @right_links << Link.new(name, path, icon, partial_match, ignore_query_params)
     end
 
-    def profile_link(name, path, partial_match: false, icon: nil)
-      @profile_links << Link.new(name, path, icon, partial_match)
+    def profile_link(name, path, partial_match: false, ignore_query_params: false, icon: nil)
+      @profile_links << Link.new(name, path, icon, partial_match, ignore_query_params)
     end
 
     def logged_in_as(email)
@@ -40,21 +40,27 @@ module OclTools
     def links
       # view components only allow you to call controller helpers like current_page? at render time
       @links.map do |link|
-        is_current = link.partial_match ? request.fullpath.start_with?(link.path) : current_page?(link.path)
+        path = link.ignore_query_params ? URI(link.path).path : link.path
+
+        is_current = link.partial_match ? request.fullpath.start_with?(path) : current_page?(path)
         LinkWithActive.new(link.name, link.path, link.icon, is_current)
       end
     end
 
     def right_links
       @right_links.map do |link|
-        is_current = link.partial_match ? request.fullpath.start_with?(link.path) : current_page?(link.path)
+        path = link.ignore_query_params ? URI(link.path).path : link.path
+
+        is_current = link.partial_match ? request.fullpath.start_with?(path) : current_page?(path)
         LinkWithActive.new(link.name, link.path, link.icon, is_current)
       end
     end
 
     def profile_links
       @profile_links.map do |link|
-        is_current = link.partial_match ? request.fullpath.start_with?(link.path) : current_page?(link.path)
+        path = link.ignore_query_params ? URI(link.path).path : link.path
+
+        is_current = link.partial_match ? request.fullpath.start_with?(path) : current_page?(path)
         LinkWithActive.new(link.name, link.path, link.icon, is_current)
       end
     end
