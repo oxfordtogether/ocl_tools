@@ -4,11 +4,12 @@ module OclTools
   class DropdownDotsComponent < ViewComponent::Base
     delegate :icon, to: :helpers
 
-    attr_reader :links
+    attr_reader :links, :icon_name
 
-    def initialize
+    def initialize(icon: 'dots-vertical')
       super
       @links = []
+      @icon_name = icon
 
       yield self
     end

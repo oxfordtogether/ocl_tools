@@ -105,8 +105,8 @@ module OclTools
       render DropdownButtonComponent.new(label, &blk)
     end
 
-    def dropdown_dots(&blk)
-      render DropdownDotsComponent.new(&blk)
+    def dropdown_dots(*args, **kwargs, &blk)
+      render DropdownDotsComponent.new(*args, **kwargs, &blk)
     end
 
     def button_link_group(*args, **kwargs, &blk)
